@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:show id="ps_edu_mit_cci_simulation_model_MappingFunction" object="${mappingfunction}" path="/mappingfunctions" z="dGksjyiNYvqfIe7Ocg4DDMpnmZY=">
+        <field:display field="fx" id="s_edu_mit_cci_simulation_model_MappingFunction_fx" object="${mappingfunction}" z="+7FR0vRzR7bJi2AO5dR339BvZWU="/>
+        <field:display field="parameters" id="s_edu_mit_cci_simulation_model_MappingFunction_parameters" object="${mappingfunction}" z="ggDiVObaolDajdWzxYYLEKyUnog="/>
+    </page:show>
+</div>
