@@ -179,3 +179,18 @@ exit
 // Spring Roo 1.1.1.RELEASE [rev 156ccd6] log opened at 2011-03-02 22:55:26
 exit
 // Spring Roo 1.1.1.RELEASE [rev 156ccd6] log closed at 2011-03-03 12:14:26
+// Spring Roo 1.1.1.RELEASE [rev 156ccd6] log opened at 2011-03-03 15:13:32
+entity --class ~.model.CompositeStepMapping
+field reference --fieldName fromStep --type ~.model.Step
+field reference --fieldName toStep --type ~.model.Step
+field reference --fieldName toVar --type ~.model.Step
+// [failed] field reference --fieldName fromStep --type ~.model.Step
+field reference --fieldName fromVar --type ~.model.Step
+// [failed] entity --class ~.model.CompositeSimulation 
+// [failed] field set --fieldName stepMapping --type ~.model.CompositeSetMapping
+field set --fieldName stepMapping --type ~.model.CompositeStepMapping
+quit
+// Spring Roo 1.1.1.RELEASE [rev 156ccd6] log closed at 2011-03-03 19:43:50
+// Spring Roo 1.1.1.RELEASE [rev 156ccd6] log opened at 2011-03-03 19:45:17
+exit
+// Spring Roo 1.1.1.RELEASE [rev 156ccd6] log closed at 2011-03-03 22:07:30

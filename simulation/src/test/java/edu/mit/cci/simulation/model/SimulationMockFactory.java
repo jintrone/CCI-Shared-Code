@@ -77,5 +77,17 @@ public class SimulationMockFactory {
         return sim;
     }
 
+    public Variable getVariable(int arity, String name, DataType type, int precision) {
+        Variable v_in = new Variable();
+        v_in.setArity(arity);
+        v_in.setName(name);
+        v_in.setDataType(type);
+        v_in.setPrecision_(precision);
+        v_in.persist();
+        return v_in;
+    }
+
+
+
 
 }

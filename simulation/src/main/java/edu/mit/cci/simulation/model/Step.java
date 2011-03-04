@@ -24,6 +24,15 @@ import java.util.Set;
         @ManyToMany(cascade = CascadeType.ALL)
         private Set<DefaultSimulation> simulations = new HashSet<DefaultSimulation>();
 
+    public Step() {
 
+    }
+
+    public Step(Integer order, DefaultSimulation... sim) {
+        setOrder_(order);
+        for (DefaultSimulation s:sim) {
+            simulations.add(s);
+        }
+    }
 
 }

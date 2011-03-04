@@ -11,5 +11,6 @@
         <field:input field="outputs" id="c_edu_mit_cci_simulation_model_CompositeSimulation_outputs" z="nrQX9tdtvBtD5AUU6w9AThk5MaE="/>
         <field:select field="steps" id="c_edu_mit_cci_simulation_model_CompositeSimulation_steps" itemValue="id" items="${steps}" multiple="true" path="/steps" z="87Ippq9z96lrAo/HdlTRsrsURZk="/>
     <field:input field="url" id="c_edu_mit_cci_simulation_model_CompositeSimulation_url" z="ghaidRApCKPLEDcxCW4rTWhqNsM="/>
+    <field:select field="stepMapping" id="c_edu_mit_cci_simulation_model_CompositeSimulation_stepMapping" itemValue="id" items="${compositestepmappings}" multiple="true" path="/compositestepmappings" z="ukWzcnkyIhVqho7Z6z3sooiVSrA="/>
     </form:update>
 </div>

@@ -4,6 +4,7 @@
 package edu.mit.cci.simulation.web;
 
 import edu.mit.cci.simulation.model.CompositeSimulation;
+import edu.mit.cci.simulation.model.CompositeStepMapping;
 import edu.mit.cci.simulation.model.Step;
 import java.io.UnsupportedEncodingException;
 import java.lang.Integer;
@@ -82,6 +83,11 @@ privileged aspect CompositeSimulationController_Roo_Controller {
         model.addAttribute("page", (page == null) ? "1" : page.toString());
         model.addAttribute("size", (size == null) ? "10" : size.toString());
         return "redirect:/compositesimulations?page=" + ((page == null) ? "1" : page.toString()) + "&size=" + ((size == null) ? "10" : size.toString());
+    }
+    
+    @ModelAttribute("compositestepmappings")
+    public Collection<CompositeStepMapping> CompositeSimulationController.populateCompositeStepMappings() {
+        return CompositeStepMapping.findAllCompositeStepMappings();
     }
     
     @ModelAttribute("steps")
