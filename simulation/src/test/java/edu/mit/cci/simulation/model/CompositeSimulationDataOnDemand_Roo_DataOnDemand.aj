@@ -25,6 +25,8 @@ privileged aspect CompositeSimulationDataOnDemand_Roo_DataOnDemand {
         obj.setDescription("description_" + index);
         obj.setName("name_" + index);
         obj.setUrl("url_" + index);
+        obj.setSteps(null);
+        obj.setStepMapping(null);
         return obj;
     }
     

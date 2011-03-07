@@ -3,7 +3,11 @@
 
 package edu.mit.cci.simulation.model;
 
-import java.util.Map;
+import edu.mit.cci.simulation.model.DefaultSimulation;
+import edu.mit.cci.simulation.model.ManyToOneMapping;
+import edu.mit.cci.simulation.model.Map;
+import edu.mit.cci.simulation.model.Variable;
+import java.lang.Integer;
 
 privileged aspect MappedSimulation_Roo_JavaBean {
     

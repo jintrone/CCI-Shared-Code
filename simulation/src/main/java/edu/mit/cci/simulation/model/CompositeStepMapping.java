@@ -50,7 +50,7 @@ public class CompositeStepMapping {
     public CompositeStepMapping(CompositeSimulation csim, Step s1, Step s2) throws SimulationCreationException {
         this.parentsim = csim;
 
-        if (s1.getOrder_()>=s2.getOrder_()) {
+        if (s1!=null && s2!=null && s1.getOrder_()>=s2.getOrder_()) {
             throw new SimulationCreationException("Mappings can only between steps that are strictly ordered");
         }
         setFromStep(s1);

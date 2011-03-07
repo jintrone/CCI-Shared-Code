@@ -4,7 +4,6 @@
 package edu.mit.cci.simulation.web;
 
 import edu.mit.cci.simulation.model.CompositeSimulation;
-import edu.mit.cci.simulation.model.CompositeStepMapping;
 import edu.mit.cci.simulation.model.DefaultSimulation;
 import edu.mit.cci.simulation.model.MappedSimulation;
 import edu.mit.cci.simulation.model.Step;
@@ -64,14 +63,6 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
         };
     }
     
-    Converter<CompositeStepMapping, String> ApplicationConversionServiceFactoryBean.getCompositeStepMappingConverter() {
-        return new Converter<CompositeStepMapping, String>() {
-            public String convert(CompositeStepMapping source) {
-                return new StringBuilder().append(source.getParentsim()).append(" ").append(source.getFromStep()).append(" ").append(source.getToStep()).toString();
-            }
-        };
-    }
-    
     public void ApplicationConversionServiceFactoryBean.installLabelConverters(FormatterRegistry registry) {
         registry.addConverter(getVariableConverter());
         registry.addConverter(getMappedSimulationConverter());
@@ -79,7 +70,6 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
         registry.addConverter(getStepConverter());
         registry.addConverter(getCompositeSimulationConverter());
         registry.addConverter(getTupleConverter());
-        registry.addConverter(getCompositeStepMappingConverter());
     }
     
     public void ApplicationConversionServiceFactoryBean.afterPropertiesSet() {

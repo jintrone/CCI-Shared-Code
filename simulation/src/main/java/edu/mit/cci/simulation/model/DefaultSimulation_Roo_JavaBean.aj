@@ -3,8 +3,12 @@
 
 package edu.mit.cci.simulation.model;
 
-import java.util.Date;
-import java.util.Set;
+import edu.mit.cci.simulation.model.Date;
+import edu.mit.cci.simulation.model.RunStrategy;
+import edu.mit.cci.simulation.model.Set;
+import edu.mit.cci.simulation.model.Variable;
+import java.lang.Long;
+import java.lang.String;
 
 privileged aspect DefaultSimulation_Roo_JavaBean {
     

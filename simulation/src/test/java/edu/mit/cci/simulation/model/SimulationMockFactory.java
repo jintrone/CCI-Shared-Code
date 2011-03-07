@@ -40,7 +40,7 @@ public class SimulationMockFactory {
         vin.setMin_(0d);
         vin.setMax_(10d);
 
-        Variable vout = vdod.getSpecificVariable(varId+1);
+        Variable vout = vdod.getSpecificVariable(varId + 1);
         vout.setArity(1);
         vout.setDataType(DataType.NUM);
         vout.setPrecision_(0);
@@ -68,6 +68,32 @@ public class SimulationMockFactory {
 
     }
 
+    public static DefaultSimulation configurePassThruStrategy(DefaultSimulation sim) {
+        return new DelegatingSim(sim) {
+
+            {
+                delegate.setRunStrategy(new RunStrategy() {
+
+                    @Override
+                    public String run(String url, Map<String, String> params) throws SimulationException {
+                        Map<Variable, String[]> data = new HashMap<Variable, String[]>();
+                        String[] outputvals = new String[params.size()];
+                                                    outputvals = params.values().toArray(outputvals);
+
+                        for (Variable v : getOutputs()) {
+                            String[] output = new String[v.getArity()];
+                            for (int i = 0;i<v.getArity();i++) {
+                                output[i] = outputvals[i%outputvals.length];
+                                data.put(v, outputvals);
+                            }
+                        }
+                        return U.createStringRepresentation(data);
+                    }
+                });
+            }
+        };
+    }
+
     public MappedSimulation getMappedSimulation(int simid, DefaultSimulation embeddedscalar, int replication, int samplingFreq, ManyToOneMapping type) {
         MappedSimulation sim = mdod.getNewTransientMappedSimulation(simid);
         sim.setReplication(replication);
@@ -86,8 +112,6 @@ public class SimulationMockFactory {
         v_in.persist();
         return v_in;
     }
-
-
 
 
 }

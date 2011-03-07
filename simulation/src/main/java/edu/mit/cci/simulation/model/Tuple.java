@@ -59,5 +59,13 @@ public class Tuple {
 
     }
 
+    public static Tuple copy(Tuple t) {
+        Tuple result = new Tuple();
+        result.setValue_(t.getValue_());
+        result.setVar(t.getVar());
+        result.persist();
+        return result;
+    }
+
 
 }

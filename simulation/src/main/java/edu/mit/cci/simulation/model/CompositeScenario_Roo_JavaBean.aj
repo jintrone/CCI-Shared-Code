@@ -3,17 +3,15 @@
 
 package edu.mit.cci.simulation.model;
 
-import edu.mit.cci.simulation.model.DefaultScenario;
-import edu.mit.cci.simulation.model.Step;
 import java.util.Map;
 
 privileged aspect CompositeScenario_Roo_JavaBean {
     
-    public Map<Step, DefaultScenario> CompositeScenario.getChildScenarios() {
+    public Map<Step, ScenarioList> CompositeScenario.getChildScenarios() {
         return this.childScenarios;
     }
     
-    public void CompositeScenario.setChildScenarios(Map<Step, DefaultScenario> childScenarios) {
+    public void CompositeScenario.setChildScenarios(Map<Step, ScenarioList> childScenarios) {
         this.childScenarios = childScenarios;
     }
     
