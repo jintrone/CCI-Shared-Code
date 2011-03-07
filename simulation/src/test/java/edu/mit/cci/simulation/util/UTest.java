@@ -37,7 +37,7 @@ public class UTest {
 
     @Test
     public void unescape() {
-        org.junit.Assert.assertTrue(true);
+       Assert.assertEquals("5",U.unescape("5;")[0]);
     }
 
     @Test

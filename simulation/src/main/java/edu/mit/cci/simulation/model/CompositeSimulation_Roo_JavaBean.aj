@@ -3,8 +3,8 @@
 
 package edu.mit.cci.simulation.model;
 
-import edu.mit.cci.simulation.model.Step;
 import java.util.List;
+import java.util.Set;
 
 privileged aspect CompositeSimulation_Roo_JavaBean {
     
@@ -14,6 +14,14 @@ privileged aspect CompositeSimulation_Roo_JavaBean {
     
     public void CompositeSimulation.setSteps(List<Step> steps) {
         this.steps = steps;
+    }
+    
+    public Set<CompositeStepMapping> CompositeSimulation.getStepMapping() {
+        return this.stepMapping;
+    }
+    
+    public void CompositeSimulation.setStepMapping(Set<CompositeStepMapping> stepMapping) {
+        this.stepMapping = stepMapping;
     }
     
 }

@@ -15,15 +15,22 @@ import java.util.Set;
  * Time: 1:21 PM
  */
 @RooJavaBean
-    @RooToString
-    @RooEntity
-    public class Step {
+@RooToString
+@RooEntity
+public class Step {
 
-        private Integer order_;
+    private Integer order_ = 0;
 
-        @ManyToMany(cascade = CascadeType.ALL)
-        private Set<DefaultSimulation> simulations = new HashSet<DefaultSimulation>();
+    @ManyToMany(cascade = CascadeType.ALL)
+    private Set<DefaultSimulation> simulations = new HashSet<DefaultSimulation>();
 
+    public Step() {
+    }
 
-
+    public Step(Integer order, DefaultSimulation... sims) {
+        setOrder_(order);
+        for (DefaultSimulation sim : sims) {
+            getSimulations().add(sim);
+        }
+    }
 }

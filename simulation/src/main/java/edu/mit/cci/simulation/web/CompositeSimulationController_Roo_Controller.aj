@@ -4,17 +4,14 @@
 package edu.mit.cci.simulation.web;
 
 import edu.mit.cci.simulation.model.CompositeSimulation;
-import edu.mit.cci.simulation.model.Step;
 import java.io.UnsupportedEncodingException;
 import java.lang.Integer;
 import java.lang.Long;
 import java.lang.String;
-import java.util.Collection;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -82,11 +79,6 @@ privileged aspect CompositeSimulationController_Roo_Controller {
         model.addAttribute("page", (page == null) ? "1" : page.toString());
         model.addAttribute("size", (size == null) ? "10" : size.toString());
         return "redirect:/compositesimulations?page=" + ((page == null) ? "1" : page.toString()) + "&size=" + ((size == null) ? "10" : size.toString());
-    }
-    
-    @ModelAttribute("steps")
-    public Collection<Step> CompositeSimulationController.populateSteps() {
-        return Step.findAllSteps();
     }
     
     String CompositeSimulationController.encodeUrlPathSegment(String pathSegment, HttpServletRequest request) {

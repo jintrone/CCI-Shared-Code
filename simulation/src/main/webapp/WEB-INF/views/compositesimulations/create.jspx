@@ -9,8 +9,9 @@
         <field:input field="name" id="c_edu_mit_cci_simulation_model_CompositeSimulation_name" z="ZVL645lSkkwi5TII23SK1rVPCeY="/>
         <field:input field="inputs" id="c_edu_mit_cci_simulation_model_CompositeSimulation_inputs" z="buYLQ5unlCFl4l/1T+uC7lS4Ni8="/>
         <field:input field="outputs" id="c_edu_mit_cci_simulation_model_CompositeSimulation_outputs" z="nrQX9tdtvBtD5AUU6w9AThk5MaE="/>
-        <field:select field="steps" id="c_edu_mit_cci_simulation_model_CompositeSimulation_steps" itemValue="id" items="${steps}" multiple="true" path="/steps" z="87Ippq9z96lrAo/HdlTRsrsURZk="/>
+        <field:input field="steps" id="c_edu_mit_cci_simulation_model_CompositeSimulation_steps" z="hi/mmFibS/7vSYdPeTQkokl7A/8="/>
     <field:input field="url" id="c_edu_mit_cci_simulation_model_CompositeSimulation_url" z="ghaidRApCKPLEDcxCW4rTWhqNsM="/>
+    <field:input field="stepMapping" id="c_edu_mit_cci_simulation_model_CompositeSimulation_stepMapping" z="6Kqex1Hr7SlqFRU8T6cneAviljE="/>
     </form:create>
     <form:dependency dependencies="${dependencies}" id="d_edu_mit_cci_simulation_model_CompositeSimulation" render="${not empty dependencies}" z="9V4vcxuvTihAzc5zC8bxO4JnxoA="/>
 </div>
