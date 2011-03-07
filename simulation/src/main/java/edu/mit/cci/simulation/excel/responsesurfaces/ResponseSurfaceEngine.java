@@ -8,8 +8,7 @@ import cern.colt.matrix.DoubleMatrix2D;
  * Time: 10:20 PM
  *
  * Interface for an engine that computes a response surface.  For the SimpleResponseSurface defined here
- * columns are used to define the bounds defined by adjacent datasets. Rows define points within each dataset
- * where the the surface is re-evaluated.
+ * columns are used to define points within each dataset where the the surface is re-evaluated.
  *
  * See implementing classes for concrete examples.
  */
@@ -18,13 +17,21 @@ public interface ResponseSurfaceEngine<T extends Comparable<T>,U extends Compara
 
 
     /**
-     * Creates a response surface given the provided input data
+     * Creates a response surface given the provided input data.  Input data is provided in the form of two matrices,
+     * presumed to be organized as rows which describe different scenarios.
+     *
+     * Users are responsible for guaranteeing that
+     * <ul>
+     * <li>if a baselineidx is provided, that value exists in the other parameters</li>
+     * <li>cols.length == scenarios.columns() == outputs.columns()</li>
+     * </ul>
      *
      * @param cols Column headings; functions are defined between adjacent columns in the response surface
-     * @param rows Row headings; functions are defined at each of the rows
-     * @param m Matrix of raw data. Implementers should guarantee that m has the correct number of rows and columns
+     * @param baselineidx Optionl Column value which should serve as a baseline if response surface
+     * @param outputs Values that characterize the range of the response surface. Presume the first row is a reference scenario.
+     * @param scenarios Values that characterize the domain of the response surface. Presument the first row correspond to the reference scenario.
      * @return A response surface
      */
-    public SimpleResponseSurface<T,U> generateResponseSurface(T[] cols,U[] rows, DoubleMatrix2D m);
+    public SimpleResponseSurface<T,U> generateResponseSurface(U baselineidx, U[] cols, DoubleMatrix2D scenarios, DoubleMatrix2D outputs);
 
 }
