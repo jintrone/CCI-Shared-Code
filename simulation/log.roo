@@ -200,3 +200,8 @@ quit
 // Spring Roo 1.1.1.RELEASE [rev 156ccd6] log opened at 2011-03-06 20:27:04
 entity --class ~.model.ScenarioList
 field set --fieldName scenarios --type DefaultScenario
+quit
+// Spring Roo 1.1.1.RELEASE [rev 156ccd6] log closed at 2011-03-07 08:17:10
+// Spring Roo 1.1.1.RELEASE [rev 156ccd6] log opened at 2011-03-07 08:17:14
+// [failed] entity --class ~.model.Step
+field set --fieldName simulations --type ~.model.DefaultSimulation

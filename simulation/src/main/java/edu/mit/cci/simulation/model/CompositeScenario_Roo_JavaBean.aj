@@ -3,6 +3,8 @@
 
 package edu.mit.cci.simulation.model;
 
+import edu.mit.cci.simulation.model.ScenarioList;
+import edu.mit.cci.simulation.model.Step;
 import java.util.Map;
 
 privileged aspect CompositeScenario_Roo_JavaBean {

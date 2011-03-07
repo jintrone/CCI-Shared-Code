@@ -6,7 +6,8 @@
         <field:input field="order_" id="c_edu_mit_cci_simulation_model_Step_order_" validationMessageCode="field_invalid_integer" z="lJ9q48IInTPlrGAoiIFOgEH6hrg="/>
         
     
-    <field:select field="simulations" id="c_edu_mit_cci_simulation_model_Step_simulations" itemValue="id" items="${defaultsimulations}" path="/defaultsimulations" z="oUsmjCQKsYmTtyQKL31IIeJ9sCU="/>
+    
+    <field:select field="simulations" id="c_edu_mit_cci_simulation_model_Step_simulations" itemValue="id" items="${defaultsimulations}" multiple="true" path="/defaultsimulations" z="O93hK7d4BDaj44E4NLS/x0asBF8="/>
     </form:create>
     <form:dependency dependencies="${dependencies}" id="d_edu_mit_cci_simulation_model_Step" render="${not empty dependencies}" z="5+hgPuV996ZGnzf5c+eA2MilsgY="/>
 </div>

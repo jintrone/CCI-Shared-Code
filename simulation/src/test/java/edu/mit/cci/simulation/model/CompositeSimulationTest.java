@@ -164,10 +164,22 @@ public class CompositeSimulationTest {
         t.setValue_("4;");
         t.setVar(v_in);
 
-        DefaultScenario scenario = (DefaultScenario) csim.run(Collections.singletonList(t));
+        CompositeScenario scenario = (CompositeScenario) csim.run(Collections.singletonList(t));
         Tuple tout = scenario.getVariableValue(v_out_1);
 
-        Assert.assertArrayEquals(tout.getValues(),new String[] {"4","4"});
+        Assert.assertEquals(2,scenario.getChildScenarios().size());
+        DefaultScenario scenario1 = scenario.getChildScenarios().get(s1).getScenarios().iterator().next();
+
+            Assert.assertEquals("4",scenario1.getVariableValue(v_in));
+         Assert.assertEquals("4",scenario1.getVariableValue(v_out));
+
+        DefaultScenario scenario2 = scenario.getChildScenarios().get(s2).getScenarios().iterator().next();
+
+            Assert.assertEquals("4",scenario1.getVariableValue(v_in_3));
+         Assert.assertArrayEquals(new String[] {"4","4"},scenario1.getVariableValue(v_out_1).getValues());
+
+
+         Assert.assertArrayEquals(new String[] {"4","4"},tout.getValues());
 
 
     }

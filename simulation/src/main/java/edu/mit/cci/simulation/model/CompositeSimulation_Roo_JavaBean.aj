@@ -3,10 +3,8 @@
 
 package edu.mit.cci.simulation.model;
 
-import edu.mit.cci.simulation.model.CompositeStepMapping;
-import edu.mit.cci.simulation.model.List;
-import edu.mit.cci.simulation.model.Set;
-import edu.mit.cci.simulation.model.Step;
+import java.util.List;
+import java.util.Set;
 
 privileged aspect CompositeSimulation_Roo_JavaBean {
     
