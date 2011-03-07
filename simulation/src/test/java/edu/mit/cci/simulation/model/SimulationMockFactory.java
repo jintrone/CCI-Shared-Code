@@ -78,13 +78,15 @@ public class SimulationMockFactory {
                     public String run(String url, Map<String, String> params) throws SimulationException {
                         Map<Variable, String[]> data = new HashMap<Variable, String[]>();
                         String[] outputvals = new String[params.size()];
-                                                    outputvals = params.values().toArray(outputvals);
-
+                        int i = 0;
+                        for (String s:params.values()) {
+                            outputvals[i++] = U.unescape(s)[0];
+                        }
                         for (Variable v : getOutputs()) {
                             String[] output = new String[v.getArity()];
-                            for (int i = 0;i<v.getArity();i++) {
+                            for (i = 0;i<v.getArity();i++) {
                                 output[i] = outputvals[i%outputvals.length];
-                                data.put(v, outputvals);
+                                data.put(v, output);
                             }
                         }
                         return U.createStringRepresentation(data);

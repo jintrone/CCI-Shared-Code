@@ -53,10 +53,13 @@ public class CompositeStepMapping {
         if (s1!=null && s2!=null && s1.getOrder_()>=s2.getOrder_()) {
             throw new SimulationCreationException("Mappings can only between steps that are strictly ordered");
         }
+
+        if ((s1!=null && !csim.getSteps().contains(s1)) || (s2!=null && !csim.getSteps().contains(s2))) {
+            throw new SimulationCreationException("Mappings can only be established between steps in the designated parent simulation");
+        }
+
         setFromStep(s1);
         setToStep(s2);
-        csim.getSteps().add(s1);
-        csim.getSteps().add(s2);
         this.parentsim.getStepMapping().add(this);
     }
 

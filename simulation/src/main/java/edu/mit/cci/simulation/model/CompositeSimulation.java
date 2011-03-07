@@ -29,14 +29,14 @@ public class CompositeSimulation extends DefaultSimulation {
         result.setSimulation(this);
         Collections.sort(steps, new Comparator<Step>() {
             public int compare(Step step, Step step1) {
-                return (int)Math.signum(step1.getOrder_() - step.getOrder_());
+                return (int)Math.signum(step.getOrder_()-step1.getOrder_());
             }
         });
 
         for (Step s : steps) {
             CompositeStepMapping m = null;
             for (CompositeStepMapping mapping : stepMapping) {
-                if (mapping.getToStep().equals(s)) {
+                if (s.equals(mapping.getToStep())) {
                     m = mapping;
                     break;
                 }

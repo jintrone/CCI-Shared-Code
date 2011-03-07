@@ -136,6 +136,7 @@ public class CompositeSimulationTest {
         sim1.getInputs().add(v_in);
         sim1.getOutputs().add(v_out);
         Step s1 = new Step(1,sim1);
+         csim.getSteps().add(s1);
 
 
 
@@ -145,6 +146,7 @@ public class CompositeSimulationTest {
         sim2.getInputs().add(v_in_3);
         sim2.getOutputs().add(v_out_1);
         Step s2 = new Step(2,sim2);
+         csim.getSteps().add(s2);
 
 
         csim.getInputs().add(v_in);
@@ -170,13 +172,13 @@ public class CompositeSimulationTest {
         Assert.assertEquals(2,scenario.getChildScenarios().size());
         DefaultScenario scenario1 = scenario.getChildScenarios().get(s1).getScenarios().iterator().next();
 
-            Assert.assertEquals("4",scenario1.getVariableValue(v_in));
-         Assert.assertEquals("4",scenario1.getVariableValue(v_out));
+         Assert.assertEquals("4",scenario1.getVariableValue(v_in).getValues()[0]);
+         Assert.assertEquals("4",scenario1.getVariableValue(v_out).getValues()[0]);
 
         DefaultScenario scenario2 = scenario.getChildScenarios().get(s2).getScenarios().iterator().next();
 
-            Assert.assertEquals("4",scenario1.getVariableValue(v_in_3));
-         Assert.assertArrayEquals(new String[] {"4","4"},scenario1.getVariableValue(v_out_1).getValues());
+         Assert.assertEquals("4",scenario2.getVariableValue(v_in_3).getValues()[0]);
+         Assert.assertArrayEquals(new String[] {"4","4"},scenario2.getVariableValue(v_out_1).getValues());
 
 
          Assert.assertArrayEquals(new String[] {"4","4"},tout.getValues());

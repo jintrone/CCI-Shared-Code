@@ -25,9 +25,10 @@ public class CompositeScenario extends DefaultScenario {
             ScenarioList list = new ScenarioList();
             list.persist();
             childScenarios.put(s,list);
-        } else {
-            childScenarios.get(s).getScenarios().add(scenario);
+
         }
+            childScenarios.get(s).getScenarios().add(scenario);
+
     }
 
     public void clearStep(Step s) {

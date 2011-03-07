@@ -98,7 +98,7 @@ public class DefaultSimulation implements Simulation {
             }
         }
         if (!mine.isEmpty()) {
-            throw new SimulationException("Insufficient input variables provided, missing: " + mine);
+            throw new SimulationException("Missing input variables: " + mine);
         }
 
         String response = null;
