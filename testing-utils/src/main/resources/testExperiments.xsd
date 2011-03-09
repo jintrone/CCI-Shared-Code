@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://cci.mit.edu/simulation/testing/experiments" xmlns:exp="http://cci.mit.edu/simulation/testing/experiments" elementFormDefault="qualified">
+
+
+    <element name="experiments">
+        <complexType>
+            <sequence>
+                <element name="experiment" minOccurs="0" maxOccurs="unbounded">
+                	<complexType>
+                		<sequence>
+                			
+                			<element name="inputs">
+                				<complexType>
+                					<sequence>
+                						<element name="input" minOccurs="1" maxOccurs="unbounded">
+                							<complexType>
+                								<attribute name="name" type="string" use="required" />
+                							</complexType>
+                						</element>
+                					</sequence>
+                				</complexType>
+                			</element>
+                			
+                			<element name="outputs">
+                				<complexType>
+                					<sequence>
+                						<element name="output" minOccurs="1" maxOccurs="unbounded">
+                							<complexType mixed="true">
+                								<attribute name="name" type="string" use="required" />
+                							</complexType>
+                						</element>
+                					</sequence>
+                				</complexType>
+                			</element>
+                		</sequence>
+                		
+                		<attribute name="id" type="string" use="required"/>
+                	</complexType>
+                </element>
+            </sequence>
+        </complexType>
+    </element>
+    
+</schema>
