@@ -31,7 +31,7 @@ public class Tuple {
 
         if (values == null) {
             if (value_ == null) return null;
-            else values = U.unescape(value_);
+            else values = var!=null&&var.getDataType()==DataType.NUM?U.unescapeNumeric(value_,var.getPrecision_()):U.unescape(value_);
         }
         return values;
     }

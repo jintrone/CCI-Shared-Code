@@ -15,6 +15,9 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -56,6 +59,23 @@ public class U {
             for (String val : vals.split(VAL_SEP)) {
                 try {
                     result.add(URLDecoder.decode(val, "UTF-8"));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return result.toArray(new String[]{});
+    }
+
+    public static String[] unescapeNumeric(String vals,int precision) {
+        List<String> result = new ArrayList<String>();
+        if (vals != null && !vals.trim().isEmpty()) {
+            for (String val : vals.split(VAL_SEP)) {
+                try {
+                    String tmp = URLDecoder.decode(val, "UTF-8");
+                    Double num = Double.valueOf(tmp);
+                    Validation.notNull(num,"Parsed value from tuple");
+                    result.add(String.format("%."+precision+"f",num));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -222,6 +242,43 @@ public class U {
 
     public static boolean equals(Object one, Object two) {
         return one == null ? two == null : one.equals(two);
+    }
+
+     public static String getCellValueAsString(HSSFSheet worksheet, int rowCounter, int colCounter,
+        String defaultValue) throws SimulationException {
+        Validation.notNull(worksheet, "worksheet");
+
+        Row row = worksheet.getRow(rowCounter);
+        if (row == null) {
+            return defaultValue;
+        }
+        Cell cell = row.getCell(colCounter);
+        if (cell == null) {
+            return defaultValue;
+        }
+        // cell should be either blank,string, numeric or formula
+        if (cell.getCellType() == Cell.CELL_TYPE_BLANK) {
+            return defaultValue;
+        } else if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
+            return cell.getStringCellValue();
+        } else if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
+            return cell.getNumericCellValue() + "";
+        } else if (cell.getCellType() == Cell.CELL_TYPE_FORMULA) {
+            if (cell.getCachedFormulaResultType() == Cell.CELL_TYPE_STRING) {
+                return cell.getStringCellValue();
+            } else if (cell.getCachedFormulaResultType() == Cell.CELL_TYPE_NUMERIC) {
+                return cell.getNumericCellValue() + "";
+            } else if (cell.getCachedFormulaResultType() == Cell.CELL_TYPE_ERROR) {
+                throw new SimulationComputationException("Error computing fomula");
+            } else {
+                throw new SimulationException("invalid formula type with cached type of  "
+                    + cell.getCachedFormulaResultType() + " for row of " + rowCounter + " and col of " + colCounter);
+            }
+        } else {
+            throw new SimulationException("invalid type with type of  " + cell.getCellType() + " for rowr of "
+                + rowCounter + " and col of " + colCounter);
+        }
+
     }
 
 

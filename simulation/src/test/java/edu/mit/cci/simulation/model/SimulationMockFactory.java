@@ -1,5 +1,8 @@
 package edu.mit.cci.simulation.model;
 
+import edu.mit.cci.simulation.excel.server.ExcelRunnerStrategy;
+import edu.mit.cci.simulation.excel.server.ExcelSimulation;
+import edu.mit.cci.simulation.excel.server.ExcelVariable;
 import edu.mit.cci.simulation.util.U;
 import org.junit.runner.RunWith;
 import org.springframework.stereotype.Component;
@@ -114,6 +117,75 @@ public class SimulationMockFactory {
         v_in.persist();
         return v_in;
     }
+
+    public DefaultSimulation getExcelBasedSimulation(byte[] file) {
+        DefaultSimulation simulation = new DefaultSimulation();
+        simulation.setSimulationVersion(1l);
+        simulation.persist();
+        Variable dateinput = new Variable();
+        dateinput.setName("Year");
+        dateinput.setDataType(DataType.NUM);
+        dateinput.setArity(11);
+        dateinput.setPrecision_(0);
+        dateinput.persist();
+
+        Variable emissionsinput = new Variable();
+        emissionsinput.setName("Emissions");
+        emissionsinput.setDataType(DataType.NUM);
+        emissionsinput.setArity(11);
+        emissionsinput.setPrecision_(2);
+        emissionsinput.persist();
+
+        Variable gdpOutput = new Variable();
+        gdpOutput.setDataType(DataType.NUM);
+        gdpOutput.setName("% GDP");
+        gdpOutput.setArity(11);
+        gdpOutput.setPrecision_(2);
+        gdpOutput.persist();
+
+        simulation.getInputs().add(dateinput);
+        simulation.getInputs().add(emissionsinput);
+        simulation.getOutputs().add(gdpOutput);
+
+        ExcelSimulation esim = new ExcelSimulation();
+        esim.setSimulation(simulation);
+
+        ExcelVariable evdatein = new ExcelVariable();
+        evdatein.setSimulationVariable(dateinput);
+        evdatein.setCellRange("A3:A13");
+        evdatein.setWorksheetName("Inputs_Outputs");
+        evdatein.setExcelSimulation(esim);
+
+        ExcelVariable evemissionsin = new ExcelVariable();
+        evemissionsin.setSimulationVariable(emissionsinput);
+        evemissionsin.setCellRange("B3:B13");
+        evemissionsin.setWorksheetName("Inputs_Outputs");
+        evemissionsin.setExcelSimulation(esim);
+
+        ExcelVariable evgdpout = new ExcelVariable();
+        evgdpout.setSimulationVariable(gdpOutput);
+        evgdpout.setCellRange("D3:D13");
+        evgdpout.setWorksheetName("Inputs_Outputs");
+        evgdpout.setExcelSimulation(esim);
+
+        esim.getInputs().add(evdatein);
+        esim.getInputs().add(evemissionsin);
+        esim.getOutputs().add(evgdpout);
+
+        esim.setFile(file);
+
+        esim.persist();
+        simulation.setUrl("/excel/"+esim.getId());
+
+        simulation.setRunStrategy(new ExcelRunnerStrategy(simulation));
+        simulation.persist();
+
+        return simulation;
+
+    }
+
+
+
 
 
 }

@@ -205,3 +205,25 @@ quit
 // Spring Roo 1.1.1.RELEASE [rev 156ccd6] log opened at 2011-03-07 08:17:14
 // [failed] entity --class ~.model.Step
 field set --fieldName simulations --type ~.model.DefaultSimulation
+// Spring Roo 1.1.1.RELEASE [rev 156ccd6] log opened at 2011-03-08 10:33:47
+entity --class ~.excel.server.ExcelSimulation
+field date --fieldName creation --type java.util.Date
+field reference --fieldName simulation --type ~.model.DefaultSimulation
+entity --class ~.excel.server.ExcelInput
+entity --class ~.excel.server.ExcelOutput
+field reference --fieldName excelSimulation --type ~.excel.server.ExcelSimulation
+// [failed] entity --class ~.excel.server.ExcelInput
+field reference --fieldName excelSimulation --type ~.excel.server.ExcelSimulation
+// [failed] entity --class ~.excel.server.ExcelSimulation
+field set --fieldName inputs --type ~.excel.server.ExcelInput
+field set --fieldName outputs --type ~.excel.server.ExcelOutput
+// Spring Roo 1.1.1.RELEASE [rev 156ccd6] log opened at 2011-03-08 11:26:35
+// [failed] entity --class ~excel.server.ExcelInput
+field string --fieldName worksheetName
+// [failed] field string --fieldName worksheetName
+field string --fieldName cellRange
+field reference --fieldName simulationVariable --type ~.model.Variable
+// [failed] entity --class ~.excel.server.ExcelSimulation
+field other --fieldName file --type int
+exit
+// Spring Roo 1.1.1.RELEASE [rev 156ccd6] log closed at 2011-03-09 09:27:31

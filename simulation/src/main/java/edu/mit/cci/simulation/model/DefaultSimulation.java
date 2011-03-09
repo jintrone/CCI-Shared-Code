@@ -109,7 +109,7 @@ public class DefaultSimulation implements Simulation {
     }
 
 
-    protected void setRunStrategy(RunStrategy r) {
+    public void setRunStrategy(RunStrategy r) {
         this.runStrategy = r;
     }
 
