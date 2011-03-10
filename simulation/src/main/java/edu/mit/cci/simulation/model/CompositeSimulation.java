@@ -8,6 +8,7 @@ import org.springframework.roo.addon.tostring.RooToString;
 
 import javax.persistence.CascadeType;
 import javax.persistence.ManyToMany;
+import javax.persistence.Transient;
 import java.util.*;
 
 @RooJavaBean
@@ -22,6 +23,7 @@ public class CompositeSimulation extends DefaultSimulation {
     @ManyToMany(cascade = CascadeType.ALL)
     private Set<CompositeStepMapping> stepMapping = new HashSet<CompositeStepMapping>();
 
+    @Transient
     private static Logger log = Logger.getLogger(CompositeSimulation.class);
 
     public Scenario run(List<Tuple> siminputs) throws SimulationException {

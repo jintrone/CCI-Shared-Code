@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:list id="pl_edu_mit_cci_simulation_model_CompositeScenario" items="${compositescenarios}" z="Widt5UgZ5wUD102LMSC45SdApPs=">
+        <table:table data="${compositescenarios}" id="l_edu_mit_cci_simulation_model_CompositeScenario" path="/compositescenarios" z="dH2kb0Pr/KSILzTveaWEjjlVTsE=">
+            <table:column id="c_edu_mit_cci_simulation_model_CompositeScenario_simulation" property="simulation" z="Ijgeq5qWqN/DMZ7iZK7RBpdvuwc="/>
+            <table:column id="c_edu_mit_cci_simulation_model_CompositeScenario_values_" property="values_" z="5+k+S2W8olQlbtar5HyM+7u0H94="/>
+            <table:column id="c_edu_mit_cci_simulation_model_CompositeScenario_created" property="created" z="ftFXMBKSWAHLnJraAfh48lBXw2g="/>
+            <table:column id="c_edu_mit_cci_simulation_model_CompositeScenario_childScenarios" property="childScenarios" z="DPQTGGgaboJJeWMvhes+s7dUB1Y="/>
+            <table:column id="c_edu_mit_cci_simulation_model_CompositeScenario_lastStep" property="lastStep" z="3Ms4fKtCthxY3ZIzBWzlqYtabYI="/>
+        </table:table>
+    </page:list>
+</div>

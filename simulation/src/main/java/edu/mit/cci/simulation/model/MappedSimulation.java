@@ -141,7 +141,7 @@ public class MappedSimulation extends DefaultSimulation {
             U.copy(mappedInput, v);
             v.setArity(replication * mappedInput.getArity());
         }
-        int outputArity = manyToOne == null ? replication / samplingFrequency : 1;
+        int outputArity = manyToOne == null ? (int) Math.ceil((double) replication / (double) samplingFrequency) : 1;
         for (Variable mo : esim.getOutputs()) {
             Variable v = new Variable();
             v.persist();

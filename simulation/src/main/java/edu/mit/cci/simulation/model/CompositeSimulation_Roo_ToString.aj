@@ -16,7 +16,6 @@ privileged aspect CompositeSimulation_Roo_ToString {
         sb.append("Description: ").append(getDescription()).append(", ");
         sb.append("Name: ").append(getName()).append(", ");
         sb.append("Url: ").append(getUrl()).append(", ");
-        sb.append("RunStrategy: ").append(getRunStrategy()).append(", ");
         sb.append("Inputs: ").append(getInputs()).append(", ");
         sb.append("Outputs: ").append(getOutputs()).append(", ");
         sb.append("Steps: ").append(getSteps()).append(", ");

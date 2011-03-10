@@ -20,6 +20,7 @@ privileged aspect DefaultSimulationDataOnDemand_Roo_DataOnDemand {
         edu.mit.cci.simulation.model.DefaultSimulation obj = new edu.mit.cci.simulation.model.DefaultSimulation();
         obj.setInputs(null);
         obj.setOutputs(null);
+        obj.setRunStrategy(null);
         obj.setCreated(null);
         obj.setSimulationVersion(new Integer(index).longValue());
         obj.setDescription("description_" + index);

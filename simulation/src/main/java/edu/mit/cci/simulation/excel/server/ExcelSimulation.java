@@ -16,7 +16,7 @@ import java.util.Set;
 @RooEntity
 public class ExcelSimulation {
 
-    public static final String EXCEL_URL = "/excel/";
+
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "S-")
     private Date creation;
@@ -32,4 +32,7 @@ public class ExcelSimulation {
 
     @Column(columnDefinition = "BLOB")
     private byte[] file;
+
+    public static final String EXCEL_URL = "/excel/";
+
 }

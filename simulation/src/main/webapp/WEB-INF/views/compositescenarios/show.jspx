@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:show id="ps_edu_mit_cci_simulation_model_CompositeScenario" object="${compositescenario}" path="/compositescenarios" z="6Fa6qQOPK0Gq0SUtn6iZI1A1icw=">
+        <field:display field="simulation" id="s_edu_mit_cci_simulation_model_CompositeScenario_simulation" object="${compositescenario}" z="RQh9NcX3IIZdrrsiW0JT1gziOHU="/>
+        <field:display field="values_" id="s_edu_mit_cci_simulation_model_CompositeScenario_values_" object="${compositescenario}" z="94qG3TytALuYMm05+000FzFmUSc="/>
+        <field:display date="true" dateTimePattern="${compositeScenario_created_date_format}" field="created" id="s_edu_mit_cci_simulation_model_CompositeScenario_created" object="${compositescenario}" z="G+byL3UxsNHMPTNCR5m2Em1Ud20="/>
+        <field:display field="lastStep" id="s_edu_mit_cci_simulation_model_CompositeScenario_lastStep" object="${compositescenario}" z="15KhP0n5DzQFs3rEOUrAhS4FPIo="/>
+    </page:show>
+</div>

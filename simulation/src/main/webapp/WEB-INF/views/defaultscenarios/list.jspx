@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:list id="pl_edu_mit_cci_simulation_model_DefaultScenario" items="${defaultscenarios}" z="bilz4YUWSqAW8am+FmCReBBVT3c=">
+        <table:table data="${defaultscenarios}" id="l_edu_mit_cci_simulation_model_DefaultScenario" path="/defaultscenarios" z="lnj/I3r76mfvlobD5dIKncEmVEg=">
+            <table:column id="c_edu_mit_cci_simulation_model_DefaultScenario_simulation" property="simulation" z="5YXp7Km2wCl4WzM/3x5w726fxA8="/>
+            <table:column id="c_edu_mit_cci_simulation_model_DefaultScenario_values_" property="values_" z="UgeTSmTD6U2bXmfaB9LK5a3C8iw="/>
+            <table:column id="c_edu_mit_cci_simulation_model_DefaultScenario_created" property="created" z="QW7wJB+jyZugG9CV9nnA+3J/5TY="/>
+        </table:table>
+    </page:list>
+</div>

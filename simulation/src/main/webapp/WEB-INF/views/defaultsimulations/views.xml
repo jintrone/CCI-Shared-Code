@@ -10,6 +10,9 @@
 <definition extends="default" name="defaultsimulations/create">
         <put-attribute name="body" value="/WEB-INF/views/defaultsimulations/create.jspx"/>
     </definition>
+<definition extends="default" name="defaultsimulations/createexcel">
+        <put-attribute name="body" value="/WEB-INF/views/defaultsimulations/create_excel.jspx"/>
+    </definition>
 <definition extends="default" name="defaultsimulations/update">
         <put-attribute name="body" value="/WEB-INF/views/defaultsimulations/update.jspx"/>
     </definition>

@@ -81,7 +81,8 @@ public class CompositeSimulationTest {
 
 
 
-
+        csim.getSteps().add(s1);
+        csim.getSteps().add(s2);
 
         CompositeStepMapping mapping = new CompositeStepMapping(csim,s1,s2);
 
@@ -131,8 +132,8 @@ public class CompositeSimulationTest {
 
         DefaultSimulation sim1 =  SimulationMockFactory.configurePassThruStrategy(new DefaultSimulation());
 
-        Variable v_in = factory.getVariable(1,"TestInput1",DataType.NUM,1);
-        Variable v_out = factory.getVariable(1,"TestOutput1",DataType.NUM,1);
+        Variable v_in = factory.getVariable(1,"TestInput1",DataType.NUM,0);
+        Variable v_out = factory.getVariable(1,"TestOutput1",DataType.NUM,0);
         sim1.getInputs().add(v_in);
         sim1.getOutputs().add(v_out);
         Step s1 = new Step(1,sim1);
@@ -141,8 +142,8 @@ public class CompositeSimulationTest {
 
 
         DefaultSimulation sim2 = SimulationMockFactory.configurePassThruStrategy(new DefaultSimulation());
-        Variable v_in_3 = factory.getVariable(1,"TestInput4",DataType.NUM,1);
-        Variable v_out_1 = factory.getVariable(2,"TestOutput2",DataType.NUM,1);
+        Variable v_in_3 = factory.getVariable(1,"TestInput4",DataType.NUM,0);
+        Variable v_out_1 = factory.getVariable(2,"TestOutput2",DataType.NUM,0);
         sim2.getInputs().add(v_in_3);
         sim2.getOutputs().add(v_out_1);
         Step s2 = new Step(2,sim2);

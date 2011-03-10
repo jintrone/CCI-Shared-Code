@@ -20,6 +20,7 @@ privileged aspect MappedSimulationDataOnDemand_Roo_DataOnDemand {
         edu.mit.cci.simulation.model.MappedSimulation obj = new edu.mit.cci.simulation.model.MappedSimulation();
         obj.setInputs(null);
         obj.setOutputs(null);
+        obj.setRunStrategy(null);
         obj.setCreated(null);
         obj.setSimulationVersion(new Integer(index).longValue());
         obj.setDescription("description_" + index);

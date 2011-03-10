@@ -3,9 +3,15 @@
 
 package edu.mit.cci.simulation.web;
 
+import edu.mit.cci.simulation.excel.server.ExcelSimulation;
+import edu.mit.cci.simulation.excel.server.ExcelVariable;
+import edu.mit.cci.simulation.model.CompositeScenario;
 import edu.mit.cci.simulation.model.CompositeSimulation;
+import edu.mit.cci.simulation.model.CompositeStepMapping;
+import edu.mit.cci.simulation.model.DefaultScenario;
 import edu.mit.cci.simulation.model.DefaultSimulation;
 import edu.mit.cci.simulation.model.MappedSimulation;
+import edu.mit.cci.simulation.model.ScenarioList;
 import edu.mit.cci.simulation.model.Step;
 import edu.mit.cci.simulation.model.Tuple;
 import edu.mit.cci.simulation.model.Variable;
@@ -15,10 +21,42 @@ import org.springframework.format.FormatterRegistry;
 
 privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService {
     
+    Converter<ExcelSimulation, String> ApplicationConversionServiceFactoryBean.getExcelSimulationConverter() {
+        return new Converter<ExcelSimulation, String>() {
+            public String convert(ExcelSimulation source) {
+                return new StringBuilder().append(source.getCreation()).toString();
+            }
+        };
+    }
+    
+    Converter<ScenarioList, String> ApplicationConversionServiceFactoryBean.getScenarioListConverter() {
+        return new Converter<ScenarioList, String>() {
+            public String convert(ScenarioList source) {
+                return new StringBuilder().append(source.toString()).toString();
+            }
+        };
+    }
+    
     Converter<Variable, String> ApplicationConversionServiceFactoryBean.getVariableConverter() {
         return new Converter<Variable, String>() {
             public String convert(Variable source) {
                 return new StringBuilder().append(source.getName()).append(" ").append(source.getDescription()).append(" ").append(source.getArity()).toString();
+            }
+        };
+    }
+    
+    Converter<CompositeScenario, String> ApplicationConversionServiceFactoryBean.getCompositeScenarioConverter() {
+        return new Converter<CompositeScenario, String>() {
+            public String convert(CompositeScenario source) {
+                return new StringBuilder().append(source.getCreated()).append(" ").append(source.getLastStep()).toString();
+            }
+        };
+    }
+    
+    Converter<CompositeStepMapping, String> ApplicationConversionServiceFactoryBean.getCompositeStepMappingConverter() {
+        return new Converter<CompositeStepMapping, String>() {
+            public String convert(CompositeStepMapping source) {
+                return new StringBuilder().append(source.getFromStep()).append(" ").append(source.getToStep()).toString();
             }
         };
     }
@@ -47,6 +85,14 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
         };
     }
     
+    Converter<ExcelVariable, String> ApplicationConversionServiceFactoryBean.getExcelVariableConverter() {
+        return new Converter<ExcelVariable, String>() {
+            public String convert(ExcelVariable source) {
+                return new StringBuilder().append(source.getWorksheetName()).append(" ").append(source.getCellRange()).toString();
+            }
+        };
+    }
+    
     Converter<CompositeSimulation, String> ApplicationConversionServiceFactoryBean.getCompositeSimulationConverter() {
         return new Converter<CompositeSimulation, String>() {
             public String convert(CompositeSimulation source) {
@@ -63,13 +109,27 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
         };
     }
     
+    Converter<DefaultScenario, String> ApplicationConversionServiceFactoryBean.getDefaultScenarioConverter() {
+        return new Converter<DefaultScenario, String>() {
+            public String convert(DefaultScenario source) {
+                return new StringBuilder().append(source.getCreated()).toString();
+            }
+        };
+    }
+    
     public void ApplicationConversionServiceFactoryBean.installLabelConverters(FormatterRegistry registry) {
+        registry.addConverter(getExcelSimulationConverter());
+        registry.addConverter(getScenarioListConverter());
         registry.addConverter(getVariableConverter());
+        registry.addConverter(getCompositeScenarioConverter());
+        registry.addConverter(getCompositeStepMappingConverter());
         registry.addConverter(getMappedSimulationConverter());
         registry.addConverter(getDefaultSimulationConverter());
         registry.addConverter(getStepConverter());
+        registry.addConverter(getExcelVariableConverter());
         registry.addConverter(getCompositeSimulationConverter());
         registry.addConverter(getTupleConverter());
+        registry.addConverter(getDefaultScenarioConverter());
     }
     
     public void ApplicationConversionServiceFactoryBean.afterPropertiesSet() {

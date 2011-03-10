@@ -227,3 +227,48 @@ field reference --fieldName simulationVariable --type ~.model.Variable
 field other --fieldName file --type int
 exit
 // Spring Roo 1.1.1.RELEASE [rev 156ccd6] log closed at 2011-03-09 09:27:31
+// Spring Roo 1.1.1.RELEASE [rev 156ccd6] log opened at 2011-03-09 12:12:51
+help controller
+help controller class
+help controller scaffold
+controller scaffold --class ~.web.ExcelSimulationController --entity ~.excel.server.ExcelSimulation
+help controller all
+controller all --package ~.web
+exit
+// Spring Roo 1.1.1.RELEASE [rev 156ccd6] log closed at 2011-03-09 12:24:29
+// Spring Roo 1.1.1.RELEASE [rev 156ccd6] log opened at 2011-03-09 12:24:33
+// [failed] entity --class ~.excel.server.ExcelSimulation
+controller scaffold ~.web.ExcelSimulationController
+controller scaffold ~.web.ExcelSimulationController
+controller scaffold --class ~.web.ExcelSimulationController
+test integration
+controller scaffold --class ~.web.ExcelSimulationController
+controller scaffold --class ~.web.ExcelSimulationController
+quit
+// Spring Roo 1.1.1.RELEASE [rev 156ccd6] log closed at 2011-03-09 21:58:24
+// Spring Roo 1.1.1.RELEASE [rev 156ccd6] log opened at 2011-03-09 21:58:32
+version
+exit
+// Spring Roo 1.1.1.RELEASE [rev 156ccd6] log closed at 2011-03-09 22:08:37
+// Spring Roo 1.1.1.RELEASE [rev 156ccd6] log opened at 2011-03-09 22:08:40
+quit
+// Spring Roo 1.1.1.RELEASE [rev 156ccd6] log closed at 2011-03-09 22:34:22
+// Spring Roo 1.1.1.RELEASE [rev 156ccd6] log opened at 2011-03-10 07:49:12
+exit
+// Spring Roo 1.1.1.RELEASE [rev 156ccd6] log closed at 2011-03-10 07:57:59
+// Spring Roo 1.1.1.RELEASE [rev 156ccd6] log opened at 2011-03-10 07:58:45
+// [failed] entity --class ~.model.ScenarioList
+// [failed] field set --fieldName testField --type java.lang.String
+// [failed] field set --fieldName testField --type java.lang.String
+field set --fieldName testField --type ~.model.DataType
+controller scaffold all
+controller all --package ~.
+controller all --package ~.web
+// [failed] entity --class ~.model.DefaultSimulation
+field other --fieldName runStrategy --type ~.model.RunStrategy --transient
+controller all --package ~.web
+exit
+// Spring Roo 1.1.1.RELEASE [rev 156ccd6] log closed at 2011-03-10 09:19:18
+// Spring Roo 1.1.1.RELEASE [rev 156ccd6] log opened at 2011-03-10 09:19:29
+exit
+// Spring Roo 1.1.1.RELEASE [rev 156ccd6] log closed at 2011-03-10 13:07:15

@@ -32,5 +32,29 @@
             <menu:item id="i_variable_new" messageCode="global_menu_new" url="/variables?form" z="KNEa4810ItMhuvWcdw2J7pQhzzI="/>
         <menu:item id="i_variable_list" messageCode="global_menu_list" url="/variables?page=1&amp;size=${empty param.size ? 10 : param.size}" z="3sNdhdh4xEofJwsTjNYjeI8kKYY="/>
         </menu:category>
+    <menu:category id="c_defaultscenario" z="k/ng/H2wLRl98gaPNDVdhFFYjTI=">
+            <menu:item id="i_defaultscenario_new" messageCode="global_menu_new" url="/defaultscenarios?form" z="o9cNN9cGRbnutQYgQXWkN3VC6Wk="/>
+        <menu:item id="i_defaultscenario_list" messageCode="global_menu_list" url="/defaultscenarios?page=1&amp;size=${empty param.size ? 10 : param.size}" z="P5+CqCUbGtLtNqmxFJV4BZbtCm0="/>
+        </menu:category>
+    <menu:category id="c_compositestepmapping" z="Gg8J2zTQBgH7u1TfgVQ5Bc5C1oE=">
+            <menu:item id="i_compositestepmapping_new" messageCode="global_menu_new" url="/compositestepmappings?form" z="QyrcOy9dn/fsXha++uZ4MVQvtT0="/>
+        <menu:item id="i_compositestepmapping_list" messageCode="global_menu_list" url="/compositestepmappings?page=1&amp;size=${empty param.size ? 10 : param.size}" z="vkG2DbLMBT8ZPpRPwytB6VuNsJM="/>
+        </menu:category>
+    <menu:category id="c_compositescenario" z="EW9C5tiA0YHQDJ+3r5rV6+45B6o=">
+            <menu:item id="i_compositescenario_new" messageCode="global_menu_new" url="/compositescenarios?form" z="h1He3lwwthukxdAp+LJW0ipkI+o="/>
+        <menu:item id="i_compositescenario_list" messageCode="global_menu_list" url="/compositescenarios?page=1&amp;size=${empty param.size ? 10 : param.size}" z="bCGcSj2p4yxGTWhOvMBWi9vtr68="/>
+        </menu:category>
+    <menu:category id="c_excelvariable" z="y+2OIUMAlae33ktBoKKuL87phEE=">
+            <menu:item id="i_excelvariable_new" messageCode="global_menu_new" url="/excelvariables?form" z="p458pvm4WscBuTjA3g2b4NK3RB0="/>
+        <menu:item id="i_excelvariable_list" messageCode="global_menu_list" url="/excelvariables?page=1&amp;size=${empty param.size ? 10 : param.size}" z="wxVgU8pogNqi5n2uO1/kKe2qDs8="/>
+        </menu:category>
+    <menu:category id="c_scenariolist" z="E02/BkwoZdMmQQCZiQ0CXeCKivk=">
+            <menu:item id="i_scenariolist_new" messageCode="global_menu_new" url="/scenariolists?form" z="aP94VsgSFsJiNdTHhUUbxbT+hLM="/>
+        <menu:item id="i_scenariolist_list" messageCode="global_menu_list" url="/scenariolists?page=1&amp;size=${empty param.size ? 10 : param.size}" z="L4K5PrkzOKu9GkNlctB0Ph0flkw="/>
+        </menu:category>
+    <menu:category id="c_excelsimulation" z="uyUns6U1YBW7B8HFh2BKYZdlqI8=">
+            <menu:item id="i_excelsimulation_new" messageCode="global_menu_new" url="/excelsimulations?form" z="c6dX+rw47I59X6+B0kOtu60JXc8="/>
+        <menu:item id="i_excelsimulation_list" messageCode="global_menu_list" url="/excelsimulations?page=1&amp;size=${empty param.size ? 10 : param.size}" z="v9plCMhYphzZqroQXyjAg0rSN58="/>
+        </menu:category>
     </menu:menu>
 </div>

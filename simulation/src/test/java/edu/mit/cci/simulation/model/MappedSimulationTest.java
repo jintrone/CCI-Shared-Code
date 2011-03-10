@@ -34,7 +34,7 @@ public class MappedSimulationTest {
         Assert.assertEquals(1,outputs.size());
 
         Assert.assertEquals(123,  inputs.iterator().next().getArity().intValue());
-        Assert.assertEquals(12,  outputs.iterator().next().getArity().intValue());
+        Assert.assertEquals(13,  outputs.iterator().next().getArity().intValue());
     }
 
     @Test
@@ -126,7 +126,7 @@ public class MappedSimulationTest {
 
 
         MappedSimulation msim = mock.getMappedSimulation(0,sim,123,1,null);
-            msim.setSamplingFrequency(10);
+        msim.setSamplingFrequency(10);
         msim.setIndexingVariable(idx);
         Set<Variable> inputs = msim.getInputs();
         List<Tuple> params = new ArrayList<Tuple>();
@@ -152,7 +152,7 @@ public class MappedSimulationTest {
         for (Variable v:msim.getOutputs()) {
             Tuple t = s.getVariableValue(v);
             Assert.assertNotNull(t);
-            Assert.assertEquals(v.getArity().intValue(),13);
+            Assert.assertEquals(13,v.getArity().intValue());
             Assert.assertEquals(v.getArity().intValue(),t.getValues().length);
             Assert.assertEquals("13",t.getValues()[0]);
         }
@@ -202,7 +202,7 @@ public class MappedSimulationTest {
             Assert.assertNotNull(t);
             Assert.assertEquals(v.getArity().intValue(),1);
             Assert.assertEquals(v.getArity().intValue(),t.getValues().length);
-            Assert.assertEquals("169.0",t.getValues()[0]);
+            Assert.assertEquals("169",t.getValues()[0]);
         }
 
 

@@ -3,7 +3,6 @@
 
 package edu.mit.cci.simulation.model;
 
-import edu.mit.cci.simulation.model.DefaultScenario;
 import java.util.Set;
 
 privileged aspect ScenarioList_Roo_JavaBean {
@@ -14,6 +13,14 @@ privileged aspect ScenarioList_Roo_JavaBean {
     
     public void ScenarioList.setScenarios(Set<DefaultScenario> scenarios) {
         this.scenarios = scenarios;
+    }
+    
+    public Set<DataType> ScenarioList.getTestField() {
+        return this.testField;
+    }
+    
+    public void ScenarioList.setTestField(Set<DataType> testField) {
+        this.testField = testField;
     }
     
 }

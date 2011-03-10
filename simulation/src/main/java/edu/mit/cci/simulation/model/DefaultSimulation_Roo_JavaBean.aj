@@ -48,10 +48,6 @@ privileged aspect DefaultSimulation_Roo_JavaBean {
         this.url = url;
     }
     
-    public RunStrategy DefaultSimulation.getRunStrategy() {
-        return this.runStrategy;
-    }
-    
     public Set<Variable> DefaultSimulation.getInputs() {
         return this.inputs;
     }

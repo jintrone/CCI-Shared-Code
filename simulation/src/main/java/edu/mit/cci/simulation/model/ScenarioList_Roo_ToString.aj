@@ -9,7 +9,8 @@ privileged aspect ScenarioList_Roo_ToString {
     
     public String ScenarioList.toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Scenarios: ").append(getScenarios() == null ? "null" : getScenarios().size());
+        sb.append("Scenarios: ").append(getScenarios() == null ? "null" : getScenarios().size()).append(", ");
+        sb.append("TestField: ").append(getTestField() == null ? "null" : getTestField().size());
         return sb.toString();
     }
     

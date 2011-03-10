@@ -7,7 +7,10 @@ import org.springframework.roo.addon.entity.RooEntity;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.tostring.RooToString;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.ManyToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import java.util.*;
 
@@ -36,29 +39,24 @@ public class DefaultSimulation implements Simulation {
 
     private String url;
 
-    @Transient
-    private RunStrategy runStrategy = new RunStrategy.Post();
-
-
     @ManyToMany(cascade = CascadeType.ALL)
     private Set<Variable> inputs = new HashSet<Variable>();
 
     @ManyToMany(cascade = CascadeType.ALL)
     private Set<Variable> outputs = new HashSet<Variable>();
 
-
+    private transient RunStrategy runStrategy;
 
     public Scenario run(List<Tuple> siminputs) throws SimulationException {
         DefaultScenario result = new DefaultScenario();
         result.setSimulation(this);
         Set<Tuple> response = runRaw(siminputs);
-
         Set<Variable> outputs = new HashSet<Variable>(getOutputs());
-        for (Tuple t:response) {
-           outputs.remove(t.getVar());
+        for (Tuple t : response) {
+            outputs.remove(t.getVar());
         }
         if (!outputs.isEmpty()) {
-            log.warn("Not all outputs were identified, missing: "+outputs);
+            log.warn("Not all outputs were identified, missing: " + outputs);
         }
         result.getValues_().addAll(siminputs);
         result.getValues_().addAll(response);
@@ -67,16 +65,16 @@ public class DefaultSimulation implements Simulation {
     }
 
     public void setInputs(Set<Variable> i) {
-         this.inputs.clear();
+        this.inputs.clear();
         if (i != null) {
-           inputs.addAll(i);
+            inputs.addAll(i);
         }
     }
 
     public void setOutputs(Set<Variable> o) {
-         this.outputs.clear();
+        this.outputs.clear();
         if (o != null) {
-           outputs.addAll(o);
+            outputs.addAll(o);
         }
     }
 
@@ -91,7 +89,6 @@ public class DefaultSimulation implements Simulation {
         Set<Variable> mine = new HashSet<Variable>(getInputs());
         Set<Tuple> result = new HashSet<Tuple>();
         Map<String, String> params = new HashMap<String, String>();
-
         for (Tuple t : siminputs) {
             if (mine.remove(t.getVar())) {
                 params.put(t.getVar().getId() + "", t.getValue_());
@@ -100,21 +97,11 @@ public class DefaultSimulation implements Simulation {
         if (!mine.isEmpty()) {
             throw new SimulationException("Missing input variables: " + mine);
         }
-
         String response = null;
-        response = runStrategy.run(url, params);
-
         result.addAll(U.parseVariableMap(response));
         return result;
     }
 
-
     public void setRunStrategy(RunStrategy r) {
-        this.runStrategy = r;
     }
-
-
-
-
-
 }

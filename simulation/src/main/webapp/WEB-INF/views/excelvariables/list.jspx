@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:list id="pl_edu_mit_cci_simulation_excel_server_ExcelVariable" items="${excelvariables}" z="JvJtOoPfWxvQPb4YLkHomwIV1S8=">
+        <table:table data="${excelvariables}" id="l_edu_mit_cci_simulation_excel_server_ExcelVariable" path="/excelvariables" z="zNramQiWozFSlu+IDLmkzr1ef18=">
+            <table:column id="c_edu_mit_cci_simulation_excel_server_ExcelVariable_excelSimulation" property="excelSimulation" z="qwR9L/2M/N1Or3xdERJxuPefyQ8="/>
+            <table:column id="c_edu_mit_cci_simulation_excel_server_ExcelVariable_worksheetName" property="worksheetName" z="Bs79iBFun91S2HbAEEHDSTx2D1w="/>
+            <table:column id="c_edu_mit_cci_simulation_excel_server_ExcelVariable_cellRange" property="cellRange" z="xv8eU9r6cB0y9w6LCHb1hHpy9uI="/>
+            <table:column id="c_edu_mit_cci_simulation_excel_server_ExcelVariable_simulationVariable" property="simulationVariable" z="2k4lJWnxPX2U1eNjbV/rFAn/VOo="/>
+        </table:table>
+    </page:list>
+</div>
