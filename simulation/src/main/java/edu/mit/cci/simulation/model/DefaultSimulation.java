@@ -12,7 +12,11 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.*;
+import java.util.Map;
+import java.util.Date;
 
 /**
  * User: jintrone
@@ -22,21 +26,26 @@ import java.util.*;
 @RooJavaBean
 @RooToString
 @RooEntity
+@XmlRootElement
 public class DefaultSimulation implements Simulation {
 
     private static Logger log = Logger.getLogger(DefaultSimulation.class);
 
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "S-")
+    @XmlElement(name="creation")
     private Date created;
 
     @NotNull
     private Long simulationVersion;
 
+     @XmlElement(name="description")
     private String description;
 
+    @XmlElement(name="name")
     private String name;
 
+    @XmlElement(name="url")
     private String url;
 
     @ManyToMany(cascade = CascadeType.ALL)
@@ -45,7 +54,7 @@ public class DefaultSimulation implements Simulation {
     @ManyToMany(cascade = CascadeType.ALL)
     private Set<Variable> outputs = new HashSet<Variable>();
 
-    private transient RunStrategy runStrategy;
+    private transient RunStrategy runStrategy = new RunStrategy.Post();
 
     public Scenario run(List<Tuple> siminputs) throws SimulationException {
         DefaultScenario result = new DefaultScenario();
@@ -98,6 +107,8 @@ public class DefaultSimulation implements Simulation {
             throw new SimulationException("Missing input variables: " + mine);
         }
         String response = null;
+       response = runStrategy.run(url, params);
+
         result.addAll(U.parseVariableMap(response));
         return result;
     }

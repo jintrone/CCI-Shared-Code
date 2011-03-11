@@ -10,6 +10,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.ManyToMany;
 import javax.persistence.Transient;
 import java.util.*;
+import java.util.List;
+import java.util.Set;
 
 @RooJavaBean
 @RooToString

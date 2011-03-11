@@ -3,7 +3,7 @@
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
     <form:update id="fu_edu_mit_cci_simulation_model_MappedSimulation" modelAttribute="mappedSimulation" path="/mappedsimulations" z="Dlb9d3rdFJR4KVr8yMF48wqzLNM=">
-        <field:input field="created" id="c_edu_mit_cci_simulation_model_MappedSimulation_created" z="kWlE3ORef6KVbkLu2paM0dQWor4="/>
+        <field:datetime dateTimePattern="${mappedSimulation_created_date_format}" field="created" id="c_edu_mit_cci_simulation_model_MappedSimulation_created" z="6DYzUCjSDfN288NfE4dm23Pcrzg="/>
         <field:input field="simulationVersion" id="c_edu_mit_cci_simulation_model_MappedSimulation_simulationVersion" required="true" validationMessageCode="field_invalid_integer" z="b0fJyUe31vb3c0lwfNCga72+LFc="/>
         <field:input field="description" id="c_edu_mit_cci_simulation_model_MappedSimulation_description" z="FU6xkUkvTiGzBit+uHN1IWhaDxI="/>
         <field:input field="name" id="c_edu_mit_cci_simulation_model_MappedSimulation_name" z="gCsSPzyenjyC+T/4Xc1HliZczSM="/>
@@ -22,6 +22,6 @@
     
     
     <field:select field="indexingVariable" id="c_edu_mit_cci_simulation_model_MappedSimulation_indexingVariable" itemValue="id" items="${variables}" path="/variables" z="dIKSbUsI27KZD0aInSh5JTUfqNM="/>
-    <field:input field="variableMap" id="c_edu_mit_cci_simulation_model_MappedSimulation_variableMap" z="XmRLGPjcYmPWww/4Q4pjDzXSUPI="/>
+    
     </form:update>
 </div>

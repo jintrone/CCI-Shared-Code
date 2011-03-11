@@ -7,25 +7,31 @@ import org.springframework.roo.addon.tostring.RooToString;
 
 import javax.persistence.Column;
 import javax.persistence.ManyToOne;
-import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 @RooJavaBean
 @RooToString
 @RooEntity
+@XmlRootElement(name="Tuple")
+@XmlAccessorType(XmlAccessType.NONE)
 public class Tuple {
 
 
 
     @NotNull
     @ManyToOne
+    @XmlElement(name="Variable")
     private Variable var;
 
     @Column(columnDefinition="LONGTEXT")
+    @XmlElement(name="Value")
     private String value_;
 
-    @Transient
-    private String[] values;
+    private transient String[] values;
 
     public String[] getValues() {
 

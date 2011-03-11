@@ -4,14 +4,20 @@
 package edu.mit.cci.simulation.web;
 
 import edu.mit.cci.simulation.model.CompositeSimulation;
+import edu.mit.cci.simulation.model.CompositeStepMapping;
+import edu.mit.cci.simulation.model.Step;
 import java.io.UnsupportedEncodingException;
 import java.lang.Integer;
 import java.lang.Long;
 import java.lang.String;
+import java.util.Collection;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import org.joda.time.format.DateTimeFormat;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,6 +31,7 @@ privileged aspect CompositeSimulationController_Roo_Controller {
     public String CompositeSimulationController.create(@Valid CompositeSimulation compositeSimulation, BindingResult result, Model model, HttpServletRequest request) {
         if (result.hasErrors()) {
             model.addAttribute("compositeSimulation", compositeSimulation);
+            addDateTimeFormatPatterns(model);
             return "compositesimulations/create";
         }
         compositeSimulation.persist();
@@ -34,11 +41,13 @@ privileged aspect CompositeSimulationController_Roo_Controller {
     @RequestMapping(params = "form", method = RequestMethod.GET)
     public String CompositeSimulationController.createForm(Model model) {
         model.addAttribute("compositeSimulation", new CompositeSimulation());
+        addDateTimeFormatPatterns(model);
         return "compositesimulations/create";
     }
     
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String CompositeSimulationController.show(@PathVariable("id") Long id, Model model) {
+        addDateTimeFormatPatterns(model);
         model.addAttribute("compositesimulation", CompositeSimulation.findCompositeSimulation(id));
         model.addAttribute("itemId", id);
         return "compositesimulations/show";
@@ -54,6 +63,7 @@ privileged aspect CompositeSimulationController_Roo_Controller {
         } else {
             model.addAttribute("compositesimulations", CompositeSimulation.findAllCompositeSimulations());
         }
+        addDateTimeFormatPatterns(model);
         return "compositesimulations/list";
     }
     
@@ -61,6 +71,7 @@ privileged aspect CompositeSimulationController_Roo_Controller {
     public String CompositeSimulationController.update(@Valid CompositeSimulation compositeSimulation, BindingResult result, Model model, HttpServletRequest request) {
         if (result.hasErrors()) {
             model.addAttribute("compositeSimulation", compositeSimulation);
+            addDateTimeFormatPatterns(model);
             return "compositesimulations/update";
         }
         compositeSimulation.merge();
@@ -70,6 +81,7 @@ privileged aspect CompositeSimulationController_Roo_Controller {
     @RequestMapping(value = "/{id}", params = "form", method = RequestMethod.GET)
     public String CompositeSimulationController.updateForm(@PathVariable("id") Long id, Model model) {
         model.addAttribute("compositeSimulation", CompositeSimulation.findCompositeSimulation(id));
+        addDateTimeFormatPatterns(model);
         return "compositesimulations/update";
     }
     
@@ -79,6 +91,20 @@ privileged aspect CompositeSimulationController_Roo_Controller {
         model.addAttribute("page", (page == null) ? "1" : page.toString());
         model.addAttribute("size", (size == null) ? "10" : size.toString());
         return "redirect:/compositesimulations?page=" + ((page == null) ? "1" : page.toString()) + "&size=" + ((size == null) ? "10" : size.toString());
+    }
+    
+    @ModelAttribute("compositestepmappings")
+    public Collection<CompositeStepMapping> CompositeSimulationController.populateCompositeStepMappings() {
+        return CompositeStepMapping.findAllCompositeStepMappings();
+    }
+    
+    @ModelAttribute("steps")
+    public Collection<Step> CompositeSimulationController.populateSteps() {
+        return Step.findAllSteps();
+    }
+    
+    void CompositeSimulationController.addDateTimeFormatPatterns(Model model) {
+        model.addAttribute("compositeSimulation_created_date_format", DateTimeFormat.patternForStyle("S-", LocaleContextHolder.getLocale()));
     }
     
     String CompositeSimulationController.encodeUrlPathSegment(String pathSegment, HttpServletRequest request) {

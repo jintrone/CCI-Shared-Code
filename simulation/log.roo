@@ -272,3 +272,20 @@ exit
 // Spring Roo 1.1.1.RELEASE [rev 156ccd6] log opened at 2011-03-10 09:19:29
 exit
 // Spring Roo 1.1.1.RELEASE [rev 156ccd6] log closed at 2011-03-10 13:07:15
+// Spring Roo 1.1.1.RELEASE [rev 156ccd6] log opened at 2011-03-10 17:08:32
+// Spring Roo 1.1.1.RELEASE [rev 156ccd6] log opened at 2011-03-10 19:21:43
+exit
+// Spring Roo 1.1.1.RELEASE [rev 156ccd6] log closed at 2011-03-10 21:57:30
+// Spring Roo 1.1.1.RELEASE [rev 156ccd6] log opened at 2011-03-10 21:57:34
+exit
+// Spring Roo 1.1.1.RELEASE [rev 156ccd6] log closed at 2011-03-11 07:19:08
+// Spring Roo 1.1.1.RELEASE [rev 156ccd6] log opened at 2011-03-11 07:19:12
+controller scaffold --class ~.web.TupleController --entity ~.model.Tuple
+controller all --package ~.web
+exit
+// Spring Roo 1.1.1.RELEASE [rev 156ccd6] log closed at 2011-03-11 10:06:23
+// Spring Roo 1.1.1.RELEASE [rev 156ccd6] log opened at 2011-03-11 10:06:27
+// [failed] exit
+exit
+// Spring Roo 1.1.1.RELEASE [rev 156ccd6] log closed at 2011-03-11 11:32:41
+// Spring Roo 1.1.1.RELEASE [rev 156ccd6] log opened at 2011-03-11 11:32:45

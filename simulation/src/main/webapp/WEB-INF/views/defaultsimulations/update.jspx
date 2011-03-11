@@ -3,7 +3,7 @@
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
     <form:update id="fu_edu_mit_cci_simulation_model_DefaultSimulation" modelAttribute="defaultSimulation" path="/defaultsimulations" z="oBTbIRFyf7jkjQgPLmqxyu3ZWC0=">
-        <field:input field="created" id="c_edu_mit_cci_simulation_model_DefaultSimulation_created" z="SWT4nSyg8lY0v35j21hq74cZcwc="/>
+        <field:datetime dateTimePattern="${defaultSimulation_created_date_format}" field="created" id="c_edu_mit_cci_simulation_model_DefaultSimulation_created" z="fc4Ce7XTo8YFGs9GyTN0vqBvSAU="/>
         <field:input field="simulationVersion" id="c_edu_mit_cci_simulation_model_DefaultSimulation_simulationVersion" required="true" validationMessageCode="field_invalid_integer" z="CDTe7/I79Oz7AWTNlQ4f9XXhazM="/>
         <field:input field="description" id="c_edu_mit_cci_simulation_model_DefaultSimulation_description" z="MRqS+C2VTu21GDglUGKA05DJJ18="/>
         <field:input field="name" id="c_edu_mit_cci_simulation_model_DefaultSimulation_name" z="UdvCFXsf65PJEGmx/Uu6OmWx83U="/>

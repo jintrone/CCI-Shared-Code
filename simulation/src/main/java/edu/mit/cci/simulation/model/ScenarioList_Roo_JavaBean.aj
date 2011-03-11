@@ -3,6 +3,8 @@
 
 package edu.mit.cci.simulation.model;
 
+import edu.mit.cci.simulation.model.DataType;
+import edu.mit.cci.simulation.model.DefaultScenario;
 import java.util.Set;
 
 privileged aspect ScenarioList_Roo_JavaBean {

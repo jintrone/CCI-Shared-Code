@@ -10,6 +10,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import java.util.*;
+import java.util.Map;
 
 @RooJavaBean
 @RooToString

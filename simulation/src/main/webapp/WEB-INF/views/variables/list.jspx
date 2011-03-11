@@ -7,9 +7,13 @@
             <table:column id="c_edu_mit_cci_simulation_model_Variable_options" property="options" z="6vONLatcojRq1G61hQNOcZ0MWSY="/>
             <table:column id="c_edu_mit_cci_simulation_model_Variable_name" property="name" z="paUV2n/hNoFH5VK7sbIhgfQTRGA="/>
             <table:column id="c_edu_mit_cci_simulation_model_Variable_description" property="description" z="w3pGLNv9hIF2mRy1wdMbBL3HhR0="/>
-            <table:column id="c_edu_mit_cci_simulation_model_Variable_arity" property="arity" z="EOByScHyWJCunzHSX9PP5AagK/o="/>
-            <table:column id="c_edu_mit_cci_simulation_model_Variable_dataType" property="dataType" z="ANhjXau0rw5qf+XcSk97Qy/iFwY="/>
+            
+            
             <table:column id="c_edu_mit_cci_simulation_model_Variable_precision_" property="precision_" z="7zhrjiBfsMjQzeTtJkbwhYVzoME="/>
+        
+            
+        <table:column id="c_edu_mit_cci_simulation_model_Variable_arity" property="arity" z="EOByScHyWJCunzHSX9PP5AagK/o="/>
+            <table:column id="c_edu_mit_cci_simulation_model_Variable_dataType" property="dataType" z="ANhjXau0rw5qf+XcSk97Qy/iFwY="/>
         </table:table>
     </page:list>
 </div>

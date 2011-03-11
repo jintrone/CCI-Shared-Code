@@ -47,13 +47,6 @@ privileged aspect TupleController_Roo_Controller {
         return "tuples/create";
     }
     
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public String TupleController.show(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("tuple", Tuple.findTuple(id));
-        model.addAttribute("itemId", id);
-        return "tuples/show";
-    }
-    
     @RequestMapping(method = RequestMethod.GET)
     public String TupleController.list(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model model) {
         if (page != null || size != null) {

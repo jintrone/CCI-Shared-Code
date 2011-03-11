@@ -3,7 +3,7 @@
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
     <page:show id="ps_edu_mit_cci_simulation_model_MappedSimulation" object="${mappedsimulation}" path="/mappedsimulations" z="lwKw10+Dn4imGWLSOcltA8vsAeI=">
-        <field:display field="created" id="s_edu_mit_cci_simulation_model_MappedSimulation_created" object="${mappedsimulation}" z="ksIVlhb+kVvUtTKZ8vOy4FDd4W8="/>
+        <field:display date="true" dateTimePattern="${mappedSimulation_created_date_format}" field="created" id="s_edu_mit_cci_simulation_model_MappedSimulation_created" object="${mappedsimulation}" z="xkX6VMPszC1xuSF8LsaNh1Xex08="/>
         <field:display field="simulationVersion" id="s_edu_mit_cci_simulation_model_MappedSimulation_simulationVersion" object="${mappedsimulation}" z="N8VUty3z79PAhwtVBBQ1pQvISNw="/>
         <field:display field="description" id="s_edu_mit_cci_simulation_model_MappedSimulation_description" object="${mappedsimulation}" z="OxtD2oMmNsZ+9MKmg+Qtr7nJquY="/>
         <field:display field="name" id="s_edu_mit_cci_simulation_model_MappedSimulation_name" object="${mappedsimulation}" z="e/2JmXRq3j7zFCoBRLY+y7dU2so="/>
@@ -22,6 +22,6 @@
     
     
     <field:display field="indexingVariable" id="s_edu_mit_cci_simulation_model_MappedSimulation_indexingVariable" object="${mappedsimulation}" z="sfpOK16BXwOzpr0NM0jCmZzHhEk="/>
-    <field:display field="variableMap" id="s_edu_mit_cci_simulation_model_MappedSimulation_variableMap" object="${mappedsimulation}" z="b2hp1ze4cluKZS/y5i/zbpGGJO4="/>
+    
     </page:show>
 </div>

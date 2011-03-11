@@ -3,7 +3,7 @@
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
     <page:show id="ps_edu_mit_cci_simulation_model_CompositeSimulation" object="${compositesimulation}" path="/compositesimulations" z="8ERSFbNNZ2DzaguQRpFGCMeLRMc=">
-        <field:display field="created" id="s_edu_mit_cci_simulation_model_CompositeSimulation_created" object="${compositesimulation}" z="9PWKio4bn3i1g0O9juSIdiTbylM="/>
+        <field:display date="true" dateTimePattern="${compositeSimulation_created_date_format}" field="created" id="s_edu_mit_cci_simulation_model_CompositeSimulation_created" object="${compositesimulation}" z="N8yU/SrT7g9NpF/pnPGCj3exbz0="/>
         <field:display field="simulationVersion" id="s_edu_mit_cci_simulation_model_CompositeSimulation_simulationVersion" object="${compositesimulation}" z="9UGbYJWcxAC/dr5yPI+t2kX6m5c="/>
         <field:display field="description" id="s_edu_mit_cci_simulation_model_CompositeSimulation_description" object="${compositesimulation}" z="fUpJAGEl9V8iCuxjdXtUkdWt0B0="/>
         <field:display field="name" id="s_edu_mit_cci_simulation_model_CompositeSimulation_name" object="${compositesimulation}" z="5lOZsU9bbXYfYWp+5N+TwH1wMe4="/>

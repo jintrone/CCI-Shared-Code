@@ -10,6 +10,7 @@ privileged aspect Variable_Roo_ToString {
     public String Variable.toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Options: ").append(java.util.Arrays.toString(getOptions())).append(", ");
+        sb.append("Id_: ").append(getId_()).append(", ");
         sb.append("Name: ").append(getName()).append(", ");
         sb.append("Description: ").append(getDescription()).append(", ");
         sb.append("Arity: ").append(getArity()).append(", ");

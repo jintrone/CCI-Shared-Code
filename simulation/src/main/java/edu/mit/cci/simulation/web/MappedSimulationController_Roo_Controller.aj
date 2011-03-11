@@ -15,6 +15,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import org.joda.time.format.DateTimeFormat;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -31,6 +33,7 @@ privileged aspect MappedSimulationController_Roo_Controller {
     public String MappedSimulationController.create(@Valid MappedSimulation mappedSimulation, BindingResult result, Model model, HttpServletRequest request) {
         if (result.hasErrors()) {
             model.addAttribute("mappedSimulation", mappedSimulation);
+            addDateTimeFormatPatterns(model);
             return "mappedsimulations/create";
         }
         mappedSimulation.persist();
@@ -40,11 +43,13 @@ privileged aspect MappedSimulationController_Roo_Controller {
     @RequestMapping(params = "form", method = RequestMethod.GET)
     public String MappedSimulationController.createForm(Model model) {
         model.addAttribute("mappedSimulation", new MappedSimulation());
+        addDateTimeFormatPatterns(model);
         return "mappedsimulations/create";
     }
     
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String MappedSimulationController.show(@PathVariable("id") Long id, Model model) {
+        addDateTimeFormatPatterns(model);
         model.addAttribute("mappedsimulation", MappedSimulation.findMappedSimulation(id));
         model.addAttribute("itemId", id);
         return "mappedsimulations/show";
@@ -60,6 +65,7 @@ privileged aspect MappedSimulationController_Roo_Controller {
         } else {
             model.addAttribute("mappedsimulations", MappedSimulation.findAllMappedSimulations());
         }
+        addDateTimeFormatPatterns(model);
         return "mappedsimulations/list";
     }
     
@@ -67,6 +73,7 @@ privileged aspect MappedSimulationController_Roo_Controller {
     public String MappedSimulationController.update(@Valid MappedSimulation mappedSimulation, BindingResult result, Model model, HttpServletRequest request) {
         if (result.hasErrors()) {
             model.addAttribute("mappedSimulation", mappedSimulation);
+            addDateTimeFormatPatterns(model);
             return "mappedsimulations/update";
         }
         mappedSimulation.merge();
@@ -76,6 +83,7 @@ privileged aspect MappedSimulationController_Roo_Controller {
     @RequestMapping(value = "/{id}", params = "form", method = RequestMethod.GET)
     public String MappedSimulationController.updateForm(@PathVariable("id") Long id, Model model) {
         model.addAttribute("mappedSimulation", MappedSimulation.findMappedSimulation(id));
+        addDateTimeFormatPatterns(model);
         return "mappedsimulations/update";
     }
     
@@ -100,6 +108,10 @@ privileged aspect MappedSimulationController_Roo_Controller {
     @ModelAttribute("variables")
     public Collection<Variable> MappedSimulationController.populateVariables() {
         return Variable.findAllVariables();
+    }
+    
+    void MappedSimulationController.addDateTimeFormatPatterns(Model model) {
+        model.addAttribute("mappedSimulation_created_date_format", DateTimeFormat.patternForStyle("S-", LocaleContextHolder.getLocale()));
     }
     
     String MappedSimulationController.encodeUrlPathSegment(String pathSegment, HttpServletRequest request) {

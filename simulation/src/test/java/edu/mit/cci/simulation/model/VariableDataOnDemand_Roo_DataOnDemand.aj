@@ -18,13 +18,13 @@ privileged aspect VariableDataOnDemand_Roo_DataOnDemand {
     
     public Variable VariableDataOnDemand.getNewTransientVariable(int index) {
         edu.mit.cci.simulation.model.Variable obj = new edu.mit.cci.simulation.model.Variable();
-        obj.setName("name_" + index);
-        obj.setDescription("description_" + index);
+        obj.setName(null);
+        obj.setDescription(null);
         obj.setArity(new Integer(index));
         obj.setDataType(null);
-        obj.setPrecision_(new Integer(index));
-        obj.setMax_(new Integer(index).doubleValue());
-        obj.setMin_(new Integer(index).doubleValue());
+        obj.setPrecision_(null);
+        obj.setMax_(null);
+        obj.setMin_(null);
         obj.set_optionsRaw("_optionsRaw_" + index);
         obj.setIndexingVariable(null);
         return obj;

@@ -10,6 +10,8 @@ import java.lang.Long;
 import java.lang.String;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import org.joda.time.format.DateTimeFormat;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,6 +27,7 @@ privileged aspect DefaultSimulationController_Roo_Controller {
     public String DefaultSimulationController.create(@Valid DefaultSimulation defaultSimulation, BindingResult result, Model model, HttpServletRequest request) {
         if (result.hasErrors()) {
             model.addAttribute("defaultSimulation", defaultSimulation);
+            addDateTimeFormatPatterns(model);
             return "defaultsimulations/create";
         }
         defaultSimulation.persist();
@@ -34,11 +37,13 @@ privileged aspect DefaultSimulationController_Roo_Controller {
     @RequestMapping(params = "form", method = RequestMethod.GET)
     public String DefaultSimulationController.createForm(Model model) {
         model.addAttribute("defaultSimulation", new DefaultSimulation());
+        addDateTimeFormatPatterns(model);
         return "defaultsimulations/create";
     }
     
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String DefaultSimulationController.show(@PathVariable("id") Long id, Model model) {
+        addDateTimeFormatPatterns(model);
         model.addAttribute("defaultsimulation", DefaultSimulation.findDefaultSimulation(id));
         model.addAttribute("itemId", id);
         return "defaultsimulations/show";
@@ -54,6 +59,7 @@ privileged aspect DefaultSimulationController_Roo_Controller {
         } else {
             model.addAttribute("defaultsimulations", DefaultSimulation.findAllDefaultSimulations());
         }
+        addDateTimeFormatPatterns(model);
         return "defaultsimulations/list";
     }
     
@@ -61,6 +67,7 @@ privileged aspect DefaultSimulationController_Roo_Controller {
     public String DefaultSimulationController.update(@Valid DefaultSimulation defaultSimulation, BindingResult result, Model model, HttpServletRequest request) {
         if (result.hasErrors()) {
             model.addAttribute("defaultSimulation", defaultSimulation);
+            addDateTimeFormatPatterns(model);
             return "defaultsimulations/update";
         }
         defaultSimulation.merge();
@@ -70,6 +77,7 @@ privileged aspect DefaultSimulationController_Roo_Controller {
     @RequestMapping(value = "/{id}", params = "form", method = RequestMethod.GET)
     public String DefaultSimulationController.updateForm(@PathVariable("id") Long id, Model model) {
         model.addAttribute("defaultSimulation", DefaultSimulation.findDefaultSimulation(id));
+        addDateTimeFormatPatterns(model);
         return "defaultsimulations/update";
     }
     
@@ -79,6 +87,10 @@ privileged aspect DefaultSimulationController_Roo_Controller {
         model.addAttribute("page", (page == null) ? "1" : page.toString());
         model.addAttribute("size", (size == null) ? "10" : size.toString());
         return "redirect:/defaultsimulations?page=" + ((page == null) ? "1" : page.toString()) + "&size=" + ((size == null) ? "10" : size.toString());
+    }
+    
+    void DefaultSimulationController.addDateTimeFormatPatterns(Model model) {
+        model.addAttribute("defaultSimulation_created_date_format", DateTimeFormat.patternForStyle("S-", LocaleContextHolder.getLocale()));
     }
     
     String DefaultSimulationController.encodeUrlPathSegment(String pathSegment, HttpServletRequest request) {
