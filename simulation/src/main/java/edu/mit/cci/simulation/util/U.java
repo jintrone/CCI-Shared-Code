@@ -281,5 +281,9 @@ public class U {
 
     }
 
+    public static ConcreteSerializableCollection wrap(Collection c) {
+        return new ConcreteSerializableCollection(c);
+    }
+
 
 }

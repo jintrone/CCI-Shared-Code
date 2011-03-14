@@ -9,6 +9,9 @@ import org.springframework.roo.addon.tostring.RooToString;
 import javax.persistence.CascadeType;
 import javax.persistence.ManyToMany;
 import javax.persistence.Transient;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.*;
 import java.util.List;
 import java.util.Set;
@@ -16,6 +19,8 @@ import java.util.Set;
 @RooJavaBean
 @RooToString
 @RooEntity
+@XmlRootElement(name="CompositeSimulation")
+@XmlAccessorType(XmlAccessType.NONE)
 public class CompositeSimulation extends DefaultSimulation {
 
     @ManyToMany(cascade = CascadeType.ALL)

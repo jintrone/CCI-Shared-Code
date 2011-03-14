@@ -45,28 +45,6 @@ privileged aspect DefaultScenarioController_Roo_Controller {
         return "defaultscenarios/create";
     }
     
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public String DefaultScenarioController.show(@PathVariable("id") Long id, Model model) {
-        addDateTimeFormatPatterns(model);
-        model.addAttribute("defaultscenario", DefaultScenario.findDefaultScenario(id));
-        model.addAttribute("itemId", id);
-        return "defaultscenarios/show";
-    }
-    
-    @RequestMapping(method = RequestMethod.GET)
-    public String DefaultScenarioController.list(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model model) {
-        if (page != null || size != null) {
-            int sizeNo = size == null ? 10 : size.intValue();
-            model.addAttribute("defaultscenarios", DefaultScenario.findDefaultScenarioEntries(page == null ? 0 : (page.intValue() - 1) * sizeNo, sizeNo));
-            float nrOfPages = (float) DefaultScenario.countDefaultScenarios() / sizeNo;
-            model.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
-        } else {
-            model.addAttribute("defaultscenarios", DefaultScenario.findAllDefaultScenarios());
-        }
-        addDateTimeFormatPatterns(model);
-        return "defaultscenarios/list";
-    }
-    
     @RequestMapping(method = RequestMethod.PUT)
     public String DefaultScenarioController.update(@Valid DefaultScenario defaultScenario, BindingResult result, Model model, HttpServletRequest request) {
         if (result.hasErrors()) {

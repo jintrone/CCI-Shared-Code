@@ -3,6 +3,9 @@
 
 package edu.mit.cci.simulation.model;
 
+import edu.mit.cci.simulation.model.Variable;
+import java.lang.Long;
+import java.lang.String;
 import java.util.Date;
 import java.util.Set;
 

@@ -7,16 +7,17 @@ import org.springframework.roo.addon.entity.RooEntity;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.tostring.RooToString;
 
-import javax.persistence.CascadeType;
-import javax.persistence.ManyToMany;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import java.util.*;
-import java.util.Map;
+import javax.xml.bind.annotation.*;
+import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 
 /**
  * User: jintrone
@@ -26,34 +27,40 @@ import java.util.Date;
 @RooJavaBean
 @RooToString
 @RooEntity
-@XmlRootElement
+@XmlRootElement(name="Simulation")
+@XmlAccessorType(XmlAccessType.NONE)
 public class DefaultSimulation implements Simulation {
 
     private static Logger log = Logger.getLogger(DefaultSimulation.class);
 
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "S-")
-    @XmlElement(name="creation")
+    @XmlElement(name="Creation")
     private Date created;
 
     @NotNull
     private Long simulationVersion;
 
-     @XmlElement(name="description")
+     @XmlElement(name="Description")
     private String description;
 
-    @XmlElement(name="name")
+    @XmlElement(name="Name")
     private String name;
 
-    @XmlElement(name="url")
+    @XmlElement(name="Url")
     private String url;
 
+    @XmlElement(name="Inputs",type=Variable.class)
+    @XmlIDREF
     @ManyToMany(cascade = CascadeType.ALL)
     private Set<Variable> inputs = new HashSet<Variable>();
 
+    @XmlElement(name="Outputs",type=Variable.class)
+    @XmlIDREF
     @ManyToMany(cascade = CascadeType.ALL)
     private Set<Variable> outputs = new HashSet<Variable>();
 
+    @Transient
     private transient RunStrategy runStrategy = new RunStrategy.Post();
 
     public Scenario run(List<Tuple> siminputs) throws SimulationException {
@@ -87,6 +94,12 @@ public class DefaultSimulation implements Simulation {
         }
     }
 
+    @XmlAttribute(name="Id")
+    @XmlID
+    public String getIdAsString() {
+        return ""+getId();
+    }
+
     /**
      * Runs a simulation and returns a map of output variables to tuple values
      *
@@ -114,5 +127,6 @@ public class DefaultSimulation implements Simulation {
     }
 
     public void setRunStrategy(RunStrategy r) {
+        this.runStrategy = r;
     }
 }

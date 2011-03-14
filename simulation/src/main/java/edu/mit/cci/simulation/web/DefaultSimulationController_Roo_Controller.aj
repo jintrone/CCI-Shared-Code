@@ -4,16 +4,19 @@
 package edu.mit.cci.simulation.web;
 
 import edu.mit.cci.simulation.model.DefaultSimulation;
+import edu.mit.cci.simulation.model.Variable;
 import java.io.UnsupportedEncodingException;
 import java.lang.Integer;
 import java.lang.Long;
 import java.lang.String;
+import java.util.Collection;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.joda.time.format.DateTimeFormat;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -41,28 +44,6 @@ privileged aspect DefaultSimulationController_Roo_Controller {
         return "defaultsimulations/create";
     }
     
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public String DefaultSimulationController.show(@PathVariable("id") Long id, Model model) {
-        addDateTimeFormatPatterns(model);
-        model.addAttribute("defaultsimulation", DefaultSimulation.findDefaultSimulation(id));
-        model.addAttribute("itemId", id);
-        return "defaultsimulations/show";
-    }
-    
-    @RequestMapping(method = RequestMethod.GET)
-    public String DefaultSimulationController.list(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model model) {
-        if (page != null || size != null) {
-            int sizeNo = size == null ? 10 : size.intValue();
-            model.addAttribute("defaultsimulations", DefaultSimulation.findDefaultSimulationEntries(page == null ? 0 : (page.intValue() - 1) * sizeNo, sizeNo));
-            float nrOfPages = (float) DefaultSimulation.countDefaultSimulations() / sizeNo;
-            model.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
-        } else {
-            model.addAttribute("defaultsimulations", DefaultSimulation.findAllDefaultSimulations());
-        }
-        addDateTimeFormatPatterns(model);
-        return "defaultsimulations/list";
-    }
-    
     @RequestMapping(method = RequestMethod.PUT)
     public String DefaultSimulationController.update(@Valid DefaultSimulation defaultSimulation, BindingResult result, Model model, HttpServletRequest request) {
         if (result.hasErrors()) {
@@ -87,6 +68,11 @@ privileged aspect DefaultSimulationController_Roo_Controller {
         model.addAttribute("page", (page == null) ? "1" : page.toString());
         model.addAttribute("size", (size == null) ? "10" : size.toString());
         return "redirect:/defaultsimulations?page=" + ((page == null) ? "1" : page.toString()) + "&size=" + ((size == null) ? "10" : size.toString());
+    }
+    
+    @ModelAttribute("variables")
+    public Collection<Variable> DefaultSimulationController.populateVariables() {
+        return Variable.findAllVariables();
     }
     
     void DefaultSimulationController.addDateTimeFormatPatterns(Model model) {

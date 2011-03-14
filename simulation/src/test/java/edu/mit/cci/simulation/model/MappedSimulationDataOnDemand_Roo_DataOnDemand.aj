@@ -16,24 +16,6 @@ privileged aspect MappedSimulationDataOnDemand_Roo_DataOnDemand {
     
     private List<MappedSimulation> MappedSimulationDataOnDemand.data;
     
-    public MappedSimulation MappedSimulationDataOnDemand.getNewTransientMappedSimulation(int index) {
-        edu.mit.cci.simulation.model.MappedSimulation obj = new edu.mit.cci.simulation.model.MappedSimulation();
-        obj.setInputs(null);
-        obj.setOutputs(null);
-        obj.setRunStrategy(null);
-        obj.setCreated(new java.util.GregorianCalendar(java.util.Calendar.getInstance().get(java.util.Calendar.YEAR), java.util.Calendar.getInstance().get(java.util.Calendar.MONTH), java.util.Calendar.getInstance().get(java.util.Calendar.DAY_OF_MONTH), java.util.Calendar.getInstance().get(java.util.Calendar.HOUR_OF_DAY), java.util.Calendar.getInstance().get(java.util.Calendar.MINUTE), java.util.Calendar.getInstance().get(java.util.Calendar.SECOND) + new Double(Math.random() * 1000).intValue()).getTime());
-        obj.setSimulationVersion(new Integer(index).longValue());
-        obj.setDescription(null);
-        obj.setName(null);
-        obj.setUrl(null);
-        obj.setManyToOne(null);
-        obj.setReplication(new Integer(index));
-        obj.setSamplingFrequency(new Integer(index));
-        obj.setIndexingVariable(null);
-        obj.setExecutorSimulation(null);
-        return obj;
-    }
-    
     public MappedSimulation MappedSimulationDataOnDemand.getSpecificMappedSimulation(int index) {
         init();
         if (index < 0) index = 0;

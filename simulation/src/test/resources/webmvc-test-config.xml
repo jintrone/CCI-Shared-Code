@@ -45,9 +45,9 @@
 
     <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
         <property name="messageConverters">
-            <util:list id="beanList">
+            <list>
                 <ref bean="marshallingHttpMessageConverter"/>
-            </util:list>
+            </list>
         </property>
     </bean>
 
@@ -58,11 +58,7 @@
     <!-- Allows for mapping the DispatcherServlet to "/" by forwarding static resource requests to the container's default Servlet -->
     <mvc:default-servlet-handler/>
 
-    <!-- register "global" interceptor beans to apply to all registered HandlerMappings -->
-    <mvc:interceptors>
-        <bean class="org.springframework.web.servlet.theme.ThemeChangeInterceptor"/>
-        <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" p:paramName="lang"/>
-    </mvc:interceptors>
+
 
     <!-- selects a static view for rendering without the need for an explicit controller -->
     <mvc:view-controller path="/" view-name="index"/>
@@ -111,13 +107,13 @@
         <property name="viewClass" value="org.springframework.web.servlet.view.tiles2.TilesView"/>
     </bean>
 
-    <bean class="org.springframework.web.servlet.view.tiles2.TilesConfigurer" id="tilesConfigurer">
+    <!--<bean class="org.springframework.web.servlet.view.tiles2.TilesConfigurer" id="tilesConfigurer">
         <property name="definitions">
             <list>
                 <value>/WEB-INF/layouts/layouts.xml</value>
-                <!-- Scan views directory for Tiles configurations -->
+                Scan views directory for Tiles configurations
                 <value>/WEB-INF/views/**/views.xml</value>
             </list>
         </property>
-    </bean>
+    </bean>-->
 </beans>

@@ -9,6 +9,7 @@ privileged aspect CompositeScenario_Roo_ToString {
     
     public String CompositeScenario.toString() {
         StringBuilder sb = new StringBuilder();
+        sb.append("IdAsString: ").append(getIdAsString()).append(", ");
         sb.append("Id: ").append(getId()).append(", ");
         sb.append("Version: ").append(getVersion()).append(", ");
         sb.append("Simulation: ").append(getSimulation()).append(", ");

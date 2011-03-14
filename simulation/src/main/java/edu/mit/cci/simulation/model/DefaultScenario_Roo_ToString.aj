@@ -9,6 +9,7 @@ privileged aspect DefaultScenario_Roo_ToString {
     
     public String DefaultScenario.toString() {
         StringBuilder sb = new StringBuilder();
+        sb.append("IdAsString: ").append(getIdAsString()).append(", ");
         sb.append("Simulation: ").append(getSimulation()).append(", ");
         sb.append("Values_: ").append(getValues_() == null ? "null" : getValues_().size()).append(", ");
         sb.append("Created: ").append(getCreated());

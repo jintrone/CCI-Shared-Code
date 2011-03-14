@@ -6,12 +6,17 @@ import org.springframework.roo.addon.tostring.RooToString;
 
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.HashMap;
 import java.util.Map;
 
 @RooJavaBean
 @RooToString
 @RooEntity
+@XmlRootElement(name="CompositeScenario")
+@XmlAccessorType(XmlAccessType.NONE)
 public class CompositeScenario extends DefaultScenario {
 
     @ManyToMany @JoinTable(name="STEP_SCENARIO")

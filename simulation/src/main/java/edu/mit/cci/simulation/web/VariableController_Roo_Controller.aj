@@ -41,19 +41,6 @@ privileged aspect VariableController_Roo_Controller {
         return "variables/create";
     }
     
-    @RequestMapping(method = RequestMethod.GET)
-    public String VariableController.list(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model model) {
-        if (page != null || size != null) {
-            int sizeNo = size == null ? 10 : size.intValue();
-            model.addAttribute("variables", Variable.findVariableEntries(page == null ? 0 : (page.intValue() - 1) * sizeNo, sizeNo));
-            float nrOfPages = (float) Variable.countVariables() / sizeNo;
-            model.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
-        } else {
-            model.addAttribute("variables", Variable.findAllVariables());
-        }
-        return "variables/list";
-    }
-    
     @RequestMapping(method = RequestMethod.PUT)
     public String VariableController.update(@Valid Variable variable, BindingResult result, Model model, HttpServletRequest request) {
         if (result.hasErrors()) {

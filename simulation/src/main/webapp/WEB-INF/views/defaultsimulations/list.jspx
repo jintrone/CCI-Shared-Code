@@ -8,9 +8,11 @@
             <table:column id="c_edu_mit_cci_simulation_model_DefaultSimulation_simulationVersion" property="simulationVersion" z="wWPwrU/imPF8Fn6V+uEgkMR3sEg="/>
             <table:column id="c_edu_mit_cci_simulation_model_DefaultSimulation_description" property="description" z="q2xgp1B8oLlM4S4boZLe9y5zQHk="/>
             <table:column id="c_edu_mit_cci_simulation_model_DefaultSimulation_name" property="name" z="JClDVtNYPMGmKt56b+9vhdPPXSc="/>
-            <table:column id="c_edu_mit_cci_simulation_model_DefaultSimulation_inputs" property="inputs" z="MYt/1gXhLM1dPcRcllApcSynrQI="/>
+            
             
         <table:column id="c_edu_mit_cci_simulation_model_DefaultSimulation_url" property="url" z="GQrn0oWr5nUbiJGkveC6BSO6g6M="/>
+        
+        <table:column id="c_edu_mit_cci_simulation_model_DefaultSimulation_inputs" property="inputs" z="MYt/1gXhLM1dPcRcllApcSynrQI="/>
         </table:table>
     </page:list>
 </div>

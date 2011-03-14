@@ -47,14 +47,6 @@ privileged aspect MappedSimulationController_Roo_Controller {
         return "mappedsimulations/create";
     }
     
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public String MappedSimulationController.show(@PathVariable("id") Long id, Model model) {
-        addDateTimeFormatPatterns(model);
-        model.addAttribute("mappedsimulation", MappedSimulation.findMappedSimulation(id));
-        model.addAttribute("itemId", id);
-        return "mappedsimulations/show";
-    }
-    
     @RequestMapping(method = RequestMethod.GET)
     public String MappedSimulationController.list(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model model) {
         if (page != null || size != null) {

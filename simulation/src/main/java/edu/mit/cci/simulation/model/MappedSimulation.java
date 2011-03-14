@@ -9,12 +9,19 @@ import javax.persistence.Enumerated;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import java.util.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 @RooJavaBean
 @RooToString
 @RooEntity
+@XmlRootElement(name="MappedSimulation")
+@XmlAccessorType(XmlAccessType.NONE)
 public class MappedSimulation extends DefaultSimulation {
 
     @ManyToOne
@@ -129,7 +136,7 @@ public class MappedSimulation extends DefaultSimulation {
     }
 
     private void updateMappings() {
-        if (executorSimulation == null) return;
+        if (executorSimulation == null || replication == null || samplingFrequency == null) return;
         getInputs().clear();
         getOutputs().clear();
         getVariableMap().clear();

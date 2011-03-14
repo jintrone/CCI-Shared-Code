@@ -72,8 +72,9 @@ public class Variable {
     }
 
     @XmlAttribute(name="Id")
-    public Long getId_() {
-        return getId();
+    @XmlID
+    public String getId_() {
+        return ""+getId();
     }
 
 

@@ -8,10 +8,7 @@ import org.springframework.roo.addon.tostring.RooToString;
 import javax.persistence.Column;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.*;
 
 @RooJavaBean
 @RooToString
@@ -25,6 +22,7 @@ public class Tuple {
     @NotNull
     @ManyToOne
     @XmlElement(name="Variable")
+    @XmlIDREF
     private Variable var;
 
     @Column(columnDefinition="LONGTEXT")
@@ -63,6 +61,12 @@ public class Tuple {
           System.err.println(val);
         }
 
+    }
+
+    @XmlAttribute
+    @XmlID
+    public String getId_() {
+        return ""+getId();
     }
 
     public static Tuple copy(Tuple t) {
