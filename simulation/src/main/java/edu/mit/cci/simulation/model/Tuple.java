@@ -59,7 +59,7 @@ public class Tuple {
         if (values == null) {
             if (value_ == null) return null;
             else
-                values = var != null && var.getDataType() == DataType.NUM ? U.unescapeNumeric(value_, var.getPrecision_()) : U.unescape(value_);
+                values = var != null && var.getDataType() == DataType.NUM ? U.unescapeNumeric(value_, var.getPrecision_()) : U.unescape(value_, null);
         }
         return values;
     }
@@ -76,6 +76,7 @@ public class Tuple {
                    setStatus(i,TupleStatus.ERR_OOB);
                     values[i] = null;
                }
+               values[i] = U.format(var,values[i]);
             }
         }
         this.values = values;
@@ -83,7 +84,7 @@ public class Tuple {
     }
 
     public void setValue_(String val) throws SimulationValidationException {
-        setValues(U.unescape(val));
+        setValues(U.unescape(val, null));
     }
 
     private void clearStatus() {
@@ -117,7 +118,7 @@ public class Tuple {
         String encoded = U.escape(vals);
         System.err.println(encoded);
 
-        vals = U.unescape(encoded);
+        vals = U.unescape(encoded, null);
         for (String val : vals) {
             System.err.println(val);
         }

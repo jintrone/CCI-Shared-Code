@@ -41,7 +41,7 @@ public class ExcelRunnerStrategyTest {
 
         String[] dateinput = new String[]{"2000", "2010", "2020", "2030", "2040", "2050", "2060", "2070", "2080", "2090", "2100"};
         String[] emissions = new String[]{"1.7", "1.7", "1.7", "1.7", "1.7", "1.7", "1.7", "1.7", "1.7", "1.7", "1.7"};
-        String[] expect = new String[]{"0","0","0.00","0.00","0.00","0.00","0.00","-0.10","-0.53","-0.91","-1.04"};
+        String[] expect = new String[]{null,null,"0.00","0.00","0.00","0.00","0.00","-0.10","-0.53","-0.91","-1.04"};
 
         List<Tuple> inputs = new ArrayList<Tuple>();
 

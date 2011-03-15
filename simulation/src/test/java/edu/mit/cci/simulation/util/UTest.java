@@ -1,11 +1,9 @@
 package edu.mit.cci.simulation.util;
 
-import com.sun.jersey.simple.container.SimpleServerFactory;
 import edu.mit.cci.simulation.model.SimulationException;
 import edu.mit.cci.simulation.model.Tuple;
 import edu.mit.cci.simulation.model.Variable;
 import edu.mit.cci.simulation.model.VariableDataOnDemand;
-import org.joda.time.Years;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,7 +35,7 @@ public class UTest {
 
     @Test
     public void unescape() {
-       Assert.assertEquals("5",U.unescape("5;")[0]);
+       Assert.assertEquals("5",U.unescape("5;", null)[0]);
     }
 
     @Test

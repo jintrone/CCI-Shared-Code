@@ -74,7 +74,7 @@ public class DefaultSimulationTest {
         sim.getOutputs().add(three);
         sim.getOutputs().add(four);
 
-        Map<Variable,String[]> m = new HashMap<Variable,String[]>();
+        Map<Variable,Object[]> m = new HashMap<Variable,Object[]>();
         m.put(three,threev);
         m.put(four,fourv);
         String expect = U.createStringRepresentation(m);

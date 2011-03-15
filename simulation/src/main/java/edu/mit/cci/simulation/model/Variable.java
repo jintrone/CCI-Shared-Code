@@ -90,7 +90,7 @@ public class Variable {
         if (_optionsRaw == null) {
             return null;
         } else if (options == null) {
-            options = U.unescape(_optionsRaw);
+            options = U.unescape(_optionsRaw, null);
         }
         return options;
     }

@@ -163,9 +163,9 @@ public class CompositeSimulationTest {
         mapping3.addLink(v_out_1,v_out_1);
 
 
-        Tuple t = new Tuple();
+        Tuple t = new Tuple(v_in);
         t.setValue_("4;");
-        t.setVar(v_in);
+
 
         CompositeScenario scenario = (CompositeScenario) csim.run(Collections.singletonList(t));
         Tuple tout = scenario.getVariableValue(v_out_1);

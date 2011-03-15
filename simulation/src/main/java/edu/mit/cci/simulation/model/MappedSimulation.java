@@ -1,7 +1,6 @@
 package edu.mit.cci.simulation.model;
 
 import edu.mit.cci.simulation.util.U;
-import org.apache.commons.collections.iterators.EntrySetMapIterator;
 import org.springframework.roo.addon.entity.RooEntity;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.tostring.RooToString;
@@ -80,7 +79,7 @@ public class MappedSimulation extends DefaultSimulation {
                 for (Map.Entry<Variable,String> ent:mergedresults.entrySet()) {
                     Tuple t = new Tuple(getVariableMap().get(ent.getKey()));
                     if (manyToOne != null) {
-                        t.setValues(new String[]{manyToOne.reduce(U.unescape(ent.getValue()))});
+                        t.setValues(new String[]{manyToOne.reduce(U.unescape(ent.getValue(), null))});
                     } else {
                         t.setValue_(ent.getValue());
                     }

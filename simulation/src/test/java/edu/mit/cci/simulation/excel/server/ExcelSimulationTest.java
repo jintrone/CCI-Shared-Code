@@ -24,7 +24,7 @@ import java.io.InputStream;
 public class ExcelSimulationTest {
 
     public byte[] getTestFileBytes() throws IOException {
-        InputStream infile = getClass().getClassLoader().getResourceAsStream("data_for_keren.xls");
+        InputStream infile = getClass().getClassLoader().getResourceAsStream("test_data.xls");
         byte[] b = IOUtil.toByteArray(infile);
         Assert.assertTrue(b.length>0);
         return b;

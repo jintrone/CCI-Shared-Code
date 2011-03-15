@@ -71,7 +71,7 @@ public class MappedSimulationTest {
     @Test
     public void testRun_oneToOne() throws SimulationException {
        DefaultSimulation sim = mock.getScalarSimulation(0,9,0);
-        Variable idx = new Variable("Index","Test",1,1,0,20);
+        Variable idx = new Variable("Index","Test",1,0,0,20);
         idx.persist();
         sim.getInputs().add(idx);
 
@@ -113,7 +113,7 @@ public class MappedSimulationTest {
         @Test
     public void testRun_oneToOne_subSelect() throws SimulationException {
        DefaultSimulation sim = mock.getScalarSimulation(0,9,0);
-        Variable idx = new Variable("Index","Test",1,1,0,20);
+        Variable idx = new Variable("Index","Test",1,0,0,20);
 
         MappedSimulation msim = mock.getMappedSimulation(0,sim,123,1,null);
         msim.setSamplingFrequency(10);
@@ -153,7 +153,7 @@ public class MappedSimulationTest {
         @Test
     public void testRun_oneToOne_subSelect_reduce() throws SimulationException {
        DefaultSimulation sim = mock.getScalarSimulation(0,9,0);
-       Variable idx = new Variable("Index","Test",1,1,0,20);
+       Variable idx = new Variable("Index","Test",1,0,0,20);
         idx.persist();
         sim.getInputs().add(idx);
 
@@ -187,7 +187,7 @@ public class MappedSimulationTest {
             Assert.assertNotNull(t);
             Assert.assertEquals(v.getArity().intValue(),1);
             Assert.assertEquals(v.getArity().intValue(),t.getValues().length);
-            Assert.assertEquals("117.0",t.getValues()[0]);
+            Assert.assertEquals("117",t.getValues()[0]);
         }
 
 

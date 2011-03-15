@@ -1,5 +1,6 @@
 package edu.mit.cci.simulation.util;
 
+import edu.mit.cci.simulation.model.DataType;
 import edu.mit.cci.simulation.model.SimulationException;
 import edu.mit.cci.simulation.model.Tuple;
 import edu.mit.cci.simulation.model.TupleStatus;
@@ -51,15 +52,18 @@ public class U {
 
 
 
-    public static String escape(String[] vals) {
+    public static String escape(Object[] vals) {
         StringBuffer buffer = new StringBuffer();
         if (vals == null || vals.length == 0) return "";
-        for (String val : vals) {
+        for (Object val : vals) {
             try {
                 if (val == null) {
                     buffer.append(NULL_VAL);
+                } else if (val instanceof TupleStatus) {
+                    buffer.append(((TupleStatus)val).encode());
+
                 } else {
-                    buffer.append(encode(val));
+                     buffer.append(encode(val.toString()));
                 }
                 buffer.append(VAL_SEP);
             } catch (Exception e) {
@@ -73,16 +77,22 @@ public class U {
         return URLEncoder.encode(val, "UTF-8");
     }
 
-    public static String[] unescape(String vals) {
+    public static String[] unescape(String vals, Map<Integer, TupleStatus> status) {
         List<String> result = new ArrayList<String>();
         if (vals != null && !vals.trim().isEmpty()) {
-            for (String val : vals.split(VAL_SEP)) {
+            String[] str = vals.split(VAL_SEP);
+            for (int i=0;i<str.length;i++) {
+                String val = str[i];
                 try {
                     if (val.equals(NULL_VAL)) {
                         result.add(null);
-                    } else {
-                        result.add(URLDecoder.decode(val, "UTF-8"));
-                    }
+                    } else if (TupleStatus.decode(val)!=null) {
+                        result.add(null);
+                        if (status!=null) {
+                            status.put(i,TupleStatus.decode(val));
+                        }
+                    } else result.add(URLDecoder.decode(val, "UTF-8"));
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -157,7 +167,7 @@ public class U {
             if (v == null)
                 throw new SimulationException("Variable for id:" + ent.getKey() + " could not be identified");
             Tuple t = new Tuple(v);
-            t.setValues(unescape(ent.getValue()));
+            t.setValues(unescape(ent.getValue(), null));
 
             result.put(v, t);
         }
@@ -208,7 +218,7 @@ public class U {
             for (String part : parts) {
                 String[] vv = part.split(VAR_VAL_SEP);
                 if (vv.length < 2) continue;
-                String[] val = unescape(vv[1]);
+                String[] val = unescape(vv[1], null);
                 if (val.length < 1) continue;
                 if (val.length > 1) {
                     log.warn("Encountered an encoded array; return first value and dumping the rest");
@@ -235,10 +245,10 @@ public class U {
     }
 
 
-    public static String createStringRepresentation(Map<Variable, String[]> input) {
+    public static String createStringRepresentation(Map<Variable, Object[]> input) {
         StringBuilder builder = new StringBuilder();
         String vsep = "";
-        for (Map.Entry<Variable, String[]> ent : input.entrySet()) {
+        for (Map.Entry<Variable, Object[]> ent : input.entrySet()) {
             builder.append(vsep);
             builder.append(ent.getKey().getId()).append(VAR_VAL_SEP).append(escape(ent.getValue()));
             vsep = VAR_SEP;
@@ -326,7 +336,7 @@ public class U {
             for (String part : parts) {
                 String[] vv = part.split(VAR_VAL_SEP);
                 if (vv.length < 2) continue;
-                String[] val = unescape(vv[1]);
+                String[] val = unescape(vv[1], null);
                 if (val.length < 1) continue;
                 TupleStatus[] statuses = new TupleStatus[val.length];
                 for (int i = 0; i < val.length; i++) {
@@ -344,8 +354,7 @@ public class U {
         try {
             value+=encode(val);
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        } finally {
+            log.warn("Unsupported encoding "+e.getMessage()+" falling back to raw string");
             value+=val;
         }
         if (map.isEmpty()) {
@@ -358,5 +367,15 @@ public class U {
             }
         }
         return map + VAR_SEP + value;
+    }
+
+    public static String format(Variable var, String value)
+    {
+        if (var.getDataType() == DataType.NUM && value !=null) {
+            Double num = Double.parseDouble(value);
+            return String.format("%." + var.getPrecision_() + "f", num);
+        } else {
+            return value;
+        }
     }
 }

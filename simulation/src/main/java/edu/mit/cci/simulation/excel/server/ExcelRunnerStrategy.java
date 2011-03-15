@@ -63,11 +63,11 @@ public class ExcelRunnerStrategy implements RunStrategy {
                 log.warn("Missing input variable: " + ev);
 
             }
-            writeInput(ev, U.unescape(params.get(paramId)), workbook);
+            writeInput(ev, U.unescape(params.get(paramId), null), workbook);
         }
 
         runForumlas(workbook);
-        Map<Variable, String[]> result = new HashMap<Variable, String[]>();
+        Map<Variable, Object[]> result = new HashMap<Variable, Object[]>();
         for (ExcelVariable ev : esim.getOutputs()) {
             result.put(ev.getSimulationVariable(), readOutput(ev, workbook));
         }
@@ -95,6 +95,7 @@ public class ExcelRunnerStrategy implements RunStrategy {
 
         for (int i = 0; i < Math.max(width, height); i++) {
             Cell cell = sheet.getRow(startrow + (dy * i)).getCell(startcol + (i * dx));
+
             switch (type) {
 
                 case NUM: {
@@ -132,7 +133,7 @@ public class ExcelRunnerStrategy implements RunStrategy {
         }
     }
 
-    public String[] readOutput(ExcelVariable ev, HSSFWorkbook workbook) throws SimulationException {
+    public Object[] readOutput(ExcelVariable ev, HSSFWorkbook workbook) throws SimulationException {
         HSSFSheet sheet = workbook.getSheet(ev.getWorksheetName());
         Validation.notNull(sheet, "Worksheet");
         Validation.validateExcelCoordinates(ev.getCellRange());
@@ -149,13 +150,13 @@ public class ExcelRunnerStrategy implements RunStrategy {
         int dy = height == 1 ? 0 : 1;
 
         Validation.arity(ev.getSimulationVariable(), Math.max(width, height));
-        String[] result = new String[ev.getSimulationVariable().getArity()];
+        Object[] result = new Object[ev.getSimulationVariable().getArity()];
         for (int i = 0; i < Math.max(width, height); i++) {
             try {
                 result[i] = U.getCellValueAsString(sheet,startrow + (dy * i),startcol + (i * dx),null);
             } catch (SimulationComputationException ex) {
-                log.warn("FIXME:"+ex.getMessage());
-                result[i] = "0";
+
+                result[i] = TupleStatus.ERR_CALC;
             }
         }
         return result;

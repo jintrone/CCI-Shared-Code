@@ -60,7 +60,7 @@ public class SimulationMockFactory {
 
                     @Override
                     public String run(String url, Map<String, String> params) throws SimulationException {
-                        Map<Variable, String[]> data = new HashMap<Variable, String[]>();
+                        Map<Variable, Object[]> data = new HashMap<Variable, Object[]>();
                         Variable v = getOutputs().iterator().next();
                         data.put(v, new String[]{output + ""});
                         return U.createStringRepresentation(data);
@@ -79,11 +79,11 @@ public class SimulationMockFactory {
 
                     @Override
                     public String run(String url, Map<String, String> params) throws SimulationException {
-                        Map<Variable, String[]> data = new HashMap<Variable, String[]>();
+                        Map<Variable, Object[]> data = new HashMap<Variable, Object[]>();
                         String[] outputvals = new String[params.size()];
                         int i = 0;
                         for (String s:params.values()) {
-                            outputvals[i++] = U.unescape(s)[0];
+                            outputvals[i++] = U.unescape(s, null)[0];
                         }
                         for (Variable v : getOutputs()) {
                             String[] output = new String[v.getArity()];
@@ -114,6 +114,8 @@ public class SimulationMockFactory {
         v_in.setName(name);
         v_in.setDataType(type);
         v_in.setPrecision_(precision);
+        v_in.setMin_(0d);
+        v_in.setMax_(10d);
         v_in.persist();
         return v_in;
     }
