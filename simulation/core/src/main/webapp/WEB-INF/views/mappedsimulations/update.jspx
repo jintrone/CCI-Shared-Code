@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <form:update id="fu_edu_mit_cci_simulation_model_MappedSimulation" modelAttribute="mappedSimulation" path="/mappedsimulations" z="Dlb9d3rdFJR4KVr8yMF48wqzLNM=">
+        <field:datetime dateTimePattern="${mappedSimulation_created_date_format}" field="created" id="c_edu_mit_cci_simulation_model_MappedSimulation_created" z="6DYzUCjSDfN288NfE4dm23Pcrzg="/>
+        <field:input field="simulationVersion" id="c_edu_mit_cci_simulation_model_MappedSimulation_simulationVersion" required="true" validationMessageCode="field_invalid_integer" z="b0fJyUe31vb3c0lwfNCga72+LFc="/>
+        <field:input field="description" id="c_edu_mit_cci_simulation_model_MappedSimulation_description" z="FU6xkUkvTiGzBit+uHN1IWhaDxI="/>
+        <field:input field="name" id="c_edu_mit_cci_simulation_model_MappedSimulation_name" z="gCsSPzyenjyC+T/4Xc1HliZczSM="/>
+        
+        <field:input field="outputs" id="c_edu_mit_cci_simulation_model_MappedSimulation_outputs" z="cVZoXd2dBI64UeC99pry1clE86A="/>
+        <field:select field="executorSimulation" id="c_edu_mit_cci_simulation_model_MappedSimulation_executorSimulation" itemValue="id" items="${defaultsimulations}" path="/defaultsimulations" z="+u3lKQMFznR1/VYjA3daQkALesM="/>
+        
+        
+    <field:input field="url" id="c_edu_mit_cci_simulation_model_MappedSimulation_url" z="pYSbksOvir4IKiMbZ3red/Nx8/s="/>
+    
+    
+    <field:input field="replication" id="c_edu_mit_cci_simulation_model_MappedSimulation_replication" validationMessageCode="field_invalid_integer" z="++D8qeq/3zppKpObES2MKa8ltG8="/>
+    <field:input field="samplingFrequency" id="c_edu_mit_cci_simulation_model_MappedSimulation_samplingFrequency" validationMessageCode="field_invalid_integer" z="4pLnHrPgsNzShwm8CAniPAMuLxc="/>
+        
+    <field:select field="manyToOne" id="c_edu_mit_cci_simulation_model_MappedSimulation_manyToOne" items="${manytoonemappings}" path="manytoonemappings" z="6GThtQHCYXw1DKtBdk6K9HEhUvc="/>
+    
+    
+    <field:select field="indexingVariable" id="c_edu_mit_cci_simulation_model_MappedSimulation_indexingVariable" itemValue="id" items="${variables}" path="/variables" z="dIKSbUsI27KZD0aInSh5JTUfqNM="/>
+    
+    <field:input field="inputs" id="c_edu_mit_cci_simulation_model_MappedSimulation_inputs" z="HhyWIndjwJggd9FjbTt7gXOshG4="/>
+    </form:update>
+</div>

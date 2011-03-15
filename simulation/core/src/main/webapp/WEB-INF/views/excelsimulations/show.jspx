@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:show id="ps_edu_mit_cci_simulation_excel_server_ExcelSimulation" object="${excelsimulation}" path="/excelsimulations" z="99nXJwYrV9FiY59e3TRr+zrka9c=">
+        <field:display date="true" dateTimePattern="${excelSimulation_creation_date_format}" field="creation" id="s_edu_mit_cci_simulation_excel_server_ExcelSimulation_creation" object="${excelsimulation}" z="RUkUjCIWwS3iz++y6XdasfLSgnA="/>
+        <field:display field="simulation" id="s_edu_mit_cci_simulation_excel_server_ExcelSimulation_simulation" object="${excelsimulation}" z="fMtzzxzgkW5VTMXpssHDB7k75Sc="/>
+        <field:display field="inputs" id="s_edu_mit_cci_simulation_excel_server_ExcelSimulation_inputs" object="${excelsimulation}" z="sGwWGmb4YXmujcMG6fUlu/XD6hs="/>
+        <field:display field="outputs" id="s_edu_mit_cci_simulation_excel_server_ExcelSimulation_outputs" object="${excelsimulation}" z="H4JybmyiN8hHiApg4bEixmBfSbU="/>
+        <field:display field="file" id="s_edu_mit_cci_simulation_excel_server_ExcelSimulation_file" object="${excelsimulation}" z="2xORJR59kHZjxY/iX/i6WmOrJUQ="/>
+    </page:show>
+</div>

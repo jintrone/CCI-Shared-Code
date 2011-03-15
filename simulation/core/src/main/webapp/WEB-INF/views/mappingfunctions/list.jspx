@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:list id="pl_edu_mit_cci_simulation_model_MappingFunction" items="${mappingfunctions}" z="jDDQsdBmxj9Ebbs/JP4ZVzOazM4=">
+        <table:table data="${mappingfunctions}" id="l_edu_mit_cci_simulation_model_MappingFunction" path="/mappingfunctions" z="tVLwGi2JtYFM6YV82ApOaPbkvgA=">
+            <table:column id="c_edu_mit_cci_simulation_model_MappingFunction_fx" property="fx" z="VFrXe2oYcv+Gumg4DJz3+P5YWCs="/>
+            <table:column id="c_edu_mit_cci_simulation_model_MappingFunction_parameters" property="parameters" z="mNgARN9uBxitOYMcmGe5/x34uxY="/>
+        </table:table>
+    </page:list>
+</div>

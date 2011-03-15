@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <form:update id="fu_edu_mit_cci_simulation_model_Step" modelAttribute="step" path="/steps" z="4fms3R7O0O+YqoE/ko6YLcjmkQ8=">
+        <field:input field="order_" id="c_edu_mit_cci_simulation_model_Step_order_" validationMessageCode="field_invalid_integer" z="lJ9q48IInTPlrGAoiIFOgEH6hrg="/>
+        
+    
+    
+    <field:select field="simulations" id="c_edu_mit_cci_simulation_model_Step_simulations" itemValue="id" items="${defaultsimulations}" multiple="true" path="/defaultsimulations" z="O93hK7d4BDaj44E4NLS/x0asBF8="/>
+    </form:update>
+</div>

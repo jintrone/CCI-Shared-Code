@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:show id="ps_edu_mit_cci_simulation_model_CompositeSimulation" object="${compositesimulation}" path="/compositesimulations" z="8ERSFbNNZ2DzaguQRpFGCMeLRMc=">
+        <field:display date="true" dateTimePattern="${compositeSimulation_created_date_format}" field="created" id="s_edu_mit_cci_simulation_model_CompositeSimulation_created" object="${compositesimulation}" z="N8yU/SrT7g9NpF/pnPGCj3exbz0="/>
+        <field:display field="simulationVersion" id="s_edu_mit_cci_simulation_model_CompositeSimulation_simulationVersion" object="${compositesimulation}" z="9UGbYJWcxAC/dr5yPI+t2kX6m5c="/>
+        <field:display field="description" id="s_edu_mit_cci_simulation_model_CompositeSimulation_description" object="${compositesimulation}" z="fUpJAGEl9V8iCuxjdXtUkdWt0B0="/>
+        <field:display field="name" id="s_edu_mit_cci_simulation_model_CompositeSimulation_name" object="${compositesimulation}" z="5lOZsU9bbXYfYWp+5N+TwH1wMe4="/>
+        
+        <field:display field="outputs" id="s_edu_mit_cci_simulation_model_CompositeSimulation_outputs" object="${compositesimulation}" z="Cps0j4hqHl0scI2kLRVp18om1Cg="/>
+        <field:display field="steps" id="s_edu_mit_cci_simulation_model_CompositeSimulation_steps" object="${compositesimulation}" z="WPpgxYFNvyqTaKZQzq2SENzRHkQ="/>
+    <field:display field="url" id="s_edu_mit_cci_simulation_model_CompositeSimulation_url" object="${compositesimulation}" z="chb1s8K3kUCGOi95oYenCw485h4="/>
+    <field:display field="stepMapping" id="s_edu_mit_cci_simulation_model_CompositeSimulation_stepMapping" object="${compositesimulation}" z="NjivNXBECvSifUkRmbx7Tz47NEk="/>
+    <field:display field="inputs" id="s_edu_mit_cci_simulation_model_CompositeSimulation_inputs" object="${compositesimulation}" z="a3lp5VDl4C9khQ/Plyk/3IS4El0="/>
+    </page:show>
+</div>

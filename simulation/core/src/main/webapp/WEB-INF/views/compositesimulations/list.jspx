@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:list id="pl_edu_mit_cci_simulation_model_CompositeSimulation" items="${compositesimulations}" z="+vqaZOievd2WgqVrO9f+HhPs6lI=">
+        <table:table data="${compositesimulations}" id="l_edu_mit_cci_simulation_model_CompositeSimulation" path="/compositesimulations" z="Ov4yBvx1wwNTpXVZPbsKMEwPN2M=">
+            <table:column id="c_edu_mit_cci_simulation_model_CompositeSimulation_created" property="created" z="AgBtnPJVpvd2zzR2LwaKxXEGZUM="/>
+            <table:column id="c_edu_mit_cci_simulation_model_CompositeSimulation_simulationVersion" property="simulationVersion" z="aGGy4pDk+CqEcA2gubQkwehQNHg="/>
+            <table:column id="c_edu_mit_cci_simulation_model_CompositeSimulation_description" property="description" z="BCxShbJCkt3ISVmUn2T7VXBs9+g="/>
+            <table:column id="c_edu_mit_cci_simulation_model_CompositeSimulation_name" property="name" z="4GUE3WRw6sOoqRaE8xXdMxiNBss="/>
+            
+            
+        <table:column id="c_edu_mit_cci_simulation_model_CompositeSimulation_url" property="url" z="5/zBJG4EFRk9HXeaqNN9T1cxTnE="/>
+        
+        <table:column id="c_edu_mit_cci_simulation_model_CompositeSimulation_inputs" property="inputs" z="IyP1GcvmXD8n2mxCGCbheCTzMng="/>
+        </table:table>
+    </page:list>
+</div>

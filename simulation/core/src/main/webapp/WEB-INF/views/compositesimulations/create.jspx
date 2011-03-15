@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <form:create id="fc_edu_mit_cci_simulation_model_CompositeSimulation" modelAttribute="compositeSimulation" path="/compositesimulations" render="${empty dependencies}" z="jKhSTEjF9YYx8FF3Vx3I9d615g8=">
+        <field:datetime dateTimePattern="${compositeSimulation_created_date_format}" field="created" id="c_edu_mit_cci_simulation_model_CompositeSimulation_created" z="gnW0ClY3UnAQZUf0SphzSRPAqbQ="/>
+        <field:input field="simulationVersion" id="c_edu_mit_cci_simulation_model_CompositeSimulation_simulationVersion" required="true" validationMessageCode="field_invalid_integer" z="5T3O7BFbATRsDQc+4jWoRLR7IY4="/>
+        <field:input field="description" id="c_edu_mit_cci_simulation_model_CompositeSimulation_description" z="depsbP6xMPYPEyLy+rYIhp7WiUk="/>
+        <field:input field="name" id="c_edu_mit_cci_simulation_model_CompositeSimulation_name" z="ZVL645lSkkwi5TII23SK1rVPCeY="/>
+        
+        <field:input field="outputs" id="c_edu_mit_cci_simulation_model_CompositeSimulation_outputs" z="nrQX9tdtvBtD5AUU6w9AThk5MaE="/>
+        <field:select field="steps" id="c_edu_mit_cci_simulation_model_CompositeSimulation_steps" itemValue="id" items="${steps}" multiple="true" path="/steps" z="87Ippq9z96lrAo/HdlTRsrsURZk="/>
+    <field:input field="url" id="c_edu_mit_cci_simulation_model_CompositeSimulation_url" z="ghaidRApCKPLEDcxCW4rTWhqNsM="/>
+    <field:select field="stepMapping" id="c_edu_mit_cci_simulation_model_CompositeSimulation_stepMapping" itemValue="id" items="${compositestepmappings}" multiple="true" path="/compositestepmappings" z="ukWzcnkyIhVqho7Z6z3sooiVSrA="/>
+    <field:input field="inputs" id="c_edu_mit_cci_simulation_model_CompositeSimulation_inputs" z="buYLQ5unlCFl4l/1T+uC7lS4Ni8="/>
+    </form:create>
+    <form:dependency dependencies="${dependencies}" id="d_edu_mit_cci_simulation_model_CompositeSimulation" render="${not empty dependencies}" z="9V4vcxuvTihAzc5zC8bxO4JnxoA="/>
+</div>

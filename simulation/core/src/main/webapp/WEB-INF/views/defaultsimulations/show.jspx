@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:show id="ps_edu_mit_cci_simulation_model_DefaultSimulation" object="${defaultsimulation}" path="/defaultsimulations" z="fbXIULR0Tpgljor/DFPaIZCYLnY=">
+        <field:display date="true" dateTimePattern="${defaultSimulation_created_date_format}" field="created" id="s_edu_mit_cci_simulation_model_DefaultSimulation_created" object="${defaultsimulation}" z="ff3GWxc6MeenLbr/UzAhMKE6dy4="/>
+        <field:display field="simulationVersion" id="s_edu_mit_cci_simulation_model_DefaultSimulation_simulationVersion" object="${defaultsimulation}" z="OGfZx/3wDLgyJ9cPmZv4dIuQYBY="/>
+        <field:display field="description" id="s_edu_mit_cci_simulation_model_DefaultSimulation_description" object="${defaultsimulation}" z="Cr6wUUhJyrOnQRGqh/00yLgKzBw="/>
+        <field:display field="name" id="s_edu_mit_cci_simulation_model_DefaultSimulation_name" object="${defaultsimulation}" z="d9XcRKDemH+W4BeA/uu7QmU5pIs="/>
+        
+        <field:display field="outputs" id="s_edu_mit_cci_simulation_model_DefaultSimulation_outputs" object="${defaultsimulation}" z="jWssUuPzbJMHZ0Gx+qE/VBcxgig="/>
+    <field:display field="url" id="s_edu_mit_cci_simulation_model_DefaultSimulation_url" object="${defaultsimulation}" z="YEy7P8bZnAhnLPHsgrtcAlWdSxE="/>
+    <field:display field="inputs" id="s_edu_mit_cci_simulation_model_DefaultSimulation_inputs" object="${defaultsimulation}" z="IgrPVFX4VNsgV786iMDQhl3KnVc="/>
+    </page:show>
+</div>

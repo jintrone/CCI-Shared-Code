@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:list id="pl_edu_mit_cci_simulation_model_MappedSimulation" items="${mappedsimulations}" z="FJCxPZlEowGZ2sCW2NsiXnMu7q8=">
+        <table:table data="${mappedsimulations}" id="l_edu_mit_cci_simulation_model_MappedSimulation" path="/mappedsimulations" z="iTK0GuIufPSqkcl/sR9smZUGR98=">
+            <table:column id="c_edu_mit_cci_simulation_model_MappedSimulation_created" property="created" z="vpQyzsdLttRWC7XGg3cbP6Z85L4="/>
+            <table:column id="c_edu_mit_cci_simulation_model_MappedSimulation_simulationVersion" property="simulationVersion" z="Z8wtYBL4lSejck71fJCKKbfe1pI="/>
+            <table:column id="c_edu_mit_cci_simulation_model_MappedSimulation_description" property="description" z="f9HukAhP/LqCqyxDV23gL2qPkp8="/>
+            <table:column id="c_edu_mit_cci_simulation_model_MappedSimulation_name" property="name" z="ruX17EOtN7tYfrkhTxVjzURB4Wc="/>
+            
+            
+        <table:column id="c_edu_mit_cci_simulation_model_MappedSimulation_url" property="url" z="i215t7/UqXScCHalaz/tBsZxptw="/>
+        
+        <table:column id="c_edu_mit_cci_simulation_model_MappedSimulation_inputs" property="inputs" z="2/pc5+5SW3JF67RfJ9uUVDn8hU4="/>
+        </table:table>
+    </page:list>
+</div>

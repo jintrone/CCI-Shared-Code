@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+    <definition extends="default" name="defaultsimulations/list">
+        <put-attribute name="body" value="/WEB-INF/views/defaultsimulations/list.jspx"/>
+    </definition>
+<definition extends="default" name="defaultsimulations/show">
+        <put-attribute name="body" value="/WEB-INF/views/defaultsimulations/show.jspx"/>
+    </definition>
+<definition extends="default" name="defaultsimulations/create">
+        <put-attribute name="body" value="/WEB-INF/views/defaultsimulations/create.jspx"/>
+    </definition>
+<definition extends="default" name="defaultsimulations/createexcel">
+        <put-attribute name="body" value="/WEB-INF/views/defaultsimulations/create_excel.jspx"/>
+    </definition>
+<definition extends="default" name="defaultsimulations/update">
+        <put-attribute name="body" value="/WEB-INF/views/defaultsimulations/update.jspx"/>
+    </definition>
+<definition extends="default" name="defaultsimulations/runsimulation">
+        <put-attribute name="body" value="/WEB-INF/views/defaultsimulations/runsimulation.jspx"/>
+    </definition>
+</tiles-definitions>

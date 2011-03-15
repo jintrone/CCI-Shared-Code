@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:show id="ps_edu_mit_cci_simulation_model_ScenarioList" object="${scenariolist}" path="/scenariolists" z="L9DMp90PSLSU+1hcdNtqJGWv3x4=">
+        <field:display field="scenarios" id="s_edu_mit_cci_simulation_model_ScenarioList_scenarios" object="${scenariolist}" z="6BjM2PPaFvVHRKipAuhzCDsH25c="/>
+    <field:display field="testField" id="s_edu_mit_cci_simulation_model_ScenarioList_testField" object="${scenariolist}" z="B7fAMbyhscNrQXgVBir8Rt8ZeLY="/>
+    </page:show>
+</div>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:show id="ps_edu_mit_cci_simulation_model_MappedSimulation" object="${mappedsimulation}" path="/mappedsimulations" z="lwKw10+Dn4imGWLSOcltA8vsAeI=">
+        <field:display date="true" dateTimePattern="${mappedSimulation_created_date_format}" field="created" id="s_edu_mit_cci_simulation_model_MappedSimulation_created" object="${mappedsimulation}" z="xkX6VMPszC1xuSF8LsaNh1Xex08="/>
+        <field:display field="simulationVersion" id="s_edu_mit_cci_simulation_model_MappedSimulation_simulationVersion" object="${mappedsimulation}" z="N8VUty3z79PAhwtVBBQ1pQvISNw="/>
+        <field:display field="description" id="s_edu_mit_cci_simulation_model_MappedSimulation_description" object="${mappedsimulation}" z="OxtD2oMmNsZ+9MKmg+Qtr7nJquY="/>
+        <field:display field="name" id="s_edu_mit_cci_simulation_model_MappedSimulation_name" object="${mappedsimulation}" z="e/2JmXRq3j7zFCoBRLY+y7dU2so="/>
+        
+        <field:display field="outputs" id="s_edu_mit_cci_simulation_model_MappedSimulation_outputs" object="${mappedsimulation}" z="p5liWphxiPIVi0YI2L4lVRD8NmQ="/>
+        <field:display field="executorSimulation" id="s_edu_mit_cci_simulation_model_MappedSimulation_executorSimulation" object="${mappedsimulation}" z="UfjkYZM3yrZxdJXURnEfQyI9v+k="/>
+        
+        
+    <field:display field="url" id="s_edu_mit_cci_simulation_model_MappedSimulation_url" object="${mappedsimulation}" z="vujvPHG6q0/WNEG298ryl7Ht40k="/>
+    
+    
+    <field:display field="replication" id="s_edu_mit_cci_simulation_model_MappedSimulation_replication" object="${mappedsimulation}" z="QTgUflOStQZ5HAKgnCMv1pxRif0="/>
+    <field:display field="samplingFrequency" id="s_edu_mit_cci_simulation_model_MappedSimulation_samplingFrequency" object="${mappedsimulation}" z="G4pbOeJg7F41aLN/k1Z7FmxSYSE="/>
+        
+    <field:display field="manyToOne" id="s_edu_mit_cci_simulation_model_MappedSimulation_manyToOne" object="${mappedsimulation}" z="uuKK1t8IVMAeR4Ogfz1v+AE9awA="/>
+    
+    
+    <field:display field="indexingVariable" id="s_edu_mit_cci_simulation_model_MappedSimulation_indexingVariable" object="${mappedsimulation}" z="sfpOK16BXwOzpr0NM0jCmZzHhEk="/>
+    
+    <field:display field="inputs" id="s_edu_mit_cci_simulation_model_MappedSimulation_inputs" object="${mappedsimulation}" z="p8TCaWkyvQwy8gOmWKUpUNNGhp4="/>
+    </page:show>
+</div>

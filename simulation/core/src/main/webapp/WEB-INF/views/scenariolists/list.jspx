@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:list id="pl_edu_mit_cci_simulation_model_ScenarioList" items="${scenariolists}" z="aUfe9+AbXP1H5+QOLQ1nJm1EqEU=">
+        <table:table data="${scenariolists}" id="l_edu_mit_cci_simulation_model_ScenarioList" path="/scenariolists" z="d5BFtMtkvVKlXf3c1j9kaTtVIcw=">
+            <table:column id="c_edu_mit_cci_simulation_model_ScenarioList_scenarios" property="scenarios" z="T+w6a4D+GRjL9BxaJ3temImL4i4="/>
+        <table:column id="c_edu_mit_cci_simulation_model_ScenarioList_testField" property="testField" z="OaZp9iwTCjSR18aVkooRLQhKd2Q="/>
+        </table:table>
+    </page:list>
+</div>
