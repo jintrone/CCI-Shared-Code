@@ -20,4 +20,12 @@ privileged aspect Tuple_Roo_JavaBean {
         return this.value_;
     }
     
+    public String Tuple.getStatuses_() {
+        return this.statuses_;
+    }
+    
+    public void Tuple.setStatuses_(String statuses_) {
+        this.statuses_ = statuses_;
+    }
+    
 }

@@ -23,6 +23,35 @@ import javax.xml.bind.annotation.*;
 @XmlAccessorType(XmlAccessType.NONE)
 public class Variable {
 
+    public Variable() {
+
+    }
+
+    public Variable(String name, String description, int arity, int precision, double min, double max) {
+        setName(name);
+        setDescription(description);
+        setArity(arity);
+        setPrecision_(precision);
+        setMax_(max);
+        setMin_(min);
+        setDataType(DataType.NUM);
+    }
+
+    public Variable(String name, String description, int arity, String[] options) {
+        setName(name);
+        setDescription(description);
+        setArity(arity);
+        setOptions(options);
+        setDataType(DataType.CAT);
+    }
+
+    public Variable(String name, String description, int arity) {
+        setName(name);
+        setDescription(description);
+        setArity(arity);
+        setDataType(DataType.TXT);
+    }
+
     @XmlElement(name="Name")
     private String name;
 

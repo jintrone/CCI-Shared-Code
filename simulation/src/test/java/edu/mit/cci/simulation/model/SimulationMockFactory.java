@@ -128,6 +128,8 @@ public class SimulationMockFactory {
         dateinput.setArity(11);
         dateinput.setPrecision_(0);
         dateinput.persist();
+        dateinput.setMin_(0d);
+        dateinput.setMax_(4000d);
 
         Variable emissionsinput = new Variable();
         emissionsinput.setName("Emissions");
@@ -135,6 +137,9 @@ public class SimulationMockFactory {
         emissionsinput.setArity(11);
         emissionsinput.setPrecision_(2);
         emissionsinput.persist();
+        emissionsinput.setMin_(0d);
+        emissionsinput.setMax_(5d);
+
 
         Variable gdpOutput = new Variable();
         gdpOutput.setDataType(DataType.NUM);
@@ -142,6 +147,8 @@ public class SimulationMockFactory {
         gdpOutput.setArity(11);
         gdpOutput.setPrecision_(2);
         gdpOutput.persist();
+        gdpOutput.setMin_(-100d);
+        gdpOutput.setMax_(100d);
 
         simulation.getInputs().add(dateinput);
         simulation.getInputs().add(emissionsinput);

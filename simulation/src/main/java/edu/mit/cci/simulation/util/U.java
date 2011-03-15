@@ -2,6 +2,7 @@ package edu.mit.cci.simulation.util;
 
 import edu.mit.cci.simulation.model.SimulationException;
 import edu.mit.cci.simulation.model.Tuple;
+import edu.mit.cci.simulation.model.TupleStatus;
 import edu.mit.cci.simulation.model.Variable;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -20,11 +21,19 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * User: jintrone
@@ -36,15 +45,22 @@ public class U {
     private static String VAL_SEP = ";";
     private static String VAR_SEP = "&";
     private static String VAR_VAL_SEP = "=";
+    private static String NULL_VAL = "<null/>";
 
     private static Logger log = Logger.getLogger(U.class);
+
+
 
     public static String escape(String[] vals) {
         StringBuffer buffer = new StringBuffer();
         if (vals == null || vals.length == 0) return "";
         for (String val : vals) {
             try {
-                buffer.append(URLEncoder.encode(val, "UTF-8"));
+                if (val == null) {
+                    buffer.append(NULL_VAL);
+                } else {
+                    buffer.append(encode(val));
+                }
                 buffer.append(VAL_SEP);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -53,12 +69,20 @@ public class U {
         return buffer.toString();
     }
 
+    public static String encode(String val) throws UnsupportedEncodingException {
+        return URLEncoder.encode(val, "UTF-8");
+    }
+
     public static String[] unescape(String vals) {
         List<String> result = new ArrayList<String>();
         if (vals != null && !vals.trim().isEmpty()) {
             for (String val : vals.split(VAL_SEP)) {
                 try {
-                    result.add(URLDecoder.decode(val, "UTF-8"));
+                    if (val.equals(NULL_VAL)) {
+                        result.add(null);
+                    } else {
+                        result.add(URLDecoder.decode(val, "UTF-8"));
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -67,15 +91,19 @@ public class U {
         return result.toArray(new String[]{});
     }
 
-    public static String[] unescapeNumeric(String vals,int precision) {
+    public static String[] unescapeNumeric(String vals, int precision) {
         List<String> result = new ArrayList<String>();
         if (vals != null && !vals.trim().isEmpty()) {
             for (String val : vals.split(VAL_SEP)) {
                 try {
-                    String tmp = URLDecoder.decode(val, "UTF-8");
-                    Double num = Double.valueOf(tmp);
-                    Validation.notNull(num,"Parsed value from tuple");
-                    result.add(String.format("%."+precision+"f",num));
+                    if (val.equals(NULL_VAL)) {
+                        result.add(null);
+                    } else {
+                        String tmp = URLDecoder.decode(val, "UTF-8");
+                        Double num = Double.valueOf(tmp);
+                        Validation.notNull(num, "Parsed value from tuple");
+                        result.add(String.format("%." + precision + "f", num));
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -128,9 +156,9 @@ public class U {
             Variable v = Variable.findVariable(Long.parseLong(ent.getKey()));
             if (v == null)
                 throw new SimulationException("Variable for id:" + ent.getKey() + " could not be identified");
-            Tuple t = new Tuple();
+            Tuple t = new Tuple(v);
             t.setValues(unescape(ent.getValue()));
-            t.setVar(v);
+
             result.put(v, t);
         }
         return result;
@@ -153,9 +181,9 @@ public class U {
             if (v == null) {
                 throw new SimulationException("Could not identify variable in response: " + varval[0]);
             }
-            Tuple t = new Tuple();
+            Tuple t = new Tuple(v);
             t.setValue_(varval[1]);
-            t.setVar(v);
+
             result.add(t);
         }
         return result;
@@ -229,23 +257,28 @@ public class U {
         return builder.toString();
     }
 
-    public static void copyRange(Tuple from, Tuple to, int fromidx, int toidx) {
+    public static void copyRange(Tuple from, Tuple to, int fromidx, int toidx) throws SimulationValidationException {
         String[] vals = Arrays.copyOfRange(from.getValues(), fromidx, toidx);
         to.setValues(vals);
 
     }
 
-    public static void join(Tuple first, Tuple second) {
+    public static void join(Tuple first, Tuple second) throws SimulationValidationException {
         String sep = first.getValue_().isEmpty() || first.getValue_().endsWith(";") ? "" : ";";
         first.setValue_(first.getValue_() + sep + second.getValue_());
+    }
+
+    public static String join(String first, String second) throws SimulationValidationException {
+        String sep = first.isEmpty() || first.endsWith(";") ? "" : ";";
+        return first+sep+second;
     }
 
     public static boolean equals(Object one, Object two) {
         return one == null ? two == null : one.equals(two);
     }
 
-     public static String getCellValueAsString(HSSFSheet worksheet, int rowCounter, int colCounter,
-        String defaultValue) throws SimulationException {
+    public static String getCellValueAsString(HSSFSheet worksheet, int rowCounter, int colCounter,
+                                              String defaultValue) throws SimulationException {
         Validation.notNull(worksheet, "worksheet");
 
         Row row = worksheet.getRow(rowCounter);
@@ -272,11 +305,11 @@ public class U {
                 throw new SimulationComputationException("Error computing fomula");
             } else {
                 throw new SimulationException("invalid formula type with cached type of  "
-                    + cell.getCachedFormulaResultType() + " for row of " + rowCounter + " and col of " + colCounter);
+                        + cell.getCachedFormulaResultType() + " for row of " + rowCounter + " and col of " + colCounter);
             }
         } else {
             throw new SimulationException("invalid type with type of  " + cell.getCellType() + " for rowr of "
-                + rowCounter + " and col of " + colCounter);
+                    + rowCounter + " and col of " + colCounter);
         }
 
     }
@@ -286,4 +319,44 @@ public class U {
     }
 
 
+    public static Map<Integer, TupleStatus[]> parseOrderedMap(String str) {
+        String[] parts = str.split(VAR_SEP);
+        Map<Integer, TupleStatus[]> result = new HashMap<Integer, TupleStatus[]>();
+        if (!str.trim().isEmpty()) {
+            for (String part : parts) {
+                String[] vv = part.split(VAR_VAL_SEP);
+                if (vv.length < 2) continue;
+                String[] val = unescape(vv[1]);
+                if (val.length < 1) continue;
+                TupleStatus[] statuses = new TupleStatus[val.length];
+                for (int i = 0; i < val.length; i++) {
+                    statuses[i] = TupleStatus.valueOf(val[i]);
+                }
+                result.put(Integer.parseInt(vv[0]), statuses);
+            }
+        }
+        return result;
+    }
+
+    public static String updateStringMap(String key, String val, String map) {
+        if (map == null) map = "";
+        String value = key + VAR_VAL_SEP;
+        try {
+            value+=encode(val);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } finally {
+            value+=val;
+        }
+        if (map.isEmpty()) {
+            return value;
+        } else {
+            Pattern p = Pattern.compile("(" + VAR_SEP + "|^)" + key +  VAR_VAL_SEP + "[^" + VAR_SEP + "]+");
+            Matcher m = p.matcher(map);
+            if (m.find()) {
+                return m.replaceAll("$1"+value);
+            }
+        }
+        return map + VAR_SEP + value;
+    }
 }

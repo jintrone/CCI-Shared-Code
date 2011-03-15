@@ -1,6 +1,7 @@
 package edu.mit.cci.simulation.model;
 
 import edu.mit.cci.simulation.util.U;
+import org.apache.commons.collections.iterators.EntrySetMapIterator;
 import org.springframework.roo.addon.entity.RooEntity;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.tostring.RooToString;
@@ -20,7 +21,7 @@ import java.util.Set;
 @RooJavaBean
 @RooToString
 @RooEntity
-@XmlRootElement(name="MappedSimulation")
+@XmlRootElement(name = "MappedSimulation")
 @XmlAccessorType(XmlAccessType.NONE)
 public class MappedSimulation extends DefaultSimulation {
 
@@ -48,14 +49,13 @@ public class MappedSimulation extends DefaultSimulation {
             @Override
             public String run(String url, Map<String, String> params) throws SimulationException {
                 Map<Variable, Tuple> inputs = U.convertToVarTupleMap(params);
-                Map<Variable, Tuple> mergedresults = new HashMap<Variable, Tuple>();
+                Map<Variable, String> mergedresults = new HashMap<Variable, String>();
                 Set<Tuple> thisrun = new HashSet<Tuple>();
                 for (int i = 0; i < replication; i += samplingFrequency) {
                     thisrun.clear();
 
                     for (Variable input : executorSimulation.getInputs()) {
-                        Tuple t = new Tuple();
-                        t.setVar(input);
+                        Tuple t = new Tuple(input);
                         Tuple values = inputs.get(getVariableMap().get(input));
                         U.copyRange(values, t, i * input.getArity(), (i + 1) * input.getArity());
                         thisrun.add(t);
@@ -63,27 +63,28 @@ public class MappedSimulation extends DefaultSimulation {
 
                     Set<Tuple> results = executorSimulation.runRaw(thisrun);
 
-                    for (Tuple t:results) {
+                    for (Tuple t : results) {
+                        String s = t.getValue_();
                         if (mergedresults.containsKey(t.getVar())) {
-                            Tuple e = mergedresults.get(t.getVar());
-                            U.join(e, t);
-                        } else {
-                            mergedresults.put(t.getVar(),t);
+                           s = U.join(mergedresults.get(t.getVar()), s);
                         }
+                        mergedresults.put(t.getVar(), s);
+
                     }
 
 
                 }
 
                 //remap results
-                Map<Variable,Tuple> results = new HashMap<Variable,Tuple>();
-                for (Tuple t:mergedresults.values()) {
-                    t.setVar(getVariableMap().get(t.getVar()));
-                    if (manyToOne!=null) {
-                        manyToOne.reduce(t);
+                Map<Variable, Tuple> results = new HashMap<Variable, Tuple>();
+                for (Map.Entry<Variable,String> ent:mergedresults.entrySet()) {
+                    Tuple t = new Tuple(getVariableMap().get(ent.getKey()));
+                    if (manyToOne != null) {
+                        t.setValues(new String[]{manyToOne.reduce(U.unescape(ent.getValue()))});
+                    } else {
+                        t.setValue_(ent.getValue());
                     }
-
-                    results.put(t.getVar(),t);
+                     results.put(t.getVar(), t);
                 }
 
 
@@ -149,22 +150,27 @@ public class MappedSimulation extends DefaultSimulation {
             U.copy(mappedInput, v);
             v.setArity(replication * mappedInput.getArity());
         }
-        int outputArity = manyToOne == null ? (int) Math.ceil((double) replication / (double) samplingFrequency) : 1;
+        int count =  (int) Math.ceil((double) replication / (double) samplingFrequency);
+        int outputArity = manyToOne == null ? count : 1;
         for (Variable mo : esim.getOutputs()) {
             Variable v = new Variable();
-            v.persist();
+
             getOutputs().add(v);
             getVariableMap().put(mo, v);
             U.copy(mo, v);
             v.setArity(mo.getArity() * outputArity);
+            if (getManyToOne() == ManyToOneMapping.SUM) {
+                v.setMax_(mo.getMax_()*count);
+            }
+            v.persist();
         }
         updateIndexVariable();
 
     }
 
-    public void setVariableMap(Map<Variable,Variable> map) {
+    public void setVariableMap(Map<Variable, Variable> map) {
         this.variableMap.clear();
-        if (map!=null) {
+        if (map != null) {
             variableMap.putAll(map);
         }
     }

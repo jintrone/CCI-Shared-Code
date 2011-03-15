@@ -41,13 +41,13 @@ public class ExcelRunnerStrategyTest {
 
         String[] dateinput = new String[]{"2000", "2010", "2020", "2030", "2040", "2050", "2060", "2070", "2080", "2090", "2100"};
         String[] emissions = new String[]{"1.7", "1.7", "1.7", "1.7", "1.7", "1.7", "1.7", "1.7", "1.7", "1.7", "1.7"};
-        String[] expect = new String[]{"0.00","0.00","0.00","0.00","0.00","0.00","0.00","-0.10","-0.53","-0.91","-1.04"};
+        String[] expect = new String[]{"0","0","0.00","0.00","0.00","0.00","0.00","-0.10","-0.53","-0.91","-1.04"};
 
         List<Tuple> inputs = new ArrayList<Tuple>();
 
         for (Variable v : sim.getInputs()) {
-            Tuple t = new Tuple();
-            t.setVar(v);
+
+            Tuple t = new Tuple(v);
             t.persist();
             if (v.getName().equals("Year")) {
                 t.setValues(dateinput);

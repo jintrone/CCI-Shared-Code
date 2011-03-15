@@ -1,5 +1,6 @@
 package edu.mit.cci.simulation.model;
 
+import edu.mit.cci.simulation.util.SimulationValidationException;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,74 +20,50 @@ import org.springframework.transaction.annotation.Transactional;
 public class ManyToOneMappingTest {
 
     @Test
-    public void testSum() {
-        Tuple t = new Tuple();
+    public void testSum() throws SimulationValidationException {
+
+        Tuple t = new Tuple(new Variable("Test","Test",3,0,0d,10d));
         t.setValues(new String[]{"1", "2", "3"});
-        ManyToOneMapping.SUM.reduce(t);
-        Assert.assertEquals(Double.valueOf("6"), Double.valueOf(t.getValues()[0]));
+        String val = ManyToOneMapping.SUM.reduce(t.getValues());
+        Assert.assertEquals(Double.valueOf("6"), Double.valueOf(val));
     }
 
      @Test
-    public void testMedian_odd() {
-        Tuple t = new Tuple();
+    public void testMedian_odd() throws SimulationValidationException {
+        Tuple t = new Tuple(new Variable("Test","Test",3,1,0d,10d));
         t.setValues(new String[]{"1", "2", "3"});
-        ManyToOneMapping.MEDIAN.reduce(t);
-        Assert.assertEquals("2.0", t.getValues()[0]);
+        String val = ManyToOneMapping.MEDIAN.reduce(t.getValues());
+        Assert.assertEquals("2.0", val);
 
     }
 
      @Test
-    public void testMedian_even() {
-        Tuple t = new Tuple();
+    public void testMedian_even() throws SimulationValidationException {
+        Tuple t = new Tuple(new Variable("Test","Test",4,1,0d,10d));
         t.setValues(new String[]{"1", "2", "3", "4"});
-        ManyToOneMapping.MEDIAN.reduce(t);
-        Assert.assertEquals("2.0", t.getValues()[0]);
+        String val = ManyToOneMapping.MEDIAN.reduce(t.getValues());
+        Assert.assertEquals("2.0", val);
 
     }
 
      @Test
-    public void testFirst() {
-        Tuple t = new Tuple();
+    public void testFirst() throws SimulationValidationException {
+        Tuple t = new Tuple(new Variable("Test","Test",4,0,0d,10d));
         t.setValues(new String[]{"1", "2", "3", "4"});
-        ManyToOneMapping.FIRST.reduce(t);
-        Assert.assertEquals("1", t.getValues()[0]);
+        String val = ManyToOneMapping.FIRST.reduce(t.getValues());
+        Assert.assertEquals("1", val);
 
     }
 
      @Test
-    public void testLast() {
-        Tuple t = new Tuple();
+    public void testLast() throws SimulationValidationException {
+        Tuple t = new Tuple(new Variable("Test","Test",4,0,0d,10d));
         t.setValues(new String[]{"1", "2", "3", "4"});
-        ManyToOneMapping.LAST.reduce(t);
-        Assert.assertEquals("4", t.getValues()[0]);
+        String val = ManyToOneMapping.LAST.reduce(t.getValues());
+        Assert.assertEquals("4",val);
 
     }
-      @Test
-    public void testBadInputEmpty() {
-        Tuple t = new Tuple();
-        t.setValues(new String[]{});
-        ManyToOneMapping.FIRST.reduce(t);
-        Assert.assertEquals(0, t.getValues().length);
 
-    }
-       @Test
-    public void testBadInputNull() {
-        Tuple t = new Tuple();
-        t.setValues(null);
-        ManyToOneMapping.FIRST.reduce(t);
-        Assert.assertEquals(0, t.getValues().length);
 
-    }
-      @Test
-    public void testBadInputNonNumeric() {
-        Tuple t = new Tuple();
-        t.setValues(new String[]{"a"});
-        try {
-            ManyToOneMapping.SUM.reduce(t);
-            Assert.fail();
-        } catch (Throwable ex) {
-            ex.printStackTrace();
-        }
 
-    }
 }

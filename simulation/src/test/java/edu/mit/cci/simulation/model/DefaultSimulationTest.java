@@ -38,13 +38,17 @@ public class DefaultSimulationTest {
 
         sim.setUrl("http://localhost:8080/canned");
 
-        Variable one = vdod.getSpecificVariable(0);
-        Variable two = vdod.getSpecificVariable(1);
-        Variable three = vdod.getSpecificVariable(2);
-        Variable four = vdod.getSpecificVariable(3);
+        Variable one = new Variable("Test1","Test",3);
+        Variable two = new Variable("Test2","Test",3);
+        Variable three = new Variable("Test3","Test",3);
+        Variable four = new Variable("Test4","Test",3);
+        one.persist();
+        two.persist();
+        three.persist();
+        four.persist();
 
-        Tuple onet = tdod.getSpecificTuple(0);
-        Tuple twot = tdod.getSpecificTuple(1);
+        Tuple onet = new Tuple(one);
+        Tuple twot = new Tuple(two);
 
 
 

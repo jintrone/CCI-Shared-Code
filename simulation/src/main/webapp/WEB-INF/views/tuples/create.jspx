@@ -6,6 +6,7 @@
         <field:select field="var" id="c_edu_mit_cci_simulation_model_Tuple_var" itemValue="id" items="${variables}" path="/variables" required="true" z="nxlJeOqDxR6KVHYyuDgraiSRa2E="/>
         <field:input field="value_" id="c_edu_mit_cci_simulation_model_Tuple_value_" z="fGqb2/PtRCnRTn44jfh9yvPlRps="/>
     <field:input field="values" id="c_edu_mit_cci_simulation_model_Tuple_values" render="false" z="user-managed"/>
+    <field:input field="statuses_" id="c_edu_mit_cci_simulation_model_Tuple_statuses_" z="vDMjBpV0Z91lqSCh+X3zSn6EYV8="/>
     </form:create>
     <form:dependency dependencies="${dependencies}" id="d_edu_mit_cci_simulation_model_Tuple" render="${not empty dependencies}" z="rBLy+alRrKICI4QuHFkilW2SXjE="/>
 </div>

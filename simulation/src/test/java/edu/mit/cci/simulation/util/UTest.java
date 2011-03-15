@@ -60,8 +60,10 @@ public class UTest {
 
     @Test
     public void parseVariableMap() throws SimulationException {
-        Variable one = vdod.getRandomVariable();
-        Variable two = vdod.getRandomVariable();
+        Variable one = new Variable("test1","test1",3);
+        Variable two = new Variable("test2","test2",3);
+        one.persist();
+        two.persist();
         StringBuilder builder = new StringBuilder();
         String[] vals1 = {"4", "5", "6"};
         builder.append(one.getId()).append("=").append(U.escape(vals1));
@@ -84,14 +86,15 @@ public class UTest {
 
     @Test
     public void stringRepresentationFromTuple() throws SimulationException {
-        Variable one = vdod.getRandomVariable();
-        Variable two = vdod.getRandomVariable();
-
+        Variable one = new Variable("test1","test1",3);
+        Variable two = new Variable("test2","test2",3);
+        one.persist();
+        two.persist();
         String[] vals1 = {"4", "5", "6"};
-        Tuple t1 = new Tuple();
+        Tuple t1 = new Tuple(one);
         t1.setValues(vals1);
         String[] vals2 = {"7", "8", "9"};
-        Tuple t2 = new Tuple();
+        Tuple t2 = new Tuple(two);
         t2.setValues(vals2);
 
 
@@ -127,10 +130,10 @@ public class UTest {
     public void copyRange() throws Exception {
         String[] expect = new String[]{"2","3","1","2","3"};
 
-        Tuple t = new Tuple();
+        Tuple t = new Tuple(new Variable("Test","Test",6));
         t.setValue_("1;2;3;1;2;3");
 
-        Tuple t1 = new Tuple();
+        Tuple t1 = new Tuple(new Variable("Test","test",5));
         t1.setValue_("4;5;6;");
 
         U.copyRange(t,t1,1,6);
@@ -143,10 +146,10 @@ public class UTest {
     public void append() throws Exception {
         String[] expect = new String[]{"1","2","3","1","2","3","4","5","6"};
 
-        Tuple t = new Tuple();
+        Tuple t = new Tuple(new Variable("Test","test",9));
         t.setValue_("1;2;3;1;2;3");
 
-        Tuple t1 = new Tuple();
+        Tuple t1 = new Tuple(new Variable("Test","test",3));
         t1.setValue_("4;5;6;");
 
         U.join(t, t1);
@@ -154,6 +157,22 @@ public class UTest {
         Assert.assertArrayEquals(expect,t.getValues());
 
     }
+
+    @Test
+    public void addToMap() throws Exception {
+        String map = "foo=bar&baz=foo&foobaz=barfoo";
+
+        String test = U.updateStringMap("s","r",map);
+        Assert.assertEquals(map+"&s=r",test);
+        test = U.updateStringMap("s","f",test);
+        Assert.assertEquals(map+"&s=f",test);
+        test=U.updateStringMap("foo","brr",map);
+        Assert.assertEquals("foo=brr&baz=foo&foobaz=barfoo",test);
+
+        test=U.updateStringMap("baz","brr",map);
+        Assert.assertEquals("foo=bar&baz=brr&foobaz=barfoo",test);
+    }
+
 
 
 }

@@ -1,21 +1,23 @@
 package edu.mit.cci.simulation.model;
 
 
+import edu.mit.cci.simulation.util.SimulationValidationException;
+
 public enum ManyToOneMapping {
     SUM() {
 
-        public void reduce(Tuple t) {
+        public String reduce(String[] vals) throws SimulationValidationException {
             double sum = 0;
-            if (t.getValues() == null || t.getValues().length==0) return;
-            for (String v:t.getValues()) {
+            if (vals == null || vals.length==0) return null;
+            for (String v:vals) {
                 sum+=Double.parseDouble(v);
             }
-            t.setValue_(sum+";");
+            return ""+sum;
         }
     },MEDIAN() {
-        public void reduce(Tuple t) {
-            if (t.getValues() == null || t.getValues().length==0) return;
-            String[] vals = t.getValues();
+        public String reduce(String[] vals) throws SimulationValidationException {
+            if (vals == null || vals.length==0) return null;
+
             Double[] d = new Double[vals.length];
             int i = 0;
             for (String v:vals) {
@@ -23,23 +25,22 @@ public enum ManyToOneMapping {
             }
 
            int pos = Math.max(0,-1+((vals.length & 1)==1? (int) Math.ceil(vals.length / 2.0d) :vals.length/2));
-           t.setValue_(d[pos]+";");
+           return ""+d[pos];
         }
     },FIRST() {
-         public void reduce(Tuple t) {
-             if (t.getValues() == null || t.getValues().length==0) return;
-             t.setValue_(t.getValues()[0]+";");
+         public String reduce(String[] vals) throws SimulationValidationException {
+             if (vals == null || vals.length==0) return null;
+             return vals[0];
 
         }
     },LAST() {
-         public void reduce(Tuple t) {
-             if (t.getValues() == null || t.getValues().length==0) return;
-             t.setValue_(t.getValues()[t.getValues().length-1]+";");
+         public String reduce(String[] vals) throws SimulationValidationException {
+             if (vals == null || vals.length==0) return null;
+             return vals[vals.length-1];
 
         }
     };
 
-    public void reduce(Tuple t) {
 
-    }
+    public abstract String reduce(String[] values) throws SimulationValidationException;
 }

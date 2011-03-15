@@ -104,7 +104,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     Converter<Tuple, String> ApplicationConversionServiceFactoryBean.getTupleConverter() {
         return new Converter<Tuple, String>() {
             public String convert(Tuple source) {
-                return new StringBuilder().append(source.getValue_()).toString();
+                return new StringBuilder().append(source.getValue_()).append(" ").append(source.getStatuses_()).toString();
             }
         };
     }
