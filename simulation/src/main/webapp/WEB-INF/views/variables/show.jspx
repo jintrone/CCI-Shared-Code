@@ -13,5 +13,6 @@
         <field:display field="min_" id="s_edu_mit_cci_simulation_model_Variable_min_" object="${variable}" z="hVYMaTdPW0TbzMAyiGbNRCmoLzE="/>
         <field:display field="_optionsRaw" id="s_edu_mit_cci_simulation_model_Variable__optionsRaw" object="${variable}" z="fj+B0cH0RA8RfxkCvGCvWNQ2R5Y="/>
         <field:display field="indexingVariable" id="s_edu_mit_cci_simulation_model_Variable_indexingVariable" object="${variable}" z="akp28cXe0QTwRgcppPQyDCVBUsA="/>
+    <field:display field="externalName" id="s_edu_mit_cci_simulation_model_Variable_externalName" object="${variable}" z="pODE1Emvrz8UikK/knypuoOfA+w="/>
     </page:show>
 </div>

@@ -113,7 +113,11 @@ public class DefaultSimulation implements Simulation {
         Map<String, String> params = new HashMap<String, String>();
         for (Tuple t : siminputs) {
             if (mine.remove(t.getVar())) {
-                params.put(t.getVar().getId() + "", t.getValue_());
+                if (t.getVar().getExternalName()!=null) {
+                    params.put(t.getVar().getExternalName()+"",t.getValue_());
+                } else {
+                    params.put(t.getVar().getId() + "", t.getValue_());
+                }
             }
         }
         if (!mine.isEmpty()) {
@@ -122,7 +126,7 @@ public class DefaultSimulation implements Simulation {
         String response = null;
        response = runStrategy.run(url, params);
 
-        result.addAll(U.parseVariableMap(response));
+        result.addAll(U.parseVariableMap(response, getOutputs()));
         return result;
     }
 

@@ -67,4 +67,39 @@ public class ExcelRunnerStrategyTest {
 
 
     }
+
+    @Test
+    public void testReadExcelFile_errs() throws Exception {
+        SimulationMockFactory factory = new SimulationMockFactory();
+        DefaultSimulation sim = factory.getExcelBasedSimulation(getTestFileBytes());
+
+        String[] dateinput = new String[]{"1846", "2010", "2020", "1846", "2040", "2050", "2060", "2070", "2080", "2090", "2100"};
+        String[] emissions = new String[]{"1.7", "1.7", "1.7", "1.7", "1.7", "1.7", "1.7", "1.7", "1.7", "1.7", "1.7"};
+
+
+        List<Tuple> inputs = new ArrayList<Tuple>();
+
+        for (Variable v : sim.getInputs()) {
+
+            Tuple t = new Tuple(v);
+            t.persist();
+            if (v.getName().equals("Year")) {
+                t.setValues(dateinput);
+
+            } else {
+                t.setValues(emissions);
+
+            }
+            inputs.add(t);
+
+        }
+
+        DefaultScenario scenario = (DefaultScenario) sim.run(inputs);
+        Tuple t = scenario.getVariableValue(sim.getOutputs().iterator().next());
+        System.out.println(Arrays.toString(t.getValues()));
+
+        Assert.assertEquals(TupleStatus.ERR_CALC,t.getStatus(3));
+
+
+    }
 }

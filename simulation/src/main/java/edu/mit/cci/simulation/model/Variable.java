@@ -77,6 +77,9 @@ public class Variable {
     private Double min_;
 
 
+    @XmlElement(name="ExternalName")
+    private String externalName;
+
     private String _optionsRaw;
 
     @Transient
@@ -97,7 +100,7 @@ public class Variable {
 
     public void setOptions(String[] options) {
         this.options = options;
-        _optionsRaw = U.escape(options);
+        _optionsRaw = U.escape(options, null);
     }
 
     @XmlAttribute(name="Id")

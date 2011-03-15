@@ -110,6 +110,51 @@ public class MappedSimulationTest {
 
     }
 
+
+     @Test
+    public void testRun_oneToOne_Err() throws SimulationException {
+       DefaultSimulation sim = mock.getScalarSimulation(0,12,0);
+        Variable idx = new Variable("Index","Test",1,0,0,20);
+        idx.persist();
+        sim.getInputs().add(idx);
+
+
+        MappedSimulation msim = mock.getMappedSimulation(0,sim,123,1,null);
+        msim.setIndexingVariable(idx);
+        Set<Variable> inputs = msim.getInputs();
+        List<Tuple> params = new ArrayList<Tuple>();
+
+        for (Variable v:inputs) {
+            String[] x = new String[v.getArity()];
+            Arrays.fill(x,"21");
+            Tuple t = new Tuple(v);
+            t.setValues(x);
+            params.add(t);
+        }
+
+        Scenario s  = msim.run(params);
+        for (Variable v:msim.getInputs()) {
+            Tuple t = s.getVariableValue(v);
+            Assert.assertNotNull(t);
+            Assert.assertEquals(v.getArity().intValue(),t.getValues().length);
+            Assert.assertNull(t.getValues()[0]);
+            Assert.assertEquals(TupleStatus.ERR_OOB,t.getStatus(0));
+        }
+
+        for (Variable v:msim.getOutputs()) {
+            Tuple t = s.getVariableValue(v);
+            Assert.assertNotNull(t);
+            Assert.assertEquals(v.getArity().intValue(),t.getValues().length);
+            Assert.assertNull(t.getValues()[0]);
+            Assert.assertEquals(TupleStatus.ERR_OOB,t.getStatus(0));
+
+
+        }
+
+
+
+    }
+
         @Test
     public void testRun_oneToOne_subSelect() throws SimulationException {
        DefaultSimulation sim = mock.getScalarSimulation(0,9,0);
@@ -188,6 +233,52 @@ public class MappedSimulationTest {
             Assert.assertEquals(v.getArity().intValue(),1);
             Assert.assertEquals(v.getArity().intValue(),t.getValues().length);
             Assert.assertEquals("117",t.getValues()[0]);
+        }
+
+
+
+    }
+
+     @Test
+    public void testRun_oneToOne_subSelect_reduce_err() throws SimulationException {
+       DefaultSimulation sim = mock.getScalarSimulation(0,21,0);
+       Variable idx = new Variable("Index","Test",1,0,0,20);
+        idx.persist();
+        sim.getInputs().add(idx);
+
+
+        MappedSimulation msim = mock.getMappedSimulation(0,sim,123,1,null);
+            msim.setSamplingFrequency(10);
+            msim.setManyToOne(ManyToOneMapping.SUM);
+        msim.setIndexingVariable(idx);
+        Set<Variable> inputs = msim.getInputs();
+        List<Tuple> params = new ArrayList<Tuple>();
+
+        for (Variable v:inputs) {
+            String[] x = new String[v.getArity()];
+            Arrays.fill(x,"21");
+            Tuple t = new Tuple(v);
+            t.setValues(x);
+            params.add(t);
+        }
+
+        Scenario s  = msim.run(params);
+        for (Variable v:msim.getInputs()) {
+            Tuple t = s.getVariableValue(v);
+            Assert.assertNotNull(t);
+            Assert.assertEquals(v.getArity().intValue(),123);
+            Assert.assertEquals(v.getArity().intValue(),t.getValues().length);
+            Assert.assertNull(t.getValues()[0]);
+            Assert.assertEquals(TupleStatus.ERR_OOB,t.getStatus(4));
+        }
+
+        for (Variable v:msim.getOutputs()) {
+            Tuple t = s.getVariableValue(v);
+            Assert.assertNotNull(t);
+            Assert.assertEquals(v.getArity().intValue(),1);
+            Assert.assertEquals(v.getArity().intValue(),t.getValues().length);
+            Assert.assertNull(t.getValues()[0]);
+            Assert.assertEquals(TupleStatus.ERR_CALC,t.getStatus(0));
         }
 
 

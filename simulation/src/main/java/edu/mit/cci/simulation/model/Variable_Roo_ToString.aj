@@ -18,6 +18,7 @@ privileged aspect Variable_Roo_ToString {
         sb.append("Precision_: ").append(getPrecision_()).append(", ");
         sb.append("Max_: ").append(getMax_()).append(", ");
         sb.append("Min_: ").append(getMin_()).append(", ");
+        sb.append("ExternalName: ").append(getExternalName()).append(", ");
         sb.append("_optionsRaw: ").append(get_optionsRaw()).append(", ");
         sb.append("IndexingVariable: ").append(getIndexingVariable());
         return sb.toString();

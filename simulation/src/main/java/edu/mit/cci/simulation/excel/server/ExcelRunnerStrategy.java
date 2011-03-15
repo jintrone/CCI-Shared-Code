@@ -76,7 +76,7 @@ public class ExcelRunnerStrategy implements RunStrategy {
 
     public void writeInput(ExcelVariable v, String[] data, HSSFWorkbook workbook) throws SimulationException {
         HSSFSheet sheet = workbook.getSheet(v.getWorksheetName());
-        Validation.arity(v.getSimulationVariable(), data.length);
+        Validation.equalsArity(v.getSimulationVariable(), data.length);
         Validation.notNull(sheet, "Worksheet");
         Validation.validateExcelCoordinates(v.getCellRange());
 
@@ -99,7 +99,10 @@ public class ExcelRunnerStrategy implements RunStrategy {
             switch (type) {
 
                 case NUM: {
-                    cell.setCellValue(Double.parseDouble(data[i]));
+                    Double d = null;
+                    if (data[i]==null) {
+                        cell.setCellValue(data[i]);
+                    } else cell.setCellValue(Double.parseDouble(data[i]));
                     break;
                 }
 
@@ -149,7 +152,7 @@ public class ExcelRunnerStrategy implements RunStrategy {
         int dx = width == 1 ? 0 : 1;
         int dy = height == 1 ? 0 : 1;
 
-        Validation.arity(ev.getSimulationVariable(), Math.max(width, height));
+        Validation.equalsArity(ev.getSimulationVariable(), Math.max(width, height));
         Object[] result = new Object[ev.getSimulationVariable().getArity()];
         for (int i = 0; i < Math.max(width, height); i++) {
             try {

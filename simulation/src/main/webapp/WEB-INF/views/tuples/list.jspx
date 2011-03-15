@@ -7,7 +7,7 @@
             <table:column id="c_edu_mit_cci_simulation_model_Tuple_values" property="values" z="wsLrgWeGQsvbfgQhx9sW+cauPa4="/>
             <table:column id="c_edu_mit_cci_simulation_model_Tuple_var" property="var" z="K3FYXNcX9sQ9A/rfGKFFbE85/Io="/>
             <table:column id="c_edu_mit_cci_simulation_model_Tuple_value_" property="value_" z="YPvAtuw18PExP6ZA6c0jex7BO1I="/>
-        <table:column id="c_edu_mit_cci_simulation_model_Tuple_statuses_" property="statuses_" z="e+EtzmNiTKZoPnqO6ARP6dGYG9U="/>
+        
         </table:table>
     </page:list>
 </div>

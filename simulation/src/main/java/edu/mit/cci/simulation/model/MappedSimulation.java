@@ -1,5 +1,6 @@
 package edu.mit.cci.simulation.model;
 
+import edu.mit.cci.simulation.util.SimulationComputationException;
 import edu.mit.cci.simulation.util.U;
 import org.springframework.roo.addon.entity.RooEntity;
 import org.springframework.roo.addon.javabean.RooJavaBean;
@@ -79,7 +80,12 @@ public class MappedSimulation extends DefaultSimulation {
                 for (Map.Entry<Variable,String> ent:mergedresults.entrySet()) {
                     Tuple t = new Tuple(getVariableMap().get(ent.getKey()));
                     if (manyToOne != null) {
-                        t.setValues(new String[]{manyToOne.reduce(U.unescape(ent.getValue(), null))});
+                        try {
+                            t.setValues(new String[]{manyToOne.reduce(U.unescape(ent.getValue(), null))});
+                        } catch (SimulationComputationException ex) {
+                            t.setValues(new String[] {null});
+                            t.setStatus(0,TupleStatus.ERR_CALC);
+                        }
                     } else {
                         t.setValue_(ent.getValue());
                     }

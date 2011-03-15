@@ -12,8 +12,7 @@ privileged aspect Tuple_Roo_ToString {
         sb.append("Values: ").append(java.util.Arrays.toString(getValues())).append(", ");
         sb.append("Id_: ").append(getId_()).append(", ");
         sb.append("Var: ").append(getVar()).append(", ");
-        sb.append("Value_: ").append(getValue_()).append(", ");
-        sb.append("Statuses_: ").append(getStatuses_());
+        sb.append("Value_: ").append(getValue_());
         return sb.toString();
     }
     

@@ -67,6 +67,14 @@ privileged aspect Variable_Roo_JavaBean {
         this.min_ = min_;
     }
     
+    public String Variable.getExternalName() {
+        return this.externalName;
+    }
+    
+    public void Variable.setExternalName(String externalName) {
+        this.externalName = externalName;
+    }
+    
     public String Variable.get_optionsRaw() {
         return this._optionsRaw;
     }

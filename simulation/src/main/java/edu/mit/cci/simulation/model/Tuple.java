@@ -42,13 +42,9 @@ public class Tuple {
     @XmlElement(name = "Value")
     private String value_;
 
-    @Column(columnDefinition = "LONGTEXT")
-    @XmlElement(name = "Status")
-    private String statuses_;
-
     private transient String[] values;
 
-    private transient Map<Integer, TupleStatus> statuses = new HashMap<Integer,TupleStatus>();
+    private transient final Map<Integer, TupleStatus> statuses = new HashMap<Integer,TupleStatus>();
 
     public Tuple() {
 
@@ -65,57 +61,48 @@ public class Tuple {
     }
 
     public void setValues(String[] values) throws SimulationValidationException {
-        Validation.canSet(this, values);
-        Validation.checkDataType(var, values, true);
-        clearStatus();
-        if (var.getDataType() == DataType.NUM) {
-            for (int i = 0; i < values.length; i++) {
-                if (values[i]==null) continue;
-                Double d = Double.parseDouble(values[i]);
-               if (d<var.getMin_()||d>var.getMax_()) {
-                   setStatus(i,TupleStatus.ERR_OOB);
-                    values[i] = null;
-               }
-               values[i] = U.format(var,values[i]);
-            }
+        this.statuses.clear();
+        _setValues(values);
+    }
+
+    private void _setValues(String[] values) throws SimulationValidationException {
+        Validation.isComplete(var);
+        Validation.atMostArity(var, values.length);
+        for (int i = 0; i < values.length; i++) {
+            Validation.checkDataType(var,values[i],true);
+            if (values[i]==null) continue;
+            TupleStatus status = statuses.get(i);
+            if (status!=null) continue;
+            U.process(var,i,values,statuses);
         }
         this.values = values;
-        this.value_ = (U.escape(values));
+        this.value_ = (U.escape(values,statuses));
     }
 
     public void setValue_(String val) throws SimulationValidationException {
-        setValues(U.unescape(val, null));
+        this.statuses.clear();
+        _setValues(U.unescape(val, this.statuses));
     }
 
-    private void clearStatus() {
-        statuses_ = null;
-        statuses.clear();
-    }
 
 
     public TupleStatus getStatus(int i) {
-        if (statuses == null) {
-            if (statuses_ == null) {
-                return null;
-            } else {
-                statuses = new HashMap(U.parseOrderedMap(statuses_));
-            }
-        }
         return statuses.get(i);
     }
 
     public void setStatus(int i, TupleStatus status) {
         TupleStatus current = getStatus(i);
         if (current != status) {
-            statuses.put(i, status);
-            statuses_ = U.updateStringMap(i + "", status.name(), statuses_);
+           statuses.put(i, status);
+           value_=U.updateEscapedArray(i,value_,status);
+           values[i] = null;
         }
     }
 
 
     public static void main(String[] args) {
         String[] vals = new String[]{"hi;;", "ad%%253Bd;;", "nothing;;;"};
-        String encoded = U.escape(vals);
+        String encoded = U.escape(vals, null);
         System.err.println(encoded);
 
         vals = U.unescape(encoded, null);

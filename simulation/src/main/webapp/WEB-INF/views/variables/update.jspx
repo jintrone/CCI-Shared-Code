@@ -13,5 +13,6 @@
         <field:input field="min_" id="c_edu_mit_cci_simulation_model_Variable_min_" validationMessageCode="field_invalid_number" z="n4zRNQs++OiJ4fHl2xZSa/qaX7s="/>
         <field:input field="_optionsRaw" id="c_edu_mit_cci_simulation_model_Variable__optionsRaw" z="9Qr/UMwgETy+x6PZs5o7Q7dx7/4="/>
         <field:select field="indexingVariable" id="c_edu_mit_cci_simulation_model_Variable_indexingVariable" itemValue="id" items="${variables}" path="/variables" z="FFFS30118hV41XVh5DZWGDAI3Xk="/>
+    <field:input field="externalName" id="c_edu_mit_cci_simulation_model_Variable_externalName" z="Ac5jQIQgSNEpY27wCFeIyxScyp4="/>
     </form:update>
 </div>

@@ -25,6 +25,7 @@ privileged aspect VariableDataOnDemand_Roo_DataOnDemand {
         obj.setPrecision_(null);
         obj.setMax_(null);
         obj.setMin_(null);
+        obj.setExternalName(null);
         obj.set_optionsRaw("_optionsRaw_" + index);
         obj.setIndexingVariable(null);
         return obj;

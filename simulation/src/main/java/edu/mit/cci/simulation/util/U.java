@@ -51,19 +51,22 @@ public class U {
     private static Logger log = Logger.getLogger(U.class);
 
 
-
-    public static String escape(Object[] vals) {
+    public static String escape(Object[] vals, Map<Integer, TupleStatus> statuses) {
         StringBuffer buffer = new StringBuffer();
         if (vals == null || vals.length == 0) return "";
-        for (Object val : vals) {
+        for (int i=0;i<vals.length;i++) {
+            Object val = vals[i];
             try {
-                if (val == null) {
-                    buffer.append(NULL_VAL);
+                if (statuses!=null && statuses.containsKey(i)) {
+                    buffer.append(statuses.get(i).encode());
+
                 } else if (val instanceof TupleStatus) {
-                    buffer.append(((TupleStatus)val).encode());
+                    buffer.append(((TupleStatus) val).encode());
+                } else if (val == null) {
+                    buffer.append(NULL_VAL);
 
                 } else {
-                     buffer.append(encode(val.toString()));
+                    buffer.append(encode(val.toString()));
                 }
                 buffer.append(VAL_SEP);
             } catch (Exception e) {
@@ -81,15 +84,15 @@ public class U {
         List<String> result = new ArrayList<String>();
         if (vals != null && !vals.trim().isEmpty()) {
             String[] str = vals.split(VAL_SEP);
-            for (int i=0;i<str.length;i++) {
+            for (int i = 0; i < str.length; i++) {
                 String val = str[i];
                 try {
                     if (val.equals(NULL_VAL)) {
                         result.add(null);
-                    } else if (TupleStatus.decode(val)!=null) {
+                    } else if (TupleStatus.decode(val) != null) {
                         result.add(null);
-                        if (status!=null) {
-                            status.put(i,TupleStatus.decode(val));
+                        if (status != null) {
+                            status.put(i, TupleStatus.decode(val));
                         }
                     } else result.add(URLDecoder.decode(val, "UTF-8"));
 
@@ -154,20 +157,14 @@ public class U {
 
     public static Map<Variable, Tuple> convertToVarTupleMap(Map<String, String> params) throws SimulationException {
         Map<Variable, Tuple> result = new HashMap<Variable, Tuple>();
-        //debugging
-        List<Variable> vars = Variable.findAllVariables();
-        for (Variable v : vars) {
-            log.debug("Found " + v.getId());
-            log.debug("Recall: " + Variable.findVariable(v.getId()));
-        }
-        //end debugging
+
 
         for (Map.Entry<String, String> ent : params.entrySet()) {
             Variable v = Variable.findVariable(Long.parseLong(ent.getKey()));
             if (v == null)
                 throw new SimulationException("Variable for id:" + ent.getKey() + " could not be identified");
             Tuple t = new Tuple(v);
-            t.setValues(unescape(ent.getValue(), null));
+            t.setValue_(ent.getValue());
 
             result.put(v, t);
         }
@@ -175,10 +172,23 @@ public class U {
     }
 
     /**
+     *
      * @param input Presumes data formatted as a URL query parameter string with UTF-8 encoded values
+     * @param outputCandidates
      * @return A List of Tuples.  Tuples are not explicitly persisted here.
+     * @throws edu.mit.cci.simulation.model.SimulationException
      */
-    public static List<Tuple> parseVariableMap(String input) throws SimulationException {
+    public static List<Tuple> parseVariableMap(String input, Collection<Variable> outputCandidates) throws SimulationException {
+
+        Map<String,String> externallyNamed = new HashMap<String,String>();
+        if (outputCandidates!=null) {
+            for (Variable v:outputCandidates) {
+                if (v.getExternalName()!=null) {
+                    externallyNamed.put(v.getExternalName(),v.getId_());
+                }
+            }
+        }
+
         List<Tuple> result = new ArrayList<Tuple>();
         if (input.trim().isEmpty()) {
             throw (new SimulationException("Error parsing results from string: " + input));
@@ -186,8 +196,9 @@ public class U {
         String[] vars = input.split(VAR_SEP);
         for (String seg : vars) {
             String[] varval = seg.split(VAR_VAL_SEP);
+            String id = externallyNamed.containsKey(varval[0])?externallyNamed.get(varval[0]):varval[0];
 
-            Variable v = Variable.findVariable(Long.parseLong(varval[0]));
+            Variable v = Variable.findVariable(Long.parseLong(id));
             if (v == null) {
                 throw new SimulationException("Could not identify variable in response: " + varval[0]);
             }
@@ -205,7 +216,7 @@ public class U {
         String vsep = "";
         for (Map.Entry<String, String> ent : map.entrySet()) {
             builder.append(vsep);
-            builder.append(ent.getKey()).append(VAR_VAL_SEP).append(escape(new String[]{ent.getValue()}));
+            builder.append(ent.getKey()).append(VAR_VAL_SEP).append(escape(new String[]{ent.getValue()}, null));
             vsep = VAR_SEP;
         }
         return builder.toString();
@@ -250,7 +261,7 @@ public class U {
         String vsep = "";
         for (Map.Entry<Variable, Object[]> ent : input.entrySet()) {
             builder.append(vsep);
-            builder.append(ent.getKey().getId()).append(VAR_VAL_SEP).append(escape(ent.getValue()));
+            builder.append(ent.getKey().getId()).append(VAR_VAL_SEP).append(escape(ent.getValue(), null));
             vsep = VAR_SEP;
         }
         return builder.toString();
@@ -280,7 +291,7 @@ public class U {
 
     public static String join(String first, String second) throws SimulationValidationException {
         String sep = first.isEmpty() || first.endsWith(";") ? "" : ";";
-        return first+sep+second;
+        return first + sep + second;
     }
 
     public static boolean equals(Object one, Object two) {
@@ -352,30 +363,51 @@ public class U {
         if (map == null) map = "";
         String value = key + VAR_VAL_SEP;
         try {
-            value+=encode(val);
+            value += encode(val);
         } catch (UnsupportedEncodingException e) {
-            log.warn("Unsupported encoding "+e.getMessage()+" falling back to raw string");
-            value+=val;
+            log.warn("Unsupported encoding " + e.getMessage() + " falling back to raw string");
+            value += val;
         }
         if (map.isEmpty()) {
             return value;
         } else {
-            Pattern p = Pattern.compile("(" + VAR_SEP + "|^)" + key +  VAR_VAL_SEP + "[^" + VAR_SEP + "]+");
+            Pattern p = Pattern.compile("(" + VAR_SEP + "|^)" + key + VAR_VAL_SEP + "[^" + VAR_SEP + "]+");
             Matcher m = p.matcher(map);
             if (m.find()) {
-                return m.replaceAll("$1"+value);
+                return m.replaceAll("$1" + value);
             }
         }
         return map + VAR_SEP + value;
     }
 
-    public static String format(Variable var, String value)
-    {
-        if (var.getDataType() == DataType.NUM && value !=null) {
-            Double num = Double.parseDouble(value);
-            return String.format("%." + var.getPrecision_() + "f", num);
-        } else {
-            return value;
+    public static String updateEscapedArray(int i,String arry, TupleStatus status) {
+        Map<Integer,TupleStatus> statuses = new HashMap<Integer,TupleStatus>();
+        String[] vals = unescape(arry,statuses);
+        statuses.put(i,status);
+        return escape(vals,statuses);
+    }
+
+    public static String formatToPrecision(String value, int precision) {
+
+        Double num = Double.parseDouble(value);
+        return String.format("%." + precision + "f", num);
+
+    }
+
+    public static void process(Variable var, int index, String[] values, Map<Integer, TupleStatus> statuses) {
+        if (var.getDataType() == DataType.NUM && values[index] != null) {
+            if (statuses.get(index) != null) {
+                values[index] = null;
+            } else {
+                Double num = Double.parseDouble(values[index]);
+                if (num < var.getMin_() || num > var.getMax_()) {
+                    statuses.put(index, TupleStatus.ERR_OOB);
+                    values[index] = null;
+                } else {
+                    values[index] = String.format("%." + var.getPrecision_() + "f", num);
+                }
+            }
         }
     }
+
 }

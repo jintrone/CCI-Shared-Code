@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class ManyToOneMappingTest {
 
     @Test
-    public void testSum() throws SimulationValidationException {
+    public void testSum() throws SimulationException {
 
         Tuple t = new Tuple(new Variable("Test","Test",3,0,0d,10d));
         t.setValues(new String[]{"1", "2", "3"});
@@ -29,7 +29,7 @@ public class ManyToOneMappingTest {
     }
 
      @Test
-    public void testMedian_odd() throws SimulationValidationException {
+    public void testMedian_odd() throws SimulationException {
         Tuple t = new Tuple(new Variable("Test","Test",3,1,0d,10d));
         t.setValues(new String[]{"1", "2", "3"});
         String val = ManyToOneMapping.MEDIAN.reduce(t.getValues());
@@ -38,7 +38,7 @@ public class ManyToOneMappingTest {
     }
 
      @Test
-    public void testMedian_even() throws SimulationValidationException {
+    public void testMedian_even() throws SimulationException {
         Tuple t = new Tuple(new Variable("Test","Test",4,1,0d,10d));
         t.setValues(new String[]{"1", "2", "3", "4"});
         String val = ManyToOneMapping.MEDIAN.reduce(t.getValues());
@@ -47,7 +47,7 @@ public class ManyToOneMappingTest {
     }
 
      @Test
-    public void testFirst() throws SimulationValidationException {
+    public void testFirst() throws SimulationException {
         Tuple t = new Tuple(new Variable("Test","Test",4,0,0d,10d));
         t.setValues(new String[]{"1", "2", "3", "4"});
         String val = ManyToOneMapping.FIRST.reduce(t.getValues());
@@ -56,7 +56,7 @@ public class ManyToOneMappingTest {
     }
 
      @Test
-    public void testLast() throws SimulationValidationException {
+    public void testLast() throws SimulationException {
         Tuple t = new Tuple(new Variable("Test","Test",4,0,0d,10d));
         t.setValues(new String[]{"1", "2", "3", "4"});
         String val = ManyToOneMapping.LAST.reduce(t.getValues());

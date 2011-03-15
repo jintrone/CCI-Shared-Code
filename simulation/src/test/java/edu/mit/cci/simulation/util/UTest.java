@@ -2,6 +2,7 @@ package edu.mit.cci.simulation.util;
 
 import edu.mit.cci.simulation.model.SimulationException;
 import edu.mit.cci.simulation.model.Tuple;
+import edu.mit.cci.simulation.model.TupleStatus;
 import edu.mit.cci.simulation.model.Variable;
 import edu.mit.cci.simulation.model.VariableDataOnDemand;
 import org.junit.Assert;
@@ -64,17 +65,17 @@ public class UTest {
         two.persist();
         StringBuilder builder = new StringBuilder();
         String[] vals1 = {"4", "5", "6"};
-        builder.append(one.getId()).append("=").append(U.escape(vals1));
+        builder.append(one.getId()).append("=").append(U.escape(vals1, null));
         builder.append("&");
         String[] vals2 = {"7", "8", "9"};
-        builder.append(two.getId()).append("=").append(U.escape(vals2));
+        builder.append(two.getId()).append("=").append(U.escape(vals2, null));
 
         Map<Variable,String[]> expected = new HashMap<Variable,String[]>();
         expected.put(one,vals1);
         expected.put(two,vals2);
 
 
-        List<Tuple> result = U.parseVariableMap(builder.toString());
+        List<Tuple> result = U.parseVariableMap(builder.toString(), null);
         Assert.assertNotNull(result);
         for (Tuple t:result) {
             Assert.assertArrayEquals(t.getValues(),expected.get(t.getVar()));
@@ -102,7 +103,7 @@ public class UTest {
 
 
         String result = U.createStringRepresentationFromTuple(expected);
-        List<Tuple> tester = U.parseVariableMap(result);
+        List<Tuple> tester = U.parseVariableMap(result, null);
 
         for (Tuple t:tester) {
             Assert.assertArrayEquals(t.getValues(),expected.get(t.getVar()).getValues());
@@ -170,6 +171,28 @@ public class UTest {
         test=U.updateStringMap("baz","brr",map);
         Assert.assertEquals("foo=bar&baz=brr&foobaz=barfoo",test);
     }
+
+
+    @Test
+    public void roundTrip() {
+        Map<Integer,TupleStatus> map = new HashMap<Integer,TupleStatus>();
+        map.put(2,TupleStatus.ERR_OOB);
+        map.put(1,TupleStatus.ERR_CALC);
+        String[] test = new String[] {"2","3","4",null,"&;&;><","<ERR_OOB/>"};
+        String[] expect = new String[] {"2",null,null,null,"&;&;><","<ERR_OOB/>"};
+        String str = U.escape(test,map);
+
+        System.err.println(str);
+       Map<Integer,TupleStatus> rmap = new HashMap<Integer,TupleStatus>();
+        String[] result = U.unescape(str,rmap);
+        Assert.assertArrayEquals(expect,result);
+        Assert.assertEquals(map,rmap);
+
+
+
+    }
+
+
 
 
 
