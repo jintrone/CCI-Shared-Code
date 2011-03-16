@@ -54,7 +54,9 @@ public class U {
     public static String escape(Object[] vals, Map<Integer, TupleStatus> statuses) {
         StringBuffer buffer = new StringBuffer();
         if (vals == null || vals.length == 0) return "";
+        String sep="";
         for (int i=0;i<vals.length;i++) {
+            buffer.append(sep);
             Object val = vals[i];
             try {
                 if (statuses!=null && statuses.containsKey(i)) {
@@ -68,10 +70,11 @@ public class U {
                 } else {
                     buffer.append(encode(val.toString()));
                 }
-                buffer.append(VAL_SEP);
+                sep=VAL_SEP;
             } catch (Exception e) {
                 e.printStackTrace();
             }
+
         }
         return buffer.toString();
     }
@@ -197,10 +200,16 @@ public class U {
         for (String seg : vars) {
             String[] varval = seg.split(VAR_VAL_SEP);
             String id = externallyNamed.containsKey(varval[0])?externallyNamed.get(varval[0]):varval[0];
-
-            Variable v = Variable.findVariable(Long.parseLong(id));
+            Long lid = null;
+            try {
+                lid = Long.parseLong(id);
+            } catch (NumberFormatException e) {
+               //do nothing
+            }
+            Variable v = lid!=null?Variable.findVariable(lid):null;
             if (v == null) {
-                throw new SimulationException("Could not identify variable in response: " + varval[0]);
+                log.warn("Could not identify variable in response: " + varval[0]);
+                continue;
             }
             Tuple t = new Tuple(v);
             t.setValue_(varval[1]);

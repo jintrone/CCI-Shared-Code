@@ -32,11 +32,13 @@ public class RunSimulationForm  {
 
     private Map<String, String> inputs = new HashMap<String, String>();
 
+    private Long simid;
 
     @RequestMapping(method = RequestMethod.GET)
     public String setupForm(@PathVariable("simid") long simId, Model model) {
         DefaultSimulation sim = DefaultSimulation.findDefaultSimulation(simId);
         model.addAttribute("simulation", sim);
+        this.simid = sim.getId();
         model.addAttribute("form", this);
         return "defaultsimulations/runsimulation";
     }
@@ -44,15 +46,22 @@ public class RunSimulationForm  {
     @RequestMapping(method = RequestMethod.POST)
     public String processSubmit(RunSimulationForm form, Model model) throws SimulationException {
 
-        Simulation sim = (Simulation)model.asMap().get("simulation");
+        Map<String,Long> remap = new HashMap<String,Long>();
+        DefaultSimulation sim = DefaultSimulation.findDefaultSimulation(simid);
+        for (Variable v:sim.getInputs()) {
+            if (v.getExternalName()!=null) {
+                remap.put(v.getExternalName(),v.getId());
+            }
+        }
         List<Tuple> simInputs = new ArrayList<Tuple>();
 
+
+
         for (Map.Entry<String,String> ent:form.inputs.entrySet()) {
-            Variable v = Variable.findVariable(Long.parseLong(ent.getKey()));
+            Variable v = Variable.findVariable(remap.containsKey(ent.getKey())?remap.get(ent.getKey()):Long.parseLong(ent.getKey()));
             if (v == null) throw new SimulationException("Could not identify variable "+ent.getKey());
-            Tuple t = new Tuple();
+            Tuple t = new Tuple(v);
             t.setValue_(ent.getValue());
-            t.setVar(v);
             simInputs.add(t);
         }
 
