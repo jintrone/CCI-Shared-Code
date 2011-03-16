@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:fn="http://java.sun.com/jsp/jstl/functions"  xmlns:spring="http://www.springframework.org/tags" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+
+	<spring:url var="mappingIcon" value="/resources/images/mapping_small.png" />
+	<spring:url var="stepIcon" value="/resources/images/step_small.png" />
+	<spring:url var="simulationIcon" value="/resources/images/simulation_small.png" />
+
+	
+	<script type="text/javascript">
+		var idGenerator = 1;
+		
+		var simulationsList = eval('(${simulationsJson})');
+		var simulationsById = {};
+		for (var i = 0; i &lt; simulationsList.length; i++) {
+			simulationsById[simulationsList[i].id] = simulationsList[i];
+		}
+		
+		var variablesList = eval('(${variablesJson})');
+		var variablesById = {};
+		for (var i = 0; i &lt; variablesList.length; i++) {
+			variablesById[variablesList[i].id] = variablesList[i];
+		}
+		
+
+		function generateItemId(itemType) {
+			var num = idGenerator++;
+			return {str: "compSim_" + itemType + "_" + num++, num: num} 
+		}
+		
+		function generateElement(name, attributes, body, selfEnd) {
+			var attributesStr = []
+			for (var x in attributes) {
+				attributesStr.push(" " + x + "='" + attributes[x] + "' ");
+			}
+			
+			attributesStr = attributesStr.join("");
+			if (selfEnd) {
+				return "&lt;" + name + " " + attributesStr + " /&gt;";
+			}
+			
+			return "&lt;" + name + " " + attributesStr + " &gt;" + body + "&lt;/" + name + "&gt;";
+		}		
+		
+		function generateRemoveButton() {
+			return generateElement("button", {class: "removeButton", onclick: "removeItem(this)"}, "remove");
+		}
+				
+		
+		function generateSimulationSelectBox() {
+			var options = [];
+			options.push(generateElement('option', {value: "-1"}, "-- choose simulation --"));
+			for (var i = 0; i &lt; simulationsList.length; i++) {
+				options.push(generateElement("option", {value: simulationsList[i].id}, simulationsList[i].name));
+			} 
+			
+			return generateElement("select", {}, options.join(""));
+		}
+		
+		function generateVariablesSelectBox(properties) {
+			var options = [];
+			options.push(generateElement('option', {value: "-1"}, "-- choose variable --"));
+			for (var i = 0; i &lt; variablesList.length; i++) {
+				options.push(generateElement("option", {value: variablesList[i].id}, variablesList[i].name));
+			} 
+			
+			return generateElement("select", properties, options.join(""));
+		}
+	
+		function addStep() {
+			var itemId = generateItemId("step")
+
+			var addSimulationButton = generateElement("button", {onclick: "addSimulation(\"" + itemId.str + "\")"}, "Add simulation");
+			var embeddedSimulations = generateElement("ul", {id: itemId.str + "_embeddedSim"}, "");
+			var selectBox = generateSimulationSelectBox();
+			var stepName = generateElement("span", {}, "Step " + itemId.num);
+			
+			var liTag = generateElement("li", {id: itemId.str, class: "compSim_step", rel: itemId.num}, stepName + 
+					generateRemoveButton() + embeddedSimulations + "Add simulation: " + selectBox + addSimulationButton);
+
+			var html = [];
+			
+			html.push(liTag);
+			
+			
+			
+			$("#compositeSimulationSteps").append(html.join(""));
+		}
+
+		function addSimulation(stepId) {
+			var simulationId = $("#" + stepId + " option:selected").val();
+			if (simulationId in simulationsById) {
+				var sim = simulationsById[simulationId];
+				var li = generateElement("li", {class: "compSim_simulation", rel: simulationId}, sim.name + generateRemoveButton());
+				$("#" + stepId + " ul").append(li);	
+				var simulationId = $("#" + stepId + " option").eq(0).attr('selected', 'selected');
+			}	
+		}
+		
+		function generateStepsSelectBox(properties) {
+			
+			var options = [];
+			options.push(generateElement('option', {value: null}, "-- pick a step --"));
+			
+			$("#compositeSimulationSteps>li").each(function() {
+				options.push(generateElement("option", {value: $(this).attr('rel')}, $(this).find("span").text()));
+			});
+			
+			var classProperty = ' stepsSelect ';
+			if ('class' in properties) {
+				classProperty += properties.class;
+			}
+			properties.class = classProperty;
+
+			return generateElement("select", properties, options.join(""));
+		}
+		
+		function addMapping() {
+			var itemId = generateItemId("mapping");
+			var html = [];
+
+			var addVariableMapping = generateElement("button", {onclick: "addVariableMapping(\"" + itemId.str + "\")"}, "Add variable mapping");
+			
+			var varFrom = generateVariablesSelectBox({class: "variable_from"}); //generateElement("input", {name: "nameFrom", class: "nameFromInput"}, "");
+			var varTo = generateVariablesSelectBox({class: "variable_to"}); //generateElement("input", {name: "nameTo", class: "nameToInput"}, "");
+			
+			var stepFrom = generateStepsSelectBox({class: "step_from"});
+			var stepTo = generateStepsSelectBox({class: "step_to"});
+			
+			
+			var embeddedItems = generateElement("ul", {id: itemId.str + "_embeddedItems", rel: itemId.str}, "");
+			var li = generateElement("li", {id: itemId.str, class: 'compSim_mapping', rel: itemId.num}, "From step: " + 
+					stepFrom + "To step: " + stepTo + generateRemoveButton() + embeddedItems + "&lt;br /&gt;Name from: " + varFrom + " Name to: " + varTo + " " + addVariableMapping);
+			
+			$("#compositeSimulationMappings").append(li);
+		}
+		
+		function addVariableMapping(itemId) {
+			var varFromId = $("#" + itemId + " .variable_from option:selected").val();
+			var varToId = $("#" + itemId + " .variable_to option:selected").val();
+			var variablesUsed = $("#" + itemId + " .variable_from" + varFromId).length > 0 || $("#" + itemId + " ul .variable_from" + varToId).length > 0 ||
+				$("#" + itemId + " .variable_to" + varFromId).length > 0 || $("#" + itemId + " .variable_to" + varToId).length > 0;
+			
+			
+			if (varToId != varFromId &amp;&amp; varToId in variablesById &amp;&amp; varFromId in variablesById &amp;&amp; ! variablesUsed) {
+				
+				var nameFromSpan = generateElement("span", {class: 'variable_from variable_from' + varFromId, rel: varFromId}, variablesById[varFromId].name); 
+				var nameToSpan = generateElement("span", {class: 'variable_to variable_to' + varToId, rel: varToId}, variablesById[varToId].name);
+				
+				var li = generateElement("li", {}, nameFromSpan + " &gt; " + nameToSpan + generateRemoveButton());
+			
+				$("#" + itemId + " ul").append(li);
+				
+				$("#" + itemId + " .nameFromInput").val('');
+				$("#" + itemId + " .nameToInput").val('');
+			}
+		}
+		
+		function addVariable(type) {
+			var varId = $("#" + type + "VariableSelect option:selected").val();
+			if (varId in variablesById &amp;&amp; $("#" + type + "Variable_" + varId).length == 0) {	
+				var li = generateElement('li', {id: type + 'Variable_' + varId, rel: varId}, variablesById[varId].name + generateRemoveButton());	
+						
+				$("#compositeSimulation_" + type).append(li); 
+				$("#" + type + "VariableSelect option").eq(0).attr('selected', 'selected')
+			}
+		}
+		
+		function createCompositeSimulation() {
+			var compSim = {};
+			
+			compSim.name = $("#compSim_name").val();
+			compSim.description = $("#compSim_description").val();
+			compSim.id = parseInt($("#compSim_id").val());
+			
+			compSim.inputs = [];
+			$("#compositeSimulation_input li").each(function() {
+				compSim.inputs.push(parseInt(this.getAttribute("rel")));
+			});
+			
+
+			compSim.outputs = [];
+			$("#compositeSimulation_output li").each(function() {
+				compSim.outputs.push(parseInt(this.getAttribute("rel")));
+			});
+			
+			compSim.steps = [];
+			$("#compositeSimulationSteps>li").each(function() {
+				var item = {};
+				item.simulations = [];
+				
+				$(this).find("li").each(function() {
+					item.simulations.push(parseInt(this.getAttribute('rel')));
+				});
+				
+				item.virtId = parseInt($(this).attr('rel'));
+				item.id = parseInt($(this).attr('title'));
+				
+				compSim.steps.push(item);
+			});
+			
+			compSim.mappings = [];
+			$("#compositeSimulationMappings>li").each(function() {
+				var item = {};
+				item.mapping = {};
+				$(this).find("li").each(function() {
+					var from = parseInt($(this).find('.variable_from').attr('rel'));
+					var to = parseInt($(this).find('.variable_to').attr('rel'));
+					item.mapping[from] = to;
+				});
+				
+				item.virtId = parseInt($(this).attr('rel'));
+				item.id = parseInt($(this).attr('title'));
+				item.fromStep = parseInt($(this).find('.step_from :selected').val());
+				item.toStep = parseInt($(this).find('.step_to :selected').val());
+				
+				
+				
+				
+				compSim.mappings.push(item);
+			});
+			
+			alert(JSON.stringify(compSim));
+			
+			$.ajax({data: {compositeSimulation: JSON.stringify(compSim)}, success: function() { alert('success'); }, error: function() { alert('error'); }, type: 'POST' });
+			
+		}
+		
+		function removeItem(item) {
+			$(item.parentNode).remove();
+		}
+		
+	</script>
+	
+	<label for="compSim_name">Name:</label><br />
+	<input id="compSim_name" type="text" value="${simulation.name}"/><br />
+	
+	<label for="compSim_description">Description:</label><br />
+	<textarea id="compSim_description"><!--  -->${simulation.description}</textarea> <br />
+	
+	<button onclick="addStep()">Add step</button>
+	<button onclick="addMapping()">Add mapping</button>
+	
+	<br />
+	Inputs:
+	<ul id="compositeSimulation_input">
+		<!--  -->
+		<c:forEach var="input" items="${simulation.inputs}">
+			<li id="inputVariable_${input.id}" rel="${input.id}">${input.name}  <button class="removeButton" onclick="removeItem(this)">remove</button></li>
+		</c:forEach>
+	</ul>
+	<select id="inputVariableSelect">
+		<option value="-1">-- Choose variable -- </option>
+		<c:forEach items="${variables}" var="variable"> 
+			<option value="${variable.id}">${variable.name}</option>
+		</c:forEach>
+	</select>
+	<button onclick="addVariable('input')">Add variable</button>
+	<br />
+	
+	Steps: 
+	<ul id="compositeSimulationSteps"><!--  -->
+		<c:forEach var="step" items="${simulation.steps}" varStatus="status">
+			<li id="compSim_step_${step.id}" class="compSim_step" rel="${step.id}">Step ${status.index + 1}
+			 <button class="removeButton" onclick="removeItem(this)">remove</button>
+				<ul>
+					<c:forEach var="sim" items="${step.simulations}">
+						<li class="compSim_simulation" rel="${sim.id}">${sim.name}
+							 <button class="removeButton" onclick="removeItem(this)">remove</button>
+						</li>
+					</c:forEach>
+				</ul>
+				<select class="simSelect">
+					<c:forEach var="sim" items="${simulations}">
+						<option value="${sim.id}">${sim.name}</option>
+					</c:forEach>
+				</select>
+				<button onclick="addSimulation('compSim_step_${step.id}')">Add simulation</button>
+			
+			</li>
+		</c:forEach>
+	
+	</ul>
+	<br />
+	Mappings: 
+	<ul id="compositeSimulationMappings"><!--  -->		
+		<c:forEach items="${simulation.stepMapping}" var="mapping"> 
+			<li id="compSim_mapping${mapping.id}">
+				From step: 
+				<select class=" stepsSelect step_from">
+					<option value="-1">-- choose step --</option>
+					<c:forEach var="step" items="${simulation.steps}">
+						<c:if test="${mapping.fromStep.id == step.id}">
+							<option value="${step.id}" selected="selected" >Step ${step.id}</option>
+						</c:if>
+						<c:if test="${mapping.fromStep.id != step.id}">
+							<option value="${step.id}" >Step ${step.id}</option>
+						</c:if>
+					</c:forEach>
+				</select>
+				To step:
+				<select class=" stepsSelect step_to">
+					<option value="-1">-- choose step --</option>
+					<c:forEach var="step" items="${simulation.steps}">
+						<c:if test="${mapping.toStep.id == step.id}">
+							<option value="${step.id}" selected="selected" >Step ${step.id}</option>
+						</c:if>
+						<c:if test="${mapping.toStep.id != step.id}">
+							<option value="${step.id}" >Step ${step.id}</option>
+						</c:if>
+					</c:forEach>
+				</select>
+				
+			 	<button class="removeButton" onclick="removeItem(this)">remove</button>
+				<ul><!--  -->
+					<c:forEach items="${mapping.mapping}" var="item">
+						<li>
+							<span class="variable_from variable_from${item.key.id}" rel="${item.key.id}">${item.key.name}</span>
+						        &gt;
+						    <span class="variable_to variable_to${item.value.id}" rel="${item.value.id}">${item.value.name}</span>
+						 	<button class="removeButton" onclick="removeItem(this)">remove</button>
+						</li>
+					</c:forEach> 
+				
+				</ul>
+				Name from:
+				<select class="variable_from">
+					<option value="-1">-- Choose variable -- </option>
+					<c:forEach items="${variables}" var="variable"> 
+						<option value="${variable.id}">${variable.name}</option>
+					</c:forEach>
+				</select>
+				
+				Name to:
+				<select class="variable_to">
+					<option value="-1">-- Choose variable -- </option>
+					<c:forEach items="${variables}" var="variable"> 
+						<option value="${variable.id}">${variable.name}</option>
+					</c:forEach>
+				</select>
+				<button onclick="addVariableMapping('compSim_mapping${mapping.id}')">Add variable mapping</button>
+			</li>
+		</c:forEach>
+	</ul>
+	
+	
+	<br />
+	
+	Outputs:
+	<ul id="compositeSimulation_output">
+		<!--  -->
+		<c:forEach var="output" items="${simulation.outputs}">
+			<li id="outputVariable_${output.id}" rel="${output.id}">${output.name} <button class="removeButton" onclick="removeItem(this)">remove</button></li>
+		</c:forEach>
+	</ul>
+	
+	<select id="outputVariableSelect">
+		<option value="-1">-- Choose variable -- </option>
+		<c:forEach items="${variables}" var="variable"> 
+			<option value="${variable.id}">${variable.name}</option>
+		</c:forEach>
+	</select>
+	<button onclick="addVariable('output')">Add variable</button>
+	
+	
+	<button onclick="createCompositeSimulation()">Create simulation</button>
+
+	<style>
+		#sortable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+		#sortable li { margin: 0 5px 5px 5px; padding: 5px; font-size: 1.2em; height: 1.5em; border: 1px solid gray;}
+		html>body #sortable li { height: 1.5em; line-height: 1.2em; }
+		.ui-state-highlight { height: 1.5em; line-height: 1.2em; }
+		#compositeSimulationItems li { margin: 0 5px 5px 0; padding: 5px; padding-top: 10px; font-size: 1.2em; border: 1px solid gray; list-style: none; padding-left: 34px; background-position: 5px 5px;}
+		/*
+		.compSim_step { background: url(${stepIcon}) no-repeat; }
+		.compSim_simulation { background: url(${simulationIcon}) no-repeat; }
+		.compSim_mapping { background: url(${mappingIcon}) no-repeat; }
+		*/
+		
+	</style>
+	<script>
+	    $(function() {
+		    $( "#sortable" ).sortable({
+			    placeholder: "ui-state-highlight"
+		    });
+		    $( "#sortable" ).disableSelection();
+	    });
+	</script>
+</div>
