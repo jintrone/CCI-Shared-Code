@@ -16,7 +16,7 @@ public class SimulationInput {
 		DEVELOPED_REFERENCE_YEAR("Developed countries reference year", "Developed reference year", 2005),
 
 		
-		    DEVELOPINGA_FF_CHANGE("Developing countries fossil fuel emissions","Pct change in Developing A FF emissions",-40),
+		DEVELOPINGA_FF_CHANGE("Developing countries fossil fuel emissions","Pct change in Developing A FF emissions",-40),
 		DEVELOPINGA_FF_START("Developing countries fossil fuel emissions start reduction year","Developing A start year",2025),
 		DEVELOPINGA_FF_TARGET("Developing countries fossil fuel emissions target reduction year","Developing A target year",2050),
         DEVELOPINGA_REFERENCE_YEAR("Developing A countries reference year", "Developing A reference year", 2005),
