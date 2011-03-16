@@ -3,7 +3,9 @@ package edu.mit.cci.simulation.pangaea.servlet;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.ws.rs.FormParam;
@@ -75,7 +77,7 @@ public class  RootResource {
 
 	}
 
-	private String createTextResult(SimulationResults result) {
+	String createTextResult(SimulationResults result) {
 		StringBuilder buffer = new StringBuilder();
 		List<Variable> vars = new ArrayList<Variable>(result.getPopulatedVariables());
 		
@@ -84,19 +86,20 @@ public class  RootResource {
 				return o1.getInternalName().compareTo(o2.getInternalName());
 			}
 		});
-		
-		
+
+
+        Map<String,Object> tmp = new HashMap<String,Object>();
 		for (Variable v: vars) {
-			buffer.append("<");
-			buffer.append(v.getInternalName());
-			buffer.append(">[");
-			List<ScalarElement> vresult = result.get(v);
-			for (ScalarElement e:vresult) {
-				buffer.append(e.toString());
-			}
-			buffer.append("]");
+
+            List<ScalarElement> vresult = result.get(v);
+            String[] array = new String[vresult.size()];
+            for (int i = 0;i<vresult.size();i++) {
+                array[i] = vresult.get(i).val.doubleValue()+"";
+            }
+			tmp.put(v.getInternalName(),array);
+
 		}
-		return buffer.toString();
+		return U.stringify(tmp);
 	}
 
 }
