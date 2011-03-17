@@ -227,151 +227,195 @@
 			
 		}
 		
+		function makeStepsSortable() {
+			$("#compositeSimulationSteps").sortable('destroy');
+			$("#compositeSimulationSteps").sortable();
+			
+		}
+		
 		function removeItem(item) {
 			$(item.parentNode).remove();
 		}
 		
+		$(function() {
+			makeStepsSortable();
+		});
+		
 	</script>
-	
-	<label for="compSim_name">Name:</label><br />
-	<input id="compSim_name" type="text" value="${simulation.name}"/><br />
-	
-	<label for="compSim_description">Description:</label><br />
-	<textarea id="compSim_description"><!--  -->${simulation.description}</textarea> <br />
-	
-	<button onclick="addStep()">Add step</button>
-	<button onclick="addMapping()">Add mapping</button>
-	
-	<br />
-	Inputs:
-	<ul id="compositeSimulation_input">
-		<!--  -->
-		<c:forEach var="input" items="${simulation.inputs}">
-			<li id="inputVariable_${input.id}" rel="${input.id}">${input.name}  <button class="removeButton" onclick="removeItem(this)">remove</button></li>
-		</c:forEach>
-	</ul>
-	<select id="inputVariableSelect">
-		<option value="-1">-- Choose variable -- </option>
-		<c:forEach items="${variables}" var="variable"> 
-			<option value="${variable.id}">${variable.name}</option>
-		</c:forEach>
-	</select>
-	<button onclick="addVariable('input')">Add variable</button>
-	<br />
-	
-	Steps: 
-	<ul id="compositeSimulationSteps"><!--  -->
-		<c:forEach var="step" items="${simulation.steps}" varStatus="status">
-			<li id="compSim_step_${step.id}" class="compSim_step" rel="${step.id}">Step ${status.index + 1}
-			 <button class="removeButton" onclick="removeItem(this)">remove</button>
-				<ul>
-					<c:forEach var="sim" items="${step.simulations}">
-						<li class="compSim_simulation" rel="${sim.id}">${sim.name}
-							 <button class="removeButton" onclick="removeItem(this)">remove</button>
+	<table>
+		<tr>
+			<td><label for="compSim_name">Name:</label></td>
+			<td><input id="compSim_name" type="text" value="${simulation.name}"/></td>
+		</tr>
+		<tr>
+			<td><label for="compSim_description">Description:</label></td>
+			<td><textarea id="compSim_description"><!--  -->${simulation.description}</textarea></td>
+		</tr>
+		<tr>
+			<td><label for="compSim_inputs">Inputs:</label></td>
+			<td>
+				<ul id="compositeSimulation_input">
+					<!--  -->
+					<c:forEach var="input" items="${simulation.inputs}">
+						<li id="inputVariable_${input.id}" rel="${input.id}">
+							${input.name}  
+							<button class="removeButton" onclick="removeItem(this)">remove</button>
 						</li>
 					</c:forEach>
 				</ul>
-				<select class="simSelect">
-					<c:forEach var="sim" items="${simulations}">
-						<option value="${sim.id}">${sim.name}</option>
-					</c:forEach>
-				</select>
-				<button onclick="addSimulation('compSim_step_${step.id}')">Add simulation</button>
-			
-			</li>
-		</c:forEach>
-	
-	</ul>
-	<br />
-	Mappings: 
-	<ul id="compositeSimulationMappings"><!--  -->		
-		<c:forEach items="${simulation.stepMapping}" var="mapping"> 
-			<li id="compSim_mapping${mapping.id}">
-				From step: 
-				<select class=" stepsSelect step_from">
-					<option value="-1">-- choose step --</option>
-					<c:forEach var="step" items="${simulation.steps}">
-						<c:if test="${mapping.fromStep.id == step.id}">
-							<option value="${step.id}" selected="selected" >Step ${step.id}</option>
-						</c:if>
-						<c:if test="${mapping.fromStep.id != step.id}">
-							<option value="${step.id}" >Step ${step.id}</option>
-						</c:if>
-					</c:forEach>
-				</select>
-				To step:
-				<select class=" stepsSelect step_to">
-					<option value="-1">-- choose step --</option>
-					<c:forEach var="step" items="${simulation.steps}">
-						<c:if test="${mapping.toStep.id == step.id}">
-							<option value="${step.id}" selected="selected" >Step ${step.id}</option>
-						</c:if>
-						<c:if test="${mapping.toStep.id != step.id}">
-							<option value="${step.id}" >Step ${step.id}</option>
-						</c:if>
-					</c:forEach>
-				</select>
-				
-			 	<button class="removeButton" onclick="removeItem(this)">remove</button>
-				<ul><!--  -->
-					<c:forEach items="${mapping.mapping}" var="item">
-						<li>
-							<span class="variable_from variable_from${item.key.id}" rel="${item.key.id}">${item.key.name}</span>
-						        &gt;
-						    <span class="variable_to variable_to${item.value.id}" rel="${item.value.id}">${item.value.name}</span>
-						 	<button class="removeButton" onclick="removeItem(this)">remove</button>
-						</li>
-					</c:forEach> 
-				
-				</ul>
-				Name from:
-				<select class="variable_from">
+				<select id="inputVariableSelect">
 					<option value="-1">-- Choose variable -- </option>
 					<c:forEach items="${variables}" var="variable"> 
 						<option value="${variable.id}">${variable.name}</option>
 					</c:forEach>
 				</select>
-				
-				Name to:
-				<select class="variable_to">
+				<button onclick="addVariable('input')">Add variable</button>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<label for="compSim_outputs">Outputs:</label>
+			</td>
+			<td>
+				<ul id="compositeSimulation_output">
+					<!--  -->
+					<c:forEach var="output" items="${simulation.outputs}">
+						<li id="outputVariable_${output.id}" rel="${output.id}">${output.name} <button class="removeButton" onclick="removeItem(this)">remove</button></li>
+					</c:forEach>
+				</ul>
+	
+				<select id="outputVariableSelect">
 					<option value="-1">-- Choose variable -- </option>
 					<c:forEach items="${variables}" var="variable"> 
 						<option value="${variable.id}">${variable.name}</option>
 					</c:forEach>
 				</select>
-				<button onclick="addVariableMapping('compSim_mapping${mapping.id}')">Add variable mapping</button>
-			</li>
-		</c:forEach>
-	</ul>
+				<button onclick="addVariable('output')">Add variable</button>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<label for="compSim_steps">Steps:</label>
+			</td>
+			<td>
+				<ul id="compositeSimulationSteps"><!--  -->
+					<c:forEach var="step" items="${simulation.steps}" varStatus="status">
+						<li id="compSim_step_${step.id}" class="compSim_step" rel="${step.id}">Step ${status.index + 1}
+			 				<button class="removeButton" onclick="removeItem(this)">remove</button>
+							<ul>
+								<c:forEach var="sim" items="${step.simulations}">
+									<li class="compSim_simulation" rel="${sim.id}">${sim.name}
+							 			<button class="removeButton" onclick="removeItem(this)">remove</button>
+									</li>
+								</c:forEach>
+							</ul>
+							<select class="simSelect">
+								<c:forEach var="sim" items="${simulations}">
+									<option value="${sim.id}">${sim.name}</option>
+								</c:forEach>
+							</select>
+							<button onclick="addSimulation('compSim_step_${step.id}')">Add simulation</button>
+						</li>
+					</c:forEach>
+				</ul>
+				<button onclick="addStep()">Add step</button>
+			</td>
+		</tr>
+		<tr>
+			<td><label for="compSim_inputs">Mappings:</label></td>
+			<td>
+				<ul id="compositeSimulationMappings"><!--  -->		
+					<c:forEach items="${simulation.stepMapping}" var="mapping"> 
+						<li id="compSim_mapping${mapping.id}">
+							From step: 
+							<select class=" stepsSelect step_from">
+								<option value="-1">-- choose step --</option>
+								<c:forEach var="step" items="${simulation.steps}">
+									<c:if test="${mapping.fromStep.id == step.id}">
+										<option value="${step.id}" selected="selected" >Step ${step.id}</option>
+									</c:if>
+									<c:if test="${mapping.fromStep.id != step.id}">
+										<option value="${step.id}" >Step ${step.id}</option>
+									</c:if>
+								</c:forEach>
+							</select>
+							To step:
+							<select class=" stepsSelect step_to">
+								<option value="-1">-- choose step --</option>
+								<c:forEach var="step" items="${simulation.steps}">
+									<c:if test="${mapping.toStep.id == step.id}">
+										<option value="${step.id}" selected="selected" >Step ${step.id}</option>
+									</c:if>
+									<c:if test="${mapping.toStep.id != step.id}">
+										<option value="${step.id}" >Step ${step.id}</option>
+									</c:if>
+								</c:forEach>
+							</select>
+				
+			 				<button class="removeButton" onclick="removeItem(this)">remove</button>
+							<ul><!--  -->
+							<c:forEach items="${mapping.mapping}" var="item">
+								<li>
+									<span class="variable_from variable_from${item.key.id}" rel="${item.key.id}">${item.key.name}</span>
+						        	&gt;
+						    		<span class="variable_to variable_to${item.value.id}" rel="${item.value.id}">${item.value.name}</span>
+						 			<button class="removeButton" onclick="removeItem(this)">remove</button>
+								</li>
+							</c:forEach> 
+				
+						</ul>
+							Name from:
+							<select class="variable_from">
+								<option value="-1">-- Choose variable -- </option>
+								<c:forEach items="${variables}" var="variable"> 
+									<option value="${variable.id}">${variable.name}</option>
+								</c:forEach>
+							</select>
+				
+							Name to:
+							<select class="variable_to">
+								<option value="-1">-- Choose variable -- </option>
+								<c:forEach items="${variables}" var="variable"> 
+									<option value="${variable.id}">${variable.name}</option>
+								</c:forEach>
+							</select>
+							<button onclick="addVariableMapping('compSim_mapping${mapping.id}')">Add variable mapping</button>
+						</li>
+					</c:forEach>
+				</ul>
+				<button onclick="addMapping()">Add mapping</button>
+			</td>
+		</tr>
+	</table>
 	
-	
-	<br />
-	
-	Outputs:
-	<ul id="compositeSimulation_output">
-		<!--  -->
-		<c:forEach var="output" items="${simulation.outputs}">
-			<li id="outputVariable_${output.id}" rel="${output.id}">${output.name} <button class="removeButton" onclick="removeItem(this)">remove</button></li>
-		</c:forEach>
-	</ul>
-	
-	<select id="outputVariableSelect">
-		<option value="-1">-- Choose variable -- </option>
-		<c:forEach items="${variables}" var="variable"> 
-			<option value="${variable.id}">${variable.name}</option>
-		</c:forEach>
-	</select>
-	<button onclick="addVariable('output')">Add variable</button>
 	
 	
 	<button onclick="createCompositeSimulation()">Create simulation</button>
 
+	<spring:url var="removeButton" value="/resources/images/delete.png" />
 	<style>
 		#sortable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
-		#sortable li { margin: 0 5px 5px 5px; padding: 5px; font-size: 1.2em; height: 1.5em; border: 1px solid gray;}
+		ul li { margin: 0 5px 5px 5px; padding: 5px; font-size: 1.2em; border: 1px solid gray;}
 		html>body #sortable li { height: 1.5em; line-height: 1.2em; }
 		.ui-state-highlight { height: 1.5em; line-height: 1.2em; }
 		#compositeSimulationItems li { margin: 0 5px 5px 0; padding: 5px; padding-top: 10px; font-size: 1.2em; border: 1px solid gray; list-style: none; padding-left: 34px; background-position: 5px 5px;}
+		
+		label {
+			font-weight: bold;
+			font-size: 1.3em;
+			display: block;
+			float: none;
+		}
+		textarea {
+			width: 400px;
+			height: 60px;
+		}
+		
+		button.removeButton {
+			background: url(${removeButton}) no-repeat left;
+			padding-left: 20px;
+		}
+			
 		/*
 		.compSim_step { background: url(${stepIcon}) no-repeat; }
 		.compSim_simulation { background: url(${simulationIcon}) no-repeat; }
