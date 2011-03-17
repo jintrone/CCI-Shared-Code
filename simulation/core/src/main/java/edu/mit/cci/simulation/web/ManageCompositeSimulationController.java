@@ -1,5 +1,6 @@
 package edu.mit.cci.simulation.web;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -34,6 +36,7 @@ import flexjson.JSONSerializer;
 @Controller
 @RequestMapping("/manage/compositeSimulation")
 public class ManageCompositeSimulationController {
+	private final static Logger _log = Logger.getLogger(ManageCompositeSimulationController.class);
 	
 	
 	@RequestMapping("/list")
@@ -63,9 +66,10 @@ public class ManageCompositeSimulationController {
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST)
 	@Transactional
-	public String add(Model model, HttpServletRequest request) throws SimulationCreationException {
+	public String add(Model model, HttpServletRequest request, HttpServletResponse response)
+	throws SimulationCreationException, IOException {
 		CompositeSimulation compSim = new CompositeSimulation();
-		String viewName = addUpdate(compSim, model, request);
+		String viewName = addUpdate(compSim, model, request, response);
 		
 		compSim.persist();
 		return viewName;
@@ -73,9 +77,10 @@ public class ManageCompositeSimulationController {
 	
 	@RequestMapping(value = "/edit/{simulationId}", method = RequestMethod.POST)
 	@Transactional
-	public String update(@PathVariable Long simulationId, Model model, HttpServletRequest request) throws SimulationCreationException {
+	public String update(@PathVariable Long simulationId, Model model, HttpServletRequest request, 
+			HttpServletResponse response) throws SimulationCreationException, IOException {
 		CompositeSimulation compSim = CompositeSimulation.findCompositeSimulation(simulationId);
-		String viewName = addUpdate(compSim, model, request);
+		String viewName = addUpdate(compSim, model, request, response);
 		
 		compSim.merge();
 		return viewName;
@@ -83,7 +88,8 @@ public class ManageCompositeSimulationController {
 	
 	
 	
-	private String addUpdate(CompositeSimulation compSim, Model model, HttpServletRequest request) throws SimulationCreationException {
+	private String addUpdate(CompositeSimulation compSim, Model model, HttpServletRequest request, 
+			HttpServletResponse response) throws SimulationCreationException, IOException {
 		try {
 		
 		JSONDeserializer<CompositeSimulationBean> deser = new JSONDeserializer<CompositeSimulationBean>();
@@ -182,20 +188,45 @@ public class ManageCompositeSimulationController {
 		return "compositeSimulationEdit";
 		}
 		catch (Throwable e) {
-			e.printStackTrace();
-			throw new RuntimeException(e);
+			_log.error("Can't create/update composite simulation", e);
+			response.setStatus(400);
+			response.getWriter().print(e.getMessage());	
+			return null;
 		}
 	}
 	
 	private void handleEditOperation(Model model) {
 		JSONSerializer serializer = new JSONSerializer();
-		List simulations = DefaultSimulation.findAllDefaultSimulations();
+		List<DefaultSimulation> simulations = DefaultSimulation.findAllDefaultSimulations();
+		Map<String, List<Long>> simulationInputs = new HashMap<String, List<Long>>();
+		Map<String, List<Long>> simulationOutputs = new HashMap<String, List<Long>>();
+		
+		for (DefaultSimulation sim: simulations) {
+			List<Long> inputs = new ArrayList<Long>();
+			List<Long> outputs = new ArrayList<Long>();
+			
+			simulationInputs.put(String.valueOf(sim.getId()), inputs);
+			simulationOutputs.put(String.valueOf(sim.getId()), outputs);
+			
+			for (Variable var: sim.getInputs()) {
+				inputs.add(var.getId());
+			}
+			
+			for (Variable var: sim.getOutputs()) {
+				outputs.add(var.getId());
+			}
+		}
+		
 		model.addAttribute("simulations", simulations);
 		model.addAttribute("simulationsJson", serializer.serialize(simulations));
+		
+		model.addAttribute("simulationInputs", serializer.include("*").serialize(simulationInputs));
+		model.addAttribute("simulationOutputs", serializer.serialize(simulationOutputs));
 
 		List variables = Variable.findAllVariables();
 		model.addAttribute("variables", variables);
 		model.addAttribute("variablesJson", serializer.serialize(variables));
+
 		
 	}
 	

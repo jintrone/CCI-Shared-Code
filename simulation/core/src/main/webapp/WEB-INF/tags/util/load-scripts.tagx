@@ -11,6 +11,7 @@
   <spring:url value="/resources/images/favicon.ico" var="favicon" />
   <spring:url value="/resources/javascript/jquery.js" var="jquery_url" />
   <spring:url value="/resources/javascript/json2.js" var="json2_url" />
+  <spring:url value="/resources/javascript/jquery.blockUI.js" var="jqueryBlockUI_url" />
   
   <spring:url value="/resources/javascript/jquery-ui.js" var="jquery_ui_url" />
   
@@ -27,7 +28,7 @@
   </c:set>
 
   <script type="text/javascript">var djConfig = {parseOnLoad: false, isDebug: false, locale: '${fn:toLowerCase(userLocale)}'};</script>
-
+  <script src="${jqueryBlockUI_url}" type="text/javascript"><!-- required for FF3 and Opera --></script>
   <script src="${dojo_url}" type="text/javascript"><!-- required for FF3 and Opera --></script>
   <script src="${spring_url}" type="text/javascript"><!-- /required for FF3 and Opera --></script>
   <script src="${spring_dojo_url}" type="text/javascript"><!-- required for FF3 and Opera --></script>
