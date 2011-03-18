@@ -4,9 +4,9 @@
 package edu.mit.cci.simulation.web;
 
 import edu.mit.cci.simulation.model.DefaultSimulation;
+import edu.mit.cci.simulation.model.DefaultVariable;
 import edu.mit.cci.simulation.model.ManyToOneMapping;
 import edu.mit.cci.simulation.model.MappedSimulation;
-import edu.mit.cci.simulation.model.Variable;
 import java.io.UnsupportedEncodingException;
 import java.lang.Integer;
 import java.lang.Long;
@@ -92,14 +92,14 @@ privileged aspect MappedSimulationController_Roo_Controller {
         return DefaultSimulation.findAllDefaultSimulations();
     }
     
+    @ModelAttribute("defaultvariables")
+    public Collection<DefaultVariable> MappedSimulationController.populateDefaultVariables() {
+        return DefaultVariable.findAllDefaultVariables();
+    }
+    
     @ModelAttribute("manytoonemappings")
     public Collection<ManyToOneMapping> MappedSimulationController.populateManyToOneMappings() {
         return Arrays.asList(ManyToOneMapping.class.getEnumConstants());
-    }
-    
-    @ModelAttribute("variables")
-    public Collection<Variable> MappedSimulationController.populateVariables() {
-        return Variable.findAllVariables();
     }
     
     void MappedSimulationController.addDateTimeFormatPatterns(Model model) {

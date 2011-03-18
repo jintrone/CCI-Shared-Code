@@ -17,8 +17,8 @@ privileged aspect MappedSimulation_Roo_ToString {
         sb.append("Description: ").append(getDescription()).append(", ");
         sb.append("Name: ").append(getName()).append(", ");
         sb.append("Url: ").append(getUrl()).append(", ");
-        sb.append("Inputs: ").append(getInputs() == null ? "null" : getInputs().size()).append(", ");
-        sb.append("Outputs: ").append(getOutputs() == null ? "null" : getOutputs().size()).append(", ");
+        sb.append("Inputs: ").append(getInputs()).append(", ");
+        sb.append("Outputs: ").append(getOutputs()).append(", ");
         sb.append("ExecutorSimulation: ").append(getExecutorSimulation()).append(", ");
         sb.append("VariableMap: ").append(getVariableMap() == null ? "null" : getVariableMap().size()).append(", ");
         sb.append("Replication: ").append(getReplication()).append(", ");

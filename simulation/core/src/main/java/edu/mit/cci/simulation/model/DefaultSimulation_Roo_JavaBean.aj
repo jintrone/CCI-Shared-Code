@@ -3,11 +3,9 @@
 
 package edu.mit.cci.simulation.model;
 
-import edu.mit.cci.simulation.model.Variable;
 import java.lang.Long;
 import java.lang.String;
 import java.util.Date;
-import java.util.Set;
 
 privileged aspect DefaultSimulation_Roo_JavaBean {
     
@@ -51,12 +49,7 @@ privileged aspect DefaultSimulation_Roo_JavaBean {
         this.url = url;
     }
     
-    public Set<Variable> DefaultSimulation.getInputs() {
-        return this.inputs;
-    }
-    
-    public Set<Variable> DefaultSimulation.getOutputs() {
-        return this.outputs;
-    }
+
+
     
 }

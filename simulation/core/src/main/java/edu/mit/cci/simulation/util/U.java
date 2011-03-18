@@ -1,9 +1,11 @@
 package edu.mit.cci.simulation.util;
 
 import edu.mit.cci.simulation.model.DataType;
+import edu.mit.cci.simulation.model.DefaultVariable;
 import edu.mit.cci.simulation.model.SimulationException;
 import edu.mit.cci.simulation.model.Tuple;
 import edu.mit.cci.simulation.model.TupleStatus;
+import edu.mit.cci.simulation.model.DefaultVariable;
 import edu.mit.cci.simulation.model.Variable;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -163,7 +165,7 @@ public class U {
 
 
         for (Map.Entry<String, String> ent : params.entrySet()) {
-            Variable v = Variable.findVariable(Long.parseLong(ent.getKey()));
+            Variable v = DefaultVariable.findDefaultVariable(Long.parseLong(ent.getKey()));
             if (v == null)
                 throw new SimulationException("Variable for id:" + ent.getKey() + " could not be identified");
             Tuple t = new Tuple(v);
@@ -206,7 +208,7 @@ public class U {
             } catch (NumberFormatException e) {
                //do nothing
             }
-            Variable v = lid!=null?Variable.findVariable(lid):null;
+            Variable v = lid!=null? DefaultVariable.findDefaultVariable(lid):null;
             if (v == null) {
                 log.warn("Could not identify variable in response: " + varval[0]);
                 continue;
@@ -258,7 +260,7 @@ public class U {
         to.setMax_(from.getMax_());
         to.setMin_(from.getMin_());
         to.setDescription(from.getDescription());
-        to.set_optionsRaw(from.get_optionsRaw());
+        ((DefaultVariable)to).set_optionsRaw(((DefaultVariable)from).get_optionsRaw());
         to.setPrecision_(from.getPrecision_());
         to.setArity(from.getArity());
         return to;

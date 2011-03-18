@@ -25,7 +25,7 @@ public class TupleTest {
 
     @Test
     public void testTupleArity() {
-        Variable v = new Variable();
+        DefaultVariable v = new DefaultVariable();
         v.setDataType(DataType.NUM);
         v.setArity(1);
         v.setName("Test");
@@ -46,7 +46,7 @@ public class TupleTest {
 
     @Test
     public void testTupleMinMax() throws Exception {
-        Variable v = new Variable();
+        DefaultVariable v = new DefaultVariable();
         v.setDataType(DataType.NUM);
         v.setArity(2);
         v.setName("Test");
@@ -63,7 +63,7 @@ public class TupleTest {
 
     @Test
     public void testTupleNumericType() {
-        Variable v = new Variable();
+        DefaultVariable v = new DefaultVariable();
         v.setDataType(DataType.NUM);
         v.setArity(2);
         v.setName("Test");
@@ -102,7 +102,7 @@ public class TupleTest {
 
     @Test
     public void checkErrorHandling() throws SimulationValidationException {
-        Tuple t = new Tuple(new Variable("Test","test",4,0,0,3));
+        Tuple t = new Tuple(new DefaultVariable("Test","test",4,0,0,3));
         t.setValues(new String[] {"4","-1","2","2"});
         String[] expect = new String[] {null,null,null,"2"};
         t.setStatus(2,TupleStatus.ERR_CALC);

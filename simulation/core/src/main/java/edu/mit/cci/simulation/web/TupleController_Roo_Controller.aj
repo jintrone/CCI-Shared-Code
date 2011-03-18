@@ -3,8 +3,8 @@
 
 package edu.mit.cci.simulation.web;
 
+import edu.mit.cci.simulation.model.DefaultVariable;
 import edu.mit.cci.simulation.model.Tuple;
-import edu.mit.cci.simulation.model.Variable;
 import java.io.UnsupportedEncodingException;
 import java.lang.Integer;
 import java.lang.Long;
@@ -40,8 +40,8 @@ privileged aspect TupleController_Roo_Controller {
     public String TupleController.createForm(Model model) {
         model.addAttribute("tuple", new Tuple());
         List dependencies = new ArrayList();
-        if (Variable.countVariables() == 0) {
-            dependencies.add(new String[]{"var", "variables"});
+        if (DefaultVariable.countDefaultVariables() == 0) {
+            dependencies.add(new String[]{"var", "defaultvariables"});
         }
         model.addAttribute("dependencies", dependencies);
         return "tuples/create";
@@ -84,9 +84,9 @@ privileged aspect TupleController_Roo_Controller {
         return "redirect:/tuples?page=" + ((page == null) ? "1" : page.toString()) + "&size=" + ((size == null) ? "10" : size.toString());
     }
     
-    @ModelAttribute("variables")
-    public Collection<Variable> TupleController.populateVariables() {
-        return Variable.findAllVariables();
+    @ModelAttribute("defaultvariables")
+    public Collection<DefaultVariable> TupleController.populateDefaultVariables() {
+        return DefaultVariable.findAllDefaultVariables();
     }
     
     String TupleController.encodeUrlPathSegment(String pathSegment, HttpServletRequest request) {

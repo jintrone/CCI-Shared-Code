@@ -1,5 +1,6 @@
 package edu.mit.cci.simulation.model;
 
+import org.apache.tools.ant.taskdefs.Tar;
 import org.springframework.roo.addon.entity.RooEntity;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.tostring.RooToString;
@@ -37,9 +38,9 @@ public class CompositeStepMapping {
     private final Set<Variable> toVars = new HashSet<Variable>();
 
 
-    @ManyToMany
+    @ManyToMany(targetEntity = DefaultVariable.class)
     @JoinTable(name="STEP_VAR_TO_VAR")
-    private Map<Variable,Variable> mapping = new HashMap<Variable,Variable>();
+    private Map<DefaultVariable,DefaultVariable> mapping = new HashMap<DefaultVariable,DefaultVariable>();
 
 
 
@@ -72,7 +73,7 @@ public class CompositeStepMapping {
              throw new SimulationCreationException("From and to variables must have same arity and datatype");
 
         } else {
-                mapping.put(fromVar,toVar);
+                mapping.put((DefaultVariable)fromVar,(DefaultVariable)toVar);
 
         }
 

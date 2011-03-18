@@ -1,6 +1,7 @@
 package edu.mit.cci.simulation.model;
 
 import org.springframework.roo.addon.dod.RooDataOnDemand;
+import org.springframework.stereotype.Component;
 
 @RooDataOnDemand(entity = DefaultSimulation.class)
 public class DefaultSimulationDataOnDemand {

@@ -58,7 +58,7 @@ public class RunSimulationForm  {
 
 
         for (Map.Entry<String,String> ent:form.inputs.entrySet()) {
-            Variable v = Variable.findVariable(remap.containsKey(ent.getKey())?remap.get(ent.getKey()):Long.parseLong(ent.getKey()));
+            DefaultVariable v = DefaultVariable.findDefaultVariable(remap.containsKey(ent.getKey()) ? remap.get(ent.getKey()) : Long.parseLong(ent.getKey()));
             if (v == null) throw new SimulationException("Could not identify variable "+ent.getKey());
             Tuple t = new Tuple(v);
             t.setValue_(ent.getValue());

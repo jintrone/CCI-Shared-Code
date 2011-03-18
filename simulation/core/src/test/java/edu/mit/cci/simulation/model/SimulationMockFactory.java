@@ -36,14 +36,14 @@ public class SimulationMockFactory {
     public DefaultSimulation getScalarSimulation(int simId, final int output, int varId) {
         DefaultSimulation sim = dod.getSpecificDefaultSimulation(simId);
 
-        Variable vin = vdod.getSpecificVariable(varId);
+        DefaultVariable vin = vdod.getSpecificDefaultVariable(varId);
         vin.setArity(1);
         vin.setDataType(DataType.NUM);
         vin.setPrecision_(0);
         vin.setMin_(0d);
         vin.setMax_(10d);
 
-        Variable vout = vdod.getSpecificVariable(varId + 1);
+        DefaultVariable vout = vdod.getSpecificDefaultVariable(varId + 1);
         vout.setArity(1);
         vout.setDataType(DataType.NUM);
         vout.setPrecision_(0);
@@ -108,8 +108,8 @@ public class SimulationMockFactory {
         return sim;
     }
 
-    public Variable getVariable(int arity, String name, DataType type, int precision) {
-        Variable v_in = new Variable();
+    public DefaultVariable getVariable(int arity, String name, DataType type, int precision) {
+        DefaultVariable v_in = new DefaultVariable();
         v_in.setArity(arity);
         v_in.setName(name);
         v_in.setDataType(type);
@@ -124,7 +124,7 @@ public class SimulationMockFactory {
         DefaultSimulation simulation = new DefaultSimulation();
         simulation.setSimulationVersion(1l);
         simulation.persist();
-        Variable dateinput = new Variable();
+        DefaultVariable dateinput = new DefaultVariable();
         dateinput.setName("Year");
         dateinput.setDataType(DataType.NUM);
         dateinput.setArity(11);
@@ -133,7 +133,7 @@ public class SimulationMockFactory {
         dateinput.setMin_(2000d);
         dateinput.setMax_(2100d);
 
-        Variable emissionsinput = new Variable();
+        DefaultVariable emissionsinput = new DefaultVariable();
         emissionsinput.setName("Emissions");
         emissionsinput.setDataType(DataType.NUM);
         emissionsinput.setArity(11);
@@ -143,7 +143,7 @@ public class SimulationMockFactory {
         emissionsinput.setMax_(5d);
 
 
-        Variable gdpOutput = new Variable();
+        DefaultVariable gdpOutput = new DefaultVariable();
         gdpOutput.setDataType(DataType.NUM);
         gdpOutput.setName("% GDP");
         gdpOutput.setArity(11);

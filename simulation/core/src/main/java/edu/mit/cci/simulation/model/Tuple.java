@@ -33,7 +33,7 @@ public class Tuple {
     }
 
     @NotNull
-    @ManyToOne
+    @ManyToOne(targetEntity = DefaultVariable.class)
     @XmlElement(name = "Variable")
     @XmlIDREF
     private Variable var;

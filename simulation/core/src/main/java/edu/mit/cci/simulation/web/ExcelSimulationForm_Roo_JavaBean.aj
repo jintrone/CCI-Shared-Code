@@ -3,7 +3,7 @@
 
 package edu.mit.cci.simulation.web;
 
-import edu.mit.cci.simulation.model.Variable;
+import edu.mit.cci.simulation.model.DefaultVariable;
 import java.lang.String;
 import java.util.List;
 
@@ -49,19 +49,19 @@ privileged aspect ExcelSimulationForm_Roo_JavaBean {
         this.outputWorksheetNames = outputWorksheetNames;
     }
     
-    public List<Variable> ExcelSimulationForm.getInputVars() {
+    public List<DefaultVariable> ExcelSimulationForm.getInputVars() {
         return this.inputVars;
     }
     
-    public void ExcelSimulationForm.setInputVars(List<Variable> inputVars) {
+    public void ExcelSimulationForm.setInputVars(List<DefaultVariable> inputVars) {
         this.inputVars = inputVars;
     }
     
-    public List<Variable> ExcelSimulationForm.getOutputVars() {
+    public List<DefaultVariable> ExcelSimulationForm.getOutputVars() {
         return this.outputVars;
     }
     
-    public void ExcelSimulationForm.setOutputVars(List<Variable> outputVars) {
+    public void ExcelSimulationForm.setOutputVars(List<DefaultVariable> outputVars) {
         this.outputVars = outputVars;
     }
     

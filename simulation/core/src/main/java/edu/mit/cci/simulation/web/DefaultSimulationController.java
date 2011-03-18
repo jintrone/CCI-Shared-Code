@@ -5,6 +5,7 @@ import edu.mit.cci.simulation.util.ConcreteSerializableCollection;
 import edu.mit.cci.simulation.util.U;
 import org.springframework.roo.addon.web.mvc.controller.RooWebScaffold;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,6 +35,7 @@ public class DefaultSimulationController {
     }
 
      @RequestMapping(method = RequestMethod.GET, headers = "accept=text/xml")
+      @ResponseBody
     public ConcreteSerializableCollection listXml(Model model) {
         return U.wrap(DefaultSimulation.findAllDefaultSimulations());
 

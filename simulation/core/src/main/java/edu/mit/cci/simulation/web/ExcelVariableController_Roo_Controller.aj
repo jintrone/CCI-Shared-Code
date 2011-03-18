@@ -5,7 +5,7 @@ package edu.mit.cci.simulation.web;
 
 import edu.mit.cci.simulation.excel.server.ExcelSimulation;
 import edu.mit.cci.simulation.excel.server.ExcelVariable;
-import edu.mit.cci.simulation.model.Variable;
+import edu.mit.cci.simulation.model.DefaultVariable;
 import java.io.UnsupportedEncodingException;
 import java.lang.Integer;
 import java.lang.Long;
@@ -90,9 +90,9 @@ privileged aspect ExcelVariableController_Roo_Controller {
         return ExcelSimulation.findAllExcelSimulations();
     }
     
-    @ModelAttribute("variables")
-    public Collection<Variable> ExcelVariableController.populateVariables() {
-        return Variable.findAllVariables();
+    @ModelAttribute("defaultvariables")
+    public Collection<DefaultVariable> ExcelVariableController.populateDefaultVariables() {
+        return DefaultVariable.findAllDefaultVariables();
     }
     
     String ExcelVariableController.encodeUrlPathSegment(String pathSegment, HttpServletRequest request) {

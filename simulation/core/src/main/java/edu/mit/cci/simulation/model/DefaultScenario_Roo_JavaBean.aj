@@ -10,11 +10,11 @@ import java.util.Set;
 
 privileged aspect DefaultScenario_Roo_JavaBean {
     
-    public DefaultSimulation DefaultScenario.getSimulation() {
+    public Simulation DefaultScenario.getSimulation() {
         return this.simulation;
     }
     
-    public void DefaultScenario.setSimulation(DefaultSimulation simulation) {
+    public void DefaultScenario.setSimulation(Simulation simulation) {
         this.simulation = simulation;
     }
     

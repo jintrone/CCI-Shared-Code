@@ -62,6 +62,7 @@
     <dependencies>
         <!-- General dependencies for standard applications -->
         <dependency>
+
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
             <version>3.0.5.RELEASE</version>
@@ -430,11 +431,19 @@
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.3.1</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>2.1-beta-1</version>
-                <!--
-					<configuration> <webXml>target/web.xml</webXml> </configuration>
-				-->
+                <configuration>
+          <excludes>
+            <exclude>**/web/*</exclude>
+            <exclude>**/excel/*</exclude>
+          </excludes>
+        </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -449,7 +458,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>aspectj-maven-plugin</artifactId>
-                <version>1.0</version>
+                <version>1.3.1</version>
                 <dependencies>
                     <!-- NB: You must use Maven 2.0.9 or above or these are ignored (see MNG-2972) -->
                     <dependency>
@@ -473,6 +482,7 @@
                 </executions>
                 <configuration>
                     <outxml>true</outxml>
+                    <verbose>true</verbose>
                     <aspectLibraries>
                         <aspectLibrary>
                             <groupId>org.springframework</groupId>
@@ -482,6 +492,7 @@
                     <source>1.6</source>
                     <target>1.6</target>
                 </configuration>
+
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

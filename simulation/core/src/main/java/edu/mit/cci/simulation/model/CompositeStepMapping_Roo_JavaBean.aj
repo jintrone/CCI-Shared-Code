@@ -4,8 +4,8 @@
 package edu.mit.cci.simulation.model;
 
 import edu.mit.cci.simulation.model.CompositeSimulation;
+import edu.mit.cci.simulation.model.DefaultVariable;
 import edu.mit.cci.simulation.model.Step;
-import edu.mit.cci.simulation.model.Variable;
 import java.util.Map;
 import java.util.Set;
 
@@ -35,11 +35,11 @@ privileged aspect CompositeStepMapping_Roo_JavaBean {
         return this.toVars;
     }
     
-    public Map<Variable, Variable> CompositeStepMapping.getMapping() {
+    public Map<DefaultVariable, DefaultVariable> CompositeStepMapping.getMapping() {
         return this.mapping;
     }
     
-    public void CompositeStepMapping.setMapping(Map<Variable, Variable> mapping) {
+    public void CompositeStepMapping.setMapping(Map<DefaultVariable, DefaultVariable> mapping) {
         this.mapping = mapping;
     }
     

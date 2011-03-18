@@ -2,7 +2,9 @@ package edu.mit.cci.simulation.util;
 
 import edu.mit.cci.simulation.excel.server.ExcelSimulation;
 import edu.mit.cci.simulation.model.DataType;
+import edu.mit.cci.simulation.model.DefaultVariable;
 import edu.mit.cci.simulation.model.Tuple;
+import edu.mit.cci.simulation.model.DefaultVariable;
 import edu.mit.cci.simulation.model.Variable;
 import org.apache.poi.ss.util.AreaReference;
 

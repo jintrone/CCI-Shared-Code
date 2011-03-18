@@ -21,7 +21,7 @@
     <bean id="oxmMarshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
         <property name="classesToBeBound">
             <list>
-                <value>edu.mit.cci.simulation.model.Variable</value>
+                <value>edu.mit.cci.simulation.model.DefaultVariable</value>
                 <value>edu.mit.cci.simulation.model.Tuple</value>
                 <value>edu.mit.cci.simulation.model.DefaultSimulation</value>
                 <value>edu.mit.cci.simulation.model.MappedSimulation</value>

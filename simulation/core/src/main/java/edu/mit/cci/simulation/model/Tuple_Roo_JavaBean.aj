@@ -3,7 +3,7 @@
 
 package edu.mit.cci.simulation.model;
 
-import edu.mit.cci.simulation.model.Variable;
+import edu.mit.cci.simulation.model.DefaultVariable;
 import java.lang.String;
 
 privileged aspect Tuple_Roo_JavaBean {

@@ -2,7 +2,7 @@ package edu.mit.cci.simulation.util;
 
 import edu.mit.cci.simulation.model.DefaultScenario;
 import edu.mit.cci.simulation.model.DefaultSimulation;
-import edu.mit.cci.simulation.model.Variable;
+import edu.mit.cci.simulation.model.DefaultVariable;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -23,7 +23,7 @@ import java.util.List;
 public class ConcreteSerializableCollection {
 
     @XmlElements({
-            @XmlElement(name="Variable", type=Variable.class),
+            @XmlElement(name="DefaultVariable", type=DefaultVariable.class),
             @XmlElement(name="Simulation", type=DefaultSimulation.class),
             @XmlElement(name="Scenario", type= DefaultScenario.class)
     })

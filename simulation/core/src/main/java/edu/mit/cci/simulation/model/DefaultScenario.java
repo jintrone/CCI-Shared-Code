@@ -28,8 +28,8 @@ public class DefaultScenario implements Scenario {
     }
 
     @XmlIDREF
-     @ManyToOne
-    private DefaultSimulation simulation;
+     @ManyToOne(targetEntity = DefaultSimulation.class)
+    private Simulation simulation;
 
 
     @XmlElement(name="Tuples")

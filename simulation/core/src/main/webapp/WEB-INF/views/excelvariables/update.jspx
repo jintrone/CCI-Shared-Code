@@ -6,6 +6,6 @@
         <field:select field="excelSimulation" id="c_edu_mit_cci_simulation_excel_server_ExcelVariable_excelSimulation" itemValue="id" items="${excelsimulations}" path="/excelsimulations" z="ax840RZMJ3K0jHX42M5PgKQVXOo="/>
         <field:input field="worksheetName" id="c_edu_mit_cci_simulation_excel_server_ExcelVariable_worksheetName" z="VP1cg8xHrD2R/KYcyUkJVwFyqhY="/>
         <field:input field="cellRange" id="c_edu_mit_cci_simulation_excel_server_ExcelVariable_cellRange" z="1u4ygVWrthQCC6vSa76t5KU7h7I="/>
-        <field:select field="simulationVariable" id="c_edu_mit_cci_simulation_excel_server_ExcelVariable_simulationVariable" itemValue="id" items="${variables}" path="/variables" z="1I+HgMg50B4aAsrnI0iGNyLVkyo="/>
+        <field:select field="simulationVariable" id="c_edu_mit_cci_simulation_excel_server_ExcelVariable_simulationVariable" itemValue="id" items="${defaultvariables}" path="/variables" z="1+ZdVk1S5hF+d3q00v++2723IaE="/>
     </form:update>
 </div>
