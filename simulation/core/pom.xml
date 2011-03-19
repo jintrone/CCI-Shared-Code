@@ -211,6 +211,11 @@
             </exclusions>
         </dependency>
         <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-impl</artifactId>
+            <version>2.2.3-1</version>
+        </dependency>
+        <dependency>
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
             <version>1.0.0.GA</version>
@@ -439,11 +444,11 @@
                 <artifactId>maven-war-plugin</artifactId>
                 <version>2.1-beta-1</version>
                 <configuration>
-          <excludes>
-            <exclude>**/web/*</exclude>
-            <exclude>**/excel/*</exclude>
-          </excludes>
-        </configuration>
+                    <excludes>
+                        <exclude>**/web/*</exclude>
+                        <exclude>**/excel/*</exclude>
+                    </excludes>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

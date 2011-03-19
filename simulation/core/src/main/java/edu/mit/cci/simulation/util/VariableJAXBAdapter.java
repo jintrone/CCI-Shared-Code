@@ -25,4 +25,9 @@ public class VariableJAXBAdapter  extends XmlAdapter<DefaultVariable, Variable> 
     }
 
 
+     public DefaultVariable marshal(String v) throws Exception {
+        return  null;
+    }
+
+
 }

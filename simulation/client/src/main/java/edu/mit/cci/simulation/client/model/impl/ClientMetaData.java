@@ -13,7 +13,7 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 
-@XmlType(name="metadata")
+@XmlType(name="DefaultVariable")
 public class ClientMetaData implements MetaData {
 
     private static Logger log = Logger.getLogger(ClientMetaData.class);
@@ -48,7 +48,7 @@ public class ClientMetaData implements MetaData {
 
 
 
-    @XmlElement(name="description")
+    @XmlElement(name="Description")
     public String getDescription() {
         return description;
     }
@@ -60,7 +60,7 @@ public class ClientMetaData implements MetaData {
     }
 
 
-    @XmlElement(name="internalname")
+    @XmlElement(name="ExternalName")
     public String getInternalName() {
         return internalname;
     }

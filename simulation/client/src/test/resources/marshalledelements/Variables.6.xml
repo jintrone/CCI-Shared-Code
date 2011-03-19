@@ -1,0 +1,1 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Variable Id="6"><Name>Developed start year</Name><Description>Developed start year</Description><Arity>1</Arity><DataType>NUM</DataType><Precision>0</Precision><Max>2100.0</Max><Min>2005.0</Min><ExternalName>Developed start year</ExternalName></Variable>

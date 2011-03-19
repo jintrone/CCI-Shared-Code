@@ -1,28 +1,21 @@
 package edu.mit.cci.simulation.model;
 
+import edu.mit.cci.simulation.jaxb.JaxbCollection;
 import edu.mit.cci.simulation.util.U;
 import org.apache.log4j.Logger;
-import org.apache.tools.ant.taskdefs.Jar;
-import org.hibernate.HibernateException;
-import org.hibernate.collection.PersistentCollection;
-import org.hibernate.collection.PersistentSet;
-import org.hibernate.engine.SessionImplementor;
-import org.hibernate.persister.collection.CollectionPersister;
-import org.hibernate.usertype.UserCollectionType;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.roo.addon.entity.RooEntity;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.tostring.RooToString;
 
 import javax.persistence.*;
-import javax.print.DocFlavor;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -42,6 +35,8 @@ public class DefaultSimulation implements Simulation {
 
     private static Logger log = Logger.getLogger(DefaultSimulation.class);
 
+
+
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "S-")
     @XmlElement(name="Creation")
@@ -59,27 +54,21 @@ public class DefaultSimulation implements Simulation {
     @XmlElement(name="Url")
     private String url;
 
-    @ManyToMany(cascade = CascadeType.ALL,targetEntity = DefaultVariable.class)
-    private Set<Variable> inputs = new JAXBBug546Set();
 
 
     @ManyToMany(cascade = CascadeType.ALL,targetEntity = DefaultVariable.class)
-    private Set<Variable> outputs = new JAXBBug546Set();
+    @XmlJavaTypeAdapter(JaxbCollection.Adapter.class)
+    private final Set<Variable> inputs = new HashSet<Variable>();
+
+
+    @ManyToMany(cascade = CascadeType.ALL,targetEntity = DefaultVariable.class)
+    @XmlJavaTypeAdapter(JaxbCollection.Adapter.class)
+    private final Set<Variable> outputs = new HashSet<Variable>();
 
     @Transient
     private transient RunStrategy runStrategy = new RunStrategy.Post();
 
-    @XmlElementWrapper(name="Outputs")
-    @XmlElement(name="DefaultVariable",type = DefaultVariable.class) @XmlIDREF
-    private JAXBBug546Set getJAXBOutputs() {
-        return (JAXBBug546Set)outputs;
-    }
 
-    @XmlElementWrapper(name="Inputs")
-    @XmlElement(name="DefaultVariable",type = DefaultVariable.class) @XmlIDREF
-        public JAXBBug546Set getJAXBInputs() {
-        return (JAXBBug546Set)inputs;
-    }
 
     public Scenario run(List<Tuple> siminputs) throws SimulationException {
         DefaultScenario result = new DefaultScenario();
@@ -124,7 +113,6 @@ public class DefaultSimulation implements Simulation {
 
     @Override
     @XmlAttribute(name="Id")
-    @XmlID
     public String getIdAsString() {
         return ""+getId();
     }
@@ -163,16 +151,5 @@ public class DefaultSimulation implements Simulation {
         this.runStrategy = r;
     }
 
-    public static class JAXBBug546Set extends HashSet<Variable>  {
 
-        public JAXBBug546Set() {
-            super();
-        }
-
-        public JAXBBug546Set(Set<Variable> other) {
-            super(other);
-        }
-
-
-    }
 }

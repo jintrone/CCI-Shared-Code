@@ -69,7 +69,7 @@ public class ClientProxyObject<T> implements InvocationHandler {
     {
       if(null == loadedObject)
       {
-           RepositoryManager repo = RepositoryManager.instance();
+           RepositoryManager repo = ClientRepository.instance().getManager();
         if (repo ==null) {
             throw new RuntimeException("Client repository must be initialized prior to unmarshalling");
         }

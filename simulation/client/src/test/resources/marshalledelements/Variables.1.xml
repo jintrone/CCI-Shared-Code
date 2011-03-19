@@ -1,0 +1,1 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Variable Id="1"><Name>Pct change in Developed FF emissions</Name><Description>Pct change in Developed FF emissions</Description><Arity>1</Arity><DataType>NUM</DataType><Precision>2</Precision><Max>3.0</Max><Min>-0.99</Min><ExternalName>Pct change in Developed FF emissions</ExternalName></Variable>

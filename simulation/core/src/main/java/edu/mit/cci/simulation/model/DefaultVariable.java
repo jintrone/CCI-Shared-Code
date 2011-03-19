@@ -19,7 +19,7 @@ import javax.xml.bind.annotation.*;
 @RooJavaBean
 @RooToString
 @RooEntity
-@XmlRootElement(name="DefaultVariable")
+@XmlRootElement(name="Variable")
 @XmlAccessorType(XmlAccessType.NONE)
 public class DefaultVariable implements Variable {
 
@@ -107,7 +107,6 @@ public class DefaultVariable implements Variable {
 
     @Override
     @XmlAttribute(name="Id")
-    @XmlID
     public String getId_() {
         return ""+getId();
     }

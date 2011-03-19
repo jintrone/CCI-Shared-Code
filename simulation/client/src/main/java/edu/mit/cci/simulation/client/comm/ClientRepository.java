@@ -1,25 +1,19 @@
 package edu.mit.cci.simulation.client.comm;
 
 import edu.mit.cci.simulation.client.EntityState;
-import edu.mit.cci.simulation.client.HasId;
 import edu.mit.cci.simulation.client.MetaData;
 import edu.mit.cci.simulation.client.Scenario;
 import edu.mit.cci.simulation.client.Simulation;
 import edu.mit.cci.simulation.client.model.impl.ClientMetaData;
 import edu.mit.cci.simulation.client.model.impl.ClientScenario;
 import edu.mit.cci.simulation.client.model.impl.ClientSimulation;
-import edu.mit.cci.simulation.client.model.jaxb.ResponseWrapper;
 import org.apache.log4j.Logger;
 
-import javax.xml.bind.JAXBException;
 import java.io.IOException;
-import java.io.Reader;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @author: jintrone
@@ -30,7 +24,7 @@ public class ClientRepository {
 
     private RepositoryManager manager;
 
-    private Connector connector;
+    private DeserializingConnector deserializingConnector;
 
     private static Logger log = Logger.getLogger(ClientRepository.class);
 
@@ -39,8 +33,8 @@ public class ClientRepository {
     public static ClientRepository instance(String hostname, int port) throws IOException {
         if (instance == null) {
             instance = new ClientRepository();
-            instance.connector = new Connector(hostname, port);
-            instance.manager = new RepositoryManager(instance.connector);
+            instance.deserializingConnector = new BasicConnector(hostname, port);
+            instance.manager = new RepositoryManager(instance.deserializingConnector);
             instance.manager.refreshSimulations();
         }
         return instance;
@@ -48,6 +42,10 @@ public class ClientRepository {
 
     public static ClientRepository instance() {
         return instance;
+    }
+
+    public RepositoryManager getManager() {
+        return manager;
     }
 
 
@@ -76,7 +74,7 @@ public class ClientRepository {
         }
         Map<String, String> params = new HashMap<String, String>();
         params.put("state", EntityState.PUBLIC.name());
-        connector.post(ModelAccessPoint.EDIT_SCENARIO_URL, params, String.valueOf(s.getId()));
+        deserializingConnector.post(ModelAccessPoint.EDIT_SCENARIO_URL, params, String.valueOf(s.getId()));
     }
 
     public Scenario runModel(Simulation s, Map<Long, Object> inputs, Long userid, boolean save) throws ModelNotFoundException, IOException, ScenarioNotFoundException {
@@ -92,7 +90,7 @@ public class ClientRepository {
         }
         params.put("user", String.valueOf(userid));
 
-        Object o = connector.post(ModelAccessPoint.RUN_MODEL_URL, Collections.<String, String>emptyMap(),String.valueOf(s.getId()));
+        Object o = deserializingConnector.post(ModelAccessPoint.RUN_MODEL_URL, Collections.<String, String>emptyMap(),String.valueOf(s.getId()));
         if (o instanceof Scenario) return (Scenario)o;
         else {
             log.warn("Error running model");

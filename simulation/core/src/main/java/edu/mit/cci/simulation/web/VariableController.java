@@ -27,7 +27,7 @@ public class VariableController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, headers = "accept=text/html")
     public String show(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("variable", DefaultVariable.findDefaultVariable(id));
+        model.addAttribute("defaultVariable", DefaultVariable.findDefaultVariable(id));
         model.addAttribute("itemId", id);
         return "variables/show";
     }
@@ -42,11 +42,11 @@ public class VariableController {
     public String list(@RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model model) {
         if (page != null || size != null) {
             int sizeNo = size == null ? 10 : size.intValue();
-            model.addAttribute("variables", DefaultVariable.findDefaultVariableEntries(page == null ? 0 : (page.intValue() - 1) * sizeNo, sizeNo));
+            model.addAttribute("defaultVariables", DefaultVariable.findDefaultVariableEntries(page == null ? 0 : (page.intValue() - 1) * sizeNo, sizeNo));
             float nrOfPages = (float) DefaultVariable.countDefaultVariables() / sizeNo;
             model.addAttribute("maxPages", (int) ((nrOfPages > (int) nrOfPages || nrOfPages == 0.0) ? nrOfPages + 1 : nrOfPages));
         } else {
-            model.addAttribute("variables", DefaultVariable.findAllDefaultVariables());
+            model.addAttribute("defaultVariables", DefaultVariable.findAllDefaultVariables());
         }
         return "variables/list";
     }

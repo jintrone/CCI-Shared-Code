@@ -1,0 +1,1 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Variable Id="4"><Name>Global land use emissions change</Name><Description>Global land use emissions change</Description><Arity>1</Arity><DataType>NUM</DataType><Precision>2</Precision><Max>1.0</Max><Min>0.0</Min><ExternalName>Global land use emissions change</ExternalName></Variable>

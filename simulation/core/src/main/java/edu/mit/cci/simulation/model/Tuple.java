@@ -1,5 +1,6 @@
 package edu.mit.cci.simulation.model;
 
+import edu.mit.cci.simulation.jaxb.JaxbReference;
 import edu.mit.cci.simulation.util.SimulationValidationException;
 import edu.mit.cci.simulation.util.U;
 import edu.mit.cci.simulation.util.Validation;
@@ -14,9 +15,8 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlID;
-import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,8 +34,7 @@ public class Tuple {
 
     @NotNull
     @ManyToOne(targetEntity = DefaultVariable.class)
-    @XmlElement(name = "Variable")
-    @XmlIDREF
+    @XmlJavaTypeAdapter(JaxbReference.Adapter.class)
     private Variable var;
 
     @Column(columnDefinition = "LONGTEXT")
@@ -113,7 +112,6 @@ public class Tuple {
     }
 
     @XmlAttribute
-    @XmlID
     public String getId_() {
         return "" + getId();
     }

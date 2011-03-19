@@ -1,0 +1,242 @@
+package edu.mit.cci.simulation.client.model.transitional;
+
+import edu.mit.cci.simulation.client.MetaData;
+import edu.mit.cci.simulation.client.comm.RepositoryManager;
+import edu.mit.cci.simulation.model.DataType;
+import edu.mit.cci.simulation.model.Variable;
+
+/**
+ * User: jintrone
+ * Date: 3/17/11
+ * Time: 4:17 PM
+ */
+public class AdaptedMetaData extends AdaptedObject<Variable> implements MetaData {
+
+    private VarContext vc;
+    private VarType vt;
+    private Class<Object>[] profile;
+    private String[] units;
+    private String[] max;
+    private String[] min;
+
+    private boolean isIndex = false;
+
+    public AdaptedMetaData(Variable o, RepositoryManager manager) {
+        super(o, manager);
+    }
+
+    @Override
+    public Long getId() {
+        return getProxiedObject().getId();
+    }
+
+    @Override
+    public MetaData getIndexingMetaData() {
+        return (MetaData) getManager().getAdaptor(getProxiedObject().getIndexingVariable());
+    }
+
+    @Override
+    public void setIndexingMetaData(MetaData md) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public String getName() {
+        return getProxiedObject().getName();
+    }
+
+    @Override
+    public void setName(String name) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public String getInternalName() {
+        return getProxiedObject().getExternalName();
+    }
+
+    @Override
+    public void setInternalName(String name) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public String[] getUnits() {
+        return new String[0];  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public void setUnits(String[] units) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public Class<Object>[] getProfile() {
+        if (profile == null) {
+            Variable v = getProxiedObject().getIndexingVariable();
+            if (v != null) {
+                profile = new Class[]{mapClass(v.getDataType(),v.getPrecision_()), mapClass(getProxiedObject().getDataType(),getProxiedObject().getPrecision_())};
+            } else {
+                profile = new Class[]{mapClass(getProxiedObject().getDataType(),getProxiedObject().getPrecision_())};
+            }
+        }
+        return profile;
+    }
+
+    @Override
+    public void setProfile(Class<Object>[] profile) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public String[] getLabels() {
+        return new String[0];  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public void setLabels(String[] lables) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public String[] getMax() {
+        if (max == null) {
+          Variable v = getProxiedObject().getIndexingVariable();
+            if (v != null) {
+                max = new String[] {v.getMax_()+"",getProxiedObject().getMax_()+""};
+            } else {
+                max = new String[] {v.getMax_()+""};
+            }
+            
+
+        }
+        return max;
+    }
+
+    @Override
+    public void setMax(String[] n) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public String[] getMin() {
+        if (min == null) {
+          Variable v = getProxiedObject().getIndexingVariable();
+            if (v != null) {
+                min = new String[] {v.getMin_()+"",getProxiedObject().getMin_()+""};
+            } else {
+                min = new String[] {v.getMin_()+""};
+            }
+            
+
+        }
+        return min;
+    }
+
+    @Override
+    public void setMin(String[] n) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public String[] getDefault() {
+        return getMin();
+    }
+
+    @Override
+    public void setDefault(String[] n) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public String[] getCategories() {
+        return getProxiedObject().getOptions();
+    }
+
+    @Override
+    public String getDescription() {
+        return getProxiedObject().getDescription();
+    }
+
+    @Override
+    public void setDescription(String desc) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public VarContext getVarContext() {
+        if (vc == null) {
+            Variable v = getProxiedObject();
+            if (v.getIndexingVariable() != null) {
+                vc = VarContext.INDEXED;
+            } else if (v.getArity() == 1) {
+                vc = VarContext.SCALAR;
+            } else if (v.getArity() > 1) {
+                vc = VarContext.LIST;
+            }
+        }
+        return vc;
+    }
+
+    @Override
+    public void setVarContext(VarContext t) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public VarType getVarType() {
+         if (vt == null) {
+             Variable v = getProxiedObject();
+             if (v.getDataType() == DataType.NUM) {
+                 vt= VarType.RANGE;
+             } else if (v.getDataType() == DataType.TXT) {
+                vt= VarType.FREE;
+             } else if (v.getDataType() == DataType.CAT) {
+                vt= VarType.CATEGORICAL;
+             } else {
+                 vt=VarType.FREE;
+             }
+         }
+        return vt;
+    }
+
+    @Override
+    public void setVarType(VarType t) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public void setExternalInfo(String info) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public String getExternalInfo() {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public boolean getIndex() {
+        return isIndex;
+    }
+
+    @Override
+    public void setIndex(boolean b) {
+        isIndex = b;
+    }
+
+    @Override
+    public void setCategories(String[] categories) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    private Class mapClass(DataType type, int precision) {
+        if (type == DataType.NUM) {
+            if (precision > 0) {
+                return Double.class;
+            } else {
+                return Integer.class;
+            }
+        } else return String.class;
+    }
+}

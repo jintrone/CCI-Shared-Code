@@ -13,7 +13,6 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpParams;
 
-import javax.xml.bind.Unmarshaller;
 import java.io.IOException;
 import java.io.StringReader;
 import java.net.InetAddress;
@@ -26,7 +25,7 @@ import java.util.Map;
  * @author: jintrone
  * @date: May 19, 2010
  */
-public class Connector<T> {
+public class BasicConnector implements DeserializingConnector {
 
     /**
      * Utility class for accessing web service
@@ -44,7 +43,7 @@ public class Connector<T> {
 
     private Deserializer deserializer;
 
-    public Connector(String hostname, int port) throws UnknownHostException {
+    public BasicConnector(String hostname, int port) throws UnknownHostException {
 
         serverAddress = InetAddress.getByName(hostname);
         this.port = port;
@@ -52,10 +51,11 @@ public class Connector<T> {
         client = new DefaultHttpClient();
     }
 
-    public Connector(Deserializer deserializer, String hostname) throws UnknownHostException {
+    public BasicConnector(Deserializer deserializer, String hostname) throws UnknownHostException {
         this(hostname, 80);
     }
 
+    @Override
     public void setDeserializer(Deserializer d) {
         this.deserializer = d;
     }
@@ -68,7 +68,8 @@ public class Connector<T> {
      * @param postparams Input parameters to be posted to the service
      * @return The raw xml of the of the scenario
      */
-    public Object post( RestAccessPoint location, Map<String, String> postparams, String... pathparam) throws IOException {
+    @Override
+    public Object post(RestAccessPoint location, Map<String, String> postparams, String... pathparam) throws IOException {
 
         HttpPost post = new HttpPost(location.create(serverAddress, port, pathparam));
         //post.setFollowRedirects(true);
@@ -85,6 +86,7 @@ public class Connector<T> {
         return deserializer.deserialize(new StringReader(client.execute(post, handler)));
     }
 
+    @Override
     public <U> U get(Class<U> clazz, Map<String, String> queryparams, String... pathparam) throws IOException {
         ModelAccessPoint map = ModelAccessPoint.forClass(clazz);
         if (map == null) return null;
@@ -93,6 +95,7 @@ public class Connector<T> {
         }
     }
 
+    @Override
     public Object get(RestAccessPoint location, Map<String, String> queryparams, String... pathparam) throws IOException {
         return rawGet(location.create(serverAddress, port, pathparam), queryparams);
     }

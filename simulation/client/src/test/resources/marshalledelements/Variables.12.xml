@@ -1,0 +1,1 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Variable Id="12"><Name>Goal for CO2 in the atmosphere</Name><Description>Goal for CO2 in the atmosphere</Description><Arity>1</Arity><DataType>NUM</DataType><Precision>0</Precision><Max>1500.0</Max><Min>0.0</Min><ExternalName>Goal for CO2 in the atmosphere</ExternalName></Variable>

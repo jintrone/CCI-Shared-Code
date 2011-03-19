@@ -1,0 +1,1 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Variable Id="14"><Name>DevelopedFossilFuelEmissions</Name><Description>DevelopedFossilFuelEmissions</Description><Arity>101</Arity><DataType>NUM</DataType><Precision>2</Precision><Max>10.0</Max><Min>0.0</Min><ExternalName>DevelopedFossilFuelEmissions</ExternalName></Variable>

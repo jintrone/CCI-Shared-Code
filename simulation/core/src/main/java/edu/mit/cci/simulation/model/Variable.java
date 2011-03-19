@@ -15,7 +15,6 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * Time: 11:15 PM
  */
 @XmlJavaTypeAdapter(VariableJAXBAdapter.class)
-@XmlRootElement
 public interface Variable {
 
     public String[] getOptions();
