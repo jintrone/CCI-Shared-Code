@@ -1,15 +1,25 @@
 package edu.mit.cci.simulation.model;
 
+import edu.mit.cci.simulation.jaxb.JaxbReference;
 import edu.mit.cci.simulation.util.U;
 import org.springframework.roo.addon.entity.RooEntity;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.tostring.RooToString;
 
+import javax.persistence.Column;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
  * User: jintrone
@@ -19,7 +29,7 @@ import javax.xml.bind.annotation.*;
 @RooJavaBean
 @RooToString
 @RooEntity
-@XmlRootElement(name="Variable")
+@XmlRootElement(name = "Variable")
 @XmlAccessorType(XmlAccessType.NONE)
 public class DefaultVariable implements Variable {
 
@@ -52,41 +62,43 @@ public class DefaultVariable implements Variable {
         setDataType(DataType.TXT);
     }
 
-    @XmlElement(name="Name")
+    @XmlElement(name = "Name")
     private String name;
 
-     @XmlElement(name="Description")
+    @XmlElement(name = "Description")
+    @Column(columnDefinition = "LONGTEXT")
     private String description;
 
     @NotNull
-    @XmlElement(name="Arity")
+    @XmlElement(name = "Arity")
     private Integer arity = 1;
 
 
     @Enumerated
-    @XmlElement(name="DataType")
+    @XmlElement(name = "DataType")
     private DataType dataType;
 
-    @XmlElement(name="Precision")
+    @XmlElement(name = "Precision")
     private Integer precision_;
 
-    @XmlElement(name="Max")
+    @XmlElement(name = "Max")
     private Double max_;
 
-    @XmlElement(name="Min")
+    @XmlElement(name = "Min")
     private Double min_;
 
 
-    @XmlElement(name="ExternalName")
+    @XmlElement(name = "ExternalName")
     private String externalName;
 
     private String _optionsRaw;
 
     @Transient
-    @XmlElement(name="Options")
+    @XmlElement(name = "Options")
     private String[] options;
 
     @ManyToOne(targetEntity = DefaultVariable.class)
+    @XmlJavaTypeAdapter(JaxbReference.Adapter.class)
     private Variable indexingVariable;
 
     @Override
@@ -105,13 +117,47 @@ public class DefaultVariable implements Variable {
         _optionsRaw = U.escape(options, null);
     }
 
-    @Override
-    @XmlAttribute(name="Id")
-    public String getId_() {
-        return ""+getId();
+    public String getUnits() {
+        return units;
     }
 
+    public void setUnits(String units) {
+        this.units = units;
+    }
 
+    @XmlElement(name = "Units")
+    private String units;
+
+    public String getLabels() {
+        return labels;
+    }
+
+    public void setLabels(String labels) {
+        this.labels = labels;
+    }
+
+    @XmlElement
+    private String labels;
+
+
+    @Override
+    public String getId_() {
+        return "" + getId();
+    }
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
+    private Long id;
+
+    @XmlAttribute(name = "Id")
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
 
 }

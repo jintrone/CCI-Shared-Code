@@ -116,6 +116,8 @@ public class U {
                 try {
                     if (val.equals(NULL_VAL)) {
                         result.add(null);
+                    } else if (TupleStatus.decode(val) != null) {
+                        result.add(null);
                     } else {
                         String tmp = URLDecoder.decode(val, "UTF-8");
                         Double num = Double.valueOf(tmp);

@@ -44,7 +44,7 @@ public class DumpDbToFiles {
            StringWriter writer = new StringWriter();
            m.marshal(wrapper,writer);
 
-           data.put("DefaultSimulationsList",writer.toString());
+           data.put("DefaultSimulations",writer.toString());
 
            Set<Variable> vars = new HashSet<Variable>();
            for (DefaultSimulation sim:sims) {
@@ -66,10 +66,10 @@ public class DumpDbToFiles {
            wrapper = U.wrap(scenarios);
            writer = new StringWriter();
            m.marshal(wrapper,writer);
-           data.put("DefaultScenrioList",writer.toString());
+           data.put("DefaultScenarios",writer.toString());
 
            for (Map.Entry<String,String> ent:data.entrySet()) {
-               FileWriter fwriter = new FileWriter(ent.getKey());
+               FileWriter fwriter = new FileWriter(ent.getKey()+".xml");
                fwriter.write(ent.getValue());
                fwriter.flush();
                fwriter.close();

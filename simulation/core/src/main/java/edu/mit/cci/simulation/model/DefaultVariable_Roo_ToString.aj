@@ -9,18 +9,18 @@ privileged aspect DefaultVariable_Roo_ToString {
     
     public String DefaultVariable.toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Options: ").append(java.util.Arrays.toString(getOptions())).append(", ");
+       // sb.append("Options: ").append(java.util.Arrays.toString(getOptions())).append(", ");
         sb.append("Id_: ").append(getId_()).append(", ");
         sb.append("Name: ").append(getName()).append(", ");
-        sb.append("Description: ").append(getDescription()).append(", ");
-        sb.append("Arity: ").append(getArity()).append(", ");
-        sb.append("DataType: ").append(getDataType()).append(", ");
-        sb.append("Precision_: ").append(getPrecision_()).append(", ");
-        sb.append("Max_: ").append(getMax_()).append(", ");
-        sb.append("Min_: ").append(getMin_()).append(", ");
-        sb.append("ExternalName: ").append(getExternalName()).append(", ");
-        sb.append("_optionsRaw: ").append(get_optionsRaw()).append(", ");
-        sb.append("IndexingVariable: ").append(getIndexingVariable());
+//        sb.append("Description: ").append(getDescription()).append(", ");
+//        sb.append("Arity: ").append(getArity()).append(", ");
+//        sb.append("DataType: ").append(getDataType()).append(", ");
+//        sb.append("Precision_: ").append(getPrecision_()).append(", ");
+//        sb.append("Max_: ").append(getMax_()).append(", ");
+//        sb.append("Min_: ").append(getMin_()).append(", ");
+//        sb.append("ExternalName: ").append(getExternalName()).append(", ");
+//        sb.append("_optionsRaw: ").append(get_optionsRaw()).append(", ");
+       // sb.append("IndexingVariable: ").append(getIndexingVariable());
         return sb.toString();
     }
     

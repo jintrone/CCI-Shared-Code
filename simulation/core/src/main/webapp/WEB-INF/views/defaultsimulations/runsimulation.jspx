@@ -8,12 +8,12 @@
                 <tr>
                 <td>${variable.name}</td>
                  <td>
-                     <springform:input id="${variable.name}" path="inputs[${variable.name}]" />
+                     <springform:input id="${variable.id}" path="inputs[${variable.id}]" />
 
                  </td>
                 </tr>
         </c:forEach>
         </table>
-        <input id="proceed" type="submit" value="save"/>
+        <input id="proceed" type="submit" value="Run simulation"/>
     </springform:form>
 </div>

@@ -9,6 +9,9 @@ import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.tostring.RooToString;
 
 import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -43,7 +46,7 @@ public class Tuple {
 
     private transient String[] values;
 
-    private transient final Map<Integer, TupleStatus> statuses = new HashMap<Integer,TupleStatus>();
+    private transient final Map<Integer, TupleStatus> statuses = new HashMap<Integer, TupleStatus>();
 
     public Tuple() {
 
@@ -68,21 +71,20 @@ public class Tuple {
         Validation.isComplete(var);
         Validation.atMostArity(var, values.length);
         for (int i = 0; i < values.length; i++) {
-            Validation.checkDataType(var,values[i],true);
-            if (values[i]==null) continue;
+            Validation.checkDataType(var, values[i], true);
+            if (values[i] == null) continue;
             TupleStatus status = statuses.get(i);
-            if (status!=null) continue;
-            U.process(var,i,values,statuses);
+            if (status != null) continue;
+            U.process(var, i, values, statuses);
         }
         this.values = values;
-        this.value_ = (U.escape(values,statuses));
+        this.value_ = (U.escape(values, statuses));
     }
 
     public void setValue_(String val) throws SimulationValidationException {
         this.statuses.clear();
         _setValues(U.unescape(val, this.statuses));
     }
-
 
 
     public TupleStatus getStatus(int i) {
@@ -92,9 +94,9 @@ public class Tuple {
     public void setStatus(int i, TupleStatus status) {
         TupleStatus current = getStatus(i);
         if (current != status) {
-           statuses.put(i, status);
-           value_=U.updateEscapedArray(i,value_,status);
-           values[i] = null;
+            statuses.put(i, status);
+            value_ = U.updateEscapedArray(i, value_, status);
+            values[i] = null;
         }
     }
 
@@ -111,7 +113,7 @@ public class Tuple {
 
     }
 
-    @XmlAttribute
+
     public String getId_() {
         return "" + getId();
     }
@@ -122,12 +124,26 @@ public class Tuple {
         try {
             result.setValue_(t.getValue_());
         } catch (SimulationValidationException e) {
-            throw new RuntimeException("Encountered an invalid tuple on copy",e);
+            throw new RuntimeException("Encountered an invalid tuple on copy", e);
         }
 
         result.persist();
         return result;
     }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
+    private Long id;
+
+
+    @XmlAttribute
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
 }
