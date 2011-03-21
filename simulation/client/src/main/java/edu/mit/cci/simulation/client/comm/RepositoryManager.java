@@ -4,10 +4,6 @@ import edu.mit.cci.simulation.client.HasId;
 import edu.mit.cci.simulation.client.MetaData;
 import edu.mit.cci.simulation.client.Scenario;
 import edu.mit.cci.simulation.client.Simulation;
-import edu.mit.cci.simulation.client.Variable;
-import edu.mit.cci.simulation.client.model.impl.ClientMetaData;
-import edu.mit.cci.simulation.client.model.impl.ClientScenario;
-import edu.mit.cci.simulation.client.model.impl.ClientSimulation;
 import edu.mit.cci.simulation.client.model.transitional.AdaptedObject;
 import edu.mit.cci.simulation.client.model.transitional.AdaptedMetaData;
 import edu.mit.cci.simulation.client.model.transitional.AdaptedScenario;
@@ -18,6 +14,7 @@ import edu.mit.cci.simulation.model.DefaultScenario;
 import edu.mit.cci.simulation.model.DefaultSimulation;
 import edu.mit.cci.simulation.util.ConcreteSerializableCollection;
 import org.apache.log4j.Logger;
+import sun.util.LocaleServiceProviderPool;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -150,6 +147,7 @@ public class RepositoryManager implements Deserializer, JaxbReferenceResolver {
     }
 
     public HasId getAdaptor(Object o) {
+        if (o == null) return null;
         if (o instanceof edu.mit.cci.simulation.model.Simulation) {
             return lookup(((edu.mit.cci.simulation.model.Simulation)o).getId()+"",Simulation.class);
         } else if (o instanceof edu.mit.cci.simulation.model.Scenario) {
@@ -163,7 +161,7 @@ public class RepositoryManager implements Deserializer, JaxbReferenceResolver {
 
     private <T> T deferResolve(final String ref, final Class<T> clazz) throws IOException {
         AdaptedObject<T> po = (AdaptedObject<T>) lookup(ref, clazz);
-        T result = po == null ? null : po.getProxiedObject();
+        T result = po == null ? null : po.model();
         if (result == null) {
             result = (T) Proxy.newProxyInstance(clazz.getClassLoader(), new Class[]{clazz},
                     new ClientProxyObject<T>(clazz, ref, new ClientProxyObject.Resolver<T>() {
@@ -172,8 +170,6 @@ public class RepositoryManager implements Deserializer, JaxbReferenceResolver {
                         }
                     }));
             register(result);
-        } else {
-            return ((AdaptedObject<T>) result).getProxiedObject();
         }
         return result;
     }
@@ -183,7 +179,11 @@ public class RepositoryManager implements Deserializer, JaxbReferenceResolver {
 
 
     public <T extends HasId> T resolve(String ref, Class<T> clazz) throws IOException {
+       // log.info("Resolve "+clazz.getSimpleName()+":"+ref);
         T result = (T) lookup(ref, clazz);
+        if (result!=null) {
+            //log.info("Found entity");
+        }
         if (result == null) {
             //try one more time - the side effect of this operation is that a new ProxyObject will be registered
             if (retrieve(ref, clazz) != null) {
@@ -209,6 +209,7 @@ public class RepositoryManager implements Deserializer, JaxbReferenceResolver {
             return o;
 
         } catch (JAXBException e) {
+            e.printStackTrace();
             throw new RuntimeException(e);
         }
     }

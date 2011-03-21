@@ -27,12 +27,12 @@ public class AdaptedMetaData extends AdaptedObject<Variable> implements MetaData
 
     @Override
     public Long getId() {
-        return getProxiedObject().getId();
+        return model().getId();
     }
 
     @Override
     public MetaData getIndexingMetaData() {
-        return (MetaData) getManager().getAdaptor(getProxiedObject().getIndexingVariable());
+        return (MetaData) manager().getAdaptor(model().getIndexingVariable());
     }
 
     @Override
@@ -42,7 +42,7 @@ public class AdaptedMetaData extends AdaptedObject<Variable> implements MetaData
 
     @Override
     public String getName() {
-        return getProxiedObject().getName();
+        return model().getName();
     }
 
     @Override
@@ -52,7 +52,7 @@ public class AdaptedMetaData extends AdaptedObject<Variable> implements MetaData
 
     @Override
     public String getInternalName() {
-        return getProxiedObject().getExternalName();
+        return model().getExternalName();
     }
 
     @Override
@@ -73,11 +73,11 @@ public class AdaptedMetaData extends AdaptedObject<Variable> implements MetaData
     @Override
     public Class<Object>[] getProfile() {
         if (profile == null) {
-            Variable v = getProxiedObject().getIndexingVariable();
+            Variable v = model().getIndexingVariable();
             if (v != null) {
-                profile = new Class[]{mapClass(v.getDataType(),v.getPrecision_()), mapClass(getProxiedObject().getDataType(),getProxiedObject().getPrecision_())};
+                profile = new Class[]{mapClass(v.getDataType(),v.getPrecision_()), mapClass(model().getDataType(), model().getPrecision_())};
             } else {
-                profile = new Class[]{mapClass(getProxiedObject().getDataType(),getProxiedObject().getPrecision_())};
+                profile = new Class[]{mapClass(model().getDataType(), model().getPrecision_())};
             }
         }
         return profile;
@@ -101,9 +101,9 @@ public class AdaptedMetaData extends AdaptedObject<Variable> implements MetaData
     @Override
     public String[] getMax() {
         if (max == null) {
-          Variable v = getProxiedObject().getIndexingVariable();
+          Variable v = model().getIndexingVariable();
             if (v != null) {
-                max = new String[] {v.getMax_()+"",getProxiedObject().getMax_()+""};
+                max = new String[] {v.getMax_()+"", model().getMax_()+""};
             } else {
                 max = new String[] {v.getMax_()+""};
             }
@@ -121,9 +121,9 @@ public class AdaptedMetaData extends AdaptedObject<Variable> implements MetaData
     @Override
     public String[] getMin() {
         if (min == null) {
-          Variable v = getProxiedObject().getIndexingVariable();
+          Variable v = model().getIndexingVariable();
             if (v != null) {
-                min = new String[] {v.getMin_()+"",getProxiedObject().getMin_()+""};
+                min = new String[] {v.getMin_()+"", model().getMin_()+""};
             } else {
                 min = new String[] {v.getMin_()+""};
             }
@@ -150,12 +150,12 @@ public class AdaptedMetaData extends AdaptedObject<Variable> implements MetaData
 
     @Override
     public String[] getCategories() {
-        return getProxiedObject().getOptions();
+        return model().getOptions();
     }
 
     @Override
     public String getDescription() {
-        return getProxiedObject().getDescription();
+        return model().getDescription();
     }
 
     @Override
@@ -166,7 +166,7 @@ public class AdaptedMetaData extends AdaptedObject<Variable> implements MetaData
     @Override
     public VarContext getVarContext() {
         if (vc == null) {
-            Variable v = getProxiedObject();
+            Variable v = model();
             if (v.getIndexingVariable() != null) {
                 vc = VarContext.INDEXED;
             } else if (v.getArity() == 1) {
@@ -186,7 +186,7 @@ public class AdaptedMetaData extends AdaptedObject<Variable> implements MetaData
     @Override
     public VarType getVarType() {
          if (vt == null) {
-             Variable v = getProxiedObject();
+             Variable v = model();
              if (v.getDataType() == DataType.NUM) {
                  vt= VarType.RANGE;
              } else if (v.getDataType() == DataType.TXT) {

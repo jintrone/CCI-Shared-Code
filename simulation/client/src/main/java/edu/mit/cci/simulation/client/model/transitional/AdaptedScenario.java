@@ -5,9 +5,14 @@ import edu.mit.cci.simulation.client.Scenario;
 import edu.mit.cci.simulation.client.Simulation;
 import edu.mit.cci.simulation.client.Variable;
 import edu.mit.cci.simulation.client.comm.RepositoryManager;
+import edu.mit.cci.simulation.model.Tuple;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 /**
  * User: jintrone
@@ -15,13 +20,18 @@ import java.util.List;
  * Time: 4:31 PM
  */
 public class AdaptedScenario extends AdaptedObject<edu.mit.cci.simulation.model.Scenario> implements Scenario {
+
+    Simulation sim = null;
+    List<Variable> inputs = null;
+    List<Variable> outputs = null;
+
     public AdaptedScenario(edu.mit.cci.simulation.model.Scenario o, RepositoryManager manager) {
         super(o,manager);
     }
 
     @Override
     public Long getId() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return model().getId();
     }
 
     @Override
@@ -36,7 +46,7 @@ public class AdaptedScenario extends AdaptedObject<edu.mit.cci.simulation.model.
 
     @Override
     public Date getCreation() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return model().getCreated();
     }
 
     @Override
@@ -46,7 +56,10 @@ public class AdaptedScenario extends AdaptedObject<edu.mit.cci.simulation.model.
 
     @Override
     public Simulation getSimulation() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        if (sim == null) {
+            sim = (Simulation) manager().getAdaptor(model().getSimulation());
+        }
+        return sim;
     }
 
     @Override
@@ -66,17 +79,44 @@ public class AdaptedScenario extends AdaptedObject<edu.mit.cci.simulation.model.
 
     @Override
     public List<Variable> getInputSet() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+       if (inputs == null) {
+           Set<Tuple> vals = new HashSet<Tuple>(model().getValues_());
+           filterTuples(vals, model().getSimulation().getInputs());
+           inputs = processTupleList(vals);
+       }
+        return inputs;
+    }
+
+    private static void filterTuples(Set<Tuple> vals, Set<edu.mit.cci.simulation.model.Variable> vars) {
+        for (Iterator<Tuple> it = vals.iterator();it.hasNext();) {
+           if (!vars.contains(it.next().getVar())) {
+               it.remove();
+            }
+        }
+    }
+
+    private List<Variable> processTupleList(Set<edu.mit.cci.simulation.model.Tuple> tuples) {
+        List<Variable> result = new ArrayList<Variable>();
+        for (Tuple t:tuples) {
+            result.add(new AdaptedVariable(t,tuples,manager()));
+        }
+        return result;
+
     }
 
     @Override
     public List<Variable> getOutputSet() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+       if (outputs == null) {
+           Set<Tuple> vals = new HashSet<Tuple>(model().getValues_());
+           filterTuples(vals,model().getSimulation().getOutputs());
+           outputs = processTupleList(vals);
+       }
+        return outputs;
     }
 
     @Override
     public List<Variable> getCombinedOutputs() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return getOutputSet();
     }
 
     @Override
@@ -106,6 +146,6 @@ public class AdaptedScenario extends AdaptedObject<edu.mit.cci.simulation.model.
 
     @Override
     public EntityState getState() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return EntityState.PUBLIC;
     }
 }

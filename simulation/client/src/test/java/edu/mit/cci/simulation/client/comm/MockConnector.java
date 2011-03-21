@@ -1,6 +1,9 @@
 package edu.mit.cci.simulation.client.comm;
 
 import com.sun.org.apache.bcel.internal.generic.RETURN;
+import edu.mit.cci.simulation.client.model.impl.ClientScenario;
+import edu.mit.cci.simulation.client.model.impl.ClientSimulation;
+import edu.mit.cci.simulation.client.model.impl.ClientVariable;
 import edu.mit.cci.simulation.model.DefaultSimulation;
 
 import java.io.IOException;
@@ -49,6 +52,12 @@ public class MockConnector implements DeserializingConnector {
     }
 
     public String key(Class clz, String id) {
-      return clz.getSimpleName()+"s"+(id!=null?"."+id:"");
+        String base = null;
+        if (clz == ClientSimulation.class) base = "DefaultSimulations";
+        else if (clz == ClientScenario.class) base = "DefaultScenarios";
+        else if (clz == ClientVariable.class) base = "DefaultVariables";
+        else base = clz.getSimpleName()+"s";
+
+      return base+(id!=null?"."+id:"");
     }
 }

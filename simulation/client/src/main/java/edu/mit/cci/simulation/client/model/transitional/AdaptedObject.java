@@ -1,8 +1,6 @@
 package edu.mit.cci.simulation.client.model.transitional;
 
-import edu.mit.cci.simulation.client.MetaData;
 import edu.mit.cci.simulation.client.comm.RepositoryManager;
-import edu.mit.cci.simulation.model.Variable;
 
 /**
  * User: jintrone
@@ -11,19 +9,19 @@ import edu.mit.cci.simulation.model.Variable;
  */
 public abstract class AdaptedObject<T> {
 
-    T proxiedObject;
+    T model;
     private RepositoryManager manager;
 
     public AdaptedObject(T obj, RepositoryManager manager) {
-      this.proxiedObject = obj;
+      this.model = obj;
         this.manager = manager;
     }
 
-    public T getProxiedObject() {
-        return proxiedObject;
+    public T model() {
+        return model;
     }
 
-    public RepositoryManager getManager() {
+    public RepositoryManager manager() {
         return manager;
     }
 

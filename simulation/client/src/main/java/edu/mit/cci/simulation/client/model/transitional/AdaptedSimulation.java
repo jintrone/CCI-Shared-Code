@@ -35,12 +35,12 @@ public class AdaptedSimulation extends AdaptedObject<edu.mit.cci.simulation.mode
 
     @Override
     public Long getId() {
-       return getProxiedObject().getId();
+       return model().getId();
     }
 
     @Override
     public String getDescription() {
-        return getProxiedObject().getDescription();
+        return model().getDescription();
     }
 
     @Override
@@ -50,9 +50,9 @@ public class AdaptedSimulation extends AdaptedObject<edu.mit.cci.simulation.mode
 
     @Override
     public URL getURL() {
-      if (url == null || getProxiedObject().getUrl()!=null) {
+      if (url == null || model().getUrl()!=null) {
           try {
-              url = new URL[]{new URL(getProxiedObject().getUrl())};
+              url = new URL[]{new URL(model().getUrl())};
           } catch (MalformedURLException e) {
               logger.warn("Error resolving url");
               url = new URL[0];
@@ -73,7 +73,7 @@ public class AdaptedSimulation extends AdaptedObject<edu.mit.cci.simulation.mode
 
     @Override
     public Date getCreation() {
-        return getProxiedObject().getCreated();
+        return model().getCreated();
     }
 
     @Override
@@ -85,8 +85,9 @@ public class AdaptedSimulation extends AdaptedObject<edu.mit.cci.simulation.mode
     public List<MetaData> getInputs() {
         if (inputs == null) {
             inputs = new ArrayList<MetaData>();
-            for (Variable v:getProxiedObject().getInputs()) {
-                inputs.add((MetaData) getManager().getAdaptor(v));
+            for (Variable v: model().getInputs()) {
+
+                inputs.add((MetaData) manager().getAdaptor(v));
             }
         }
         return inputs;
@@ -101,8 +102,13 @@ public class AdaptedSimulation extends AdaptedObject<edu.mit.cci.simulation.mode
     public List<MetaData> getOutputs() {
          if (outputs== null) {
             outputs = new ArrayList<MetaData>();
-            for (Variable v:getProxiedObject().getOutputs()) {
-                outputs.add((MetaData) getManager().getAdaptor(v));
+            for (Variable v: model().getOutputs()) {
+                MetaData md = (MetaData) manager().getAdaptor(v);
+                MetaData mdi = md.getIndexingMetaData();
+                if (mdi!=null) {
+                    mdi.setIndex(true);
+                }
+                outputs.add(md);
             }
         }
         return outputs;
@@ -121,7 +127,7 @@ public class AdaptedSimulation extends AdaptedObject<edu.mit.cci.simulation.mode
 
     @Override
     public String getName() {
-        return getProxiedObject().getName();
+        return model().getName();
     }
 
     @Override

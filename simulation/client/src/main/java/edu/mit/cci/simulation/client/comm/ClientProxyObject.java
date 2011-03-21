@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
@@ -37,17 +38,17 @@ public class ClientProxyObject<T> implements InvocationHandler {
 
                  
         } else if ("hashCode".equals(method.getName())) {
-            if (loadedObject!=null) {
-                return loadedObject.hashCode();
-            } else {
+//            if (loadedObject!=null) {
+//                return loadedObject.hashCode();
+//            } else {
                 return proxiedHashCode();
-            }
+           // }
         } else if ("equals".equals(method.getName())) {
-            if (loadedObject!=null) {
-                return loadedObject.equals(args[0]);
-            } else {
+//            if (loadedObject!=null) {
+//                return loadedObject.equals(args[0]);
+//            } else {
                 return proxiedEquals(args[0]);
-            }
+            //}
 
 
         } else {
@@ -62,7 +63,12 @@ public class ClientProxyObject<T> implements InvocationHandler {
     }
 
     public boolean proxiedEquals(Object o) {
-        return (clz.isInstance(o) && ((HasId)o).getId().equals(refid));
+        try {
+            return (clz.isInstance(o) && clz.getMethod("getId").invoke(o).equals(refid));
+        } catch (Exception e) {
+          log.warn("Proxied object should, but does not, implement getId: "+o);
+        }
+        return false;
     }
 
     private synchronized T getObject()

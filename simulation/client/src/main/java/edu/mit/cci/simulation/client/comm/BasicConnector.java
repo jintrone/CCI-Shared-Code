@@ -1,17 +1,25 @@
 package edu.mit.cci.simulation.client.comm;
 
 
+import org.apache.http.HttpRequest;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
+import org.apache.http.ProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.DefaultRedirectStrategy;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpParams;
+import org.apache.http.protocol.HttpContext;
+
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -49,6 +57,19 @@ public class BasicConnector implements DeserializingConnector {
         this.port = port;
         this.deserializer = deserializer;
         client = new DefaultHttpClient();
+        ((DefaultHttpClient)client).setRedirectStrategy(new DefaultRedirectStrategy() {
+
+            @Override
+            public boolean isRedirected(HttpRequest request, HttpResponse response, HttpContext context) throws ProtocolException {
+                boolean result =  super.isRedirected(request, response, context);    //To change body of overridden methods use File | Settings | File Templates.
+                int statusCode = response.getStatusLine().getStatusCode();
+                if (statusCode == HttpStatus.SC_MOVED_TEMPORARILY) {
+                    return true;
+                } else return result;
+            }
+
+
+        });
     }
 
     public BasicConnector(Deserializer deserializer, String hostname) throws UnknownHostException {
@@ -73,6 +94,8 @@ public class BasicConnector implements DeserializingConnector {
 
         HttpPost post = new HttpPost(location.create(serverAddress, port, pathparam));
         //post.setFollowRedirects(true);
+        post.addHeader("accept", "text/xml");
+
         if (postparams != null && postparams.size() > 0) {
             List<NameValuePair> paramList = new ArrayList<NameValuePair>();
             int i = 0;
@@ -102,6 +125,7 @@ public class BasicConnector implements DeserializingConnector {
 
     private Object rawGet(String location, Map<String, String> queryparams) throws IOException {
         HttpGet get = new HttpGet(location);
+         get.addHeader("accept", "text/xml");
         if (queryparams != null && queryparams.size() > 0) {
             HttpParams params = new BasicHttpParams();
             for (Map.Entry<String, String> ent : queryparams.entrySet()) {

@@ -40,6 +40,16 @@ public class ClientRepository {
         return instance;
     }
 
+    public static ClientRepository instance(RepositoryManager manager,DeserializingConnector connector) throws IOException {
+        if (instance == null) {
+            instance = new ClientRepository();
+            instance.deserializingConnector = connector;
+            instance.manager = manager;
+            instance.manager.refreshSimulations();
+        }
+        return instance;
+    }
+
     public static ClientRepository instance() {
         return instance;
     }
@@ -86,11 +96,10 @@ public class ClientRepository {
         Map<String, String> params = new HashMap<String, String>();
         for (MetaData input : s.getInputs()) {
             Object val = inputs.get(input.getId());
-            params.put(input.getInternalName()==null?String.valueOf(input.getId()):input.getInternalName(), val == null ? null : val.toString());
+            params.put(input.getId()+"", val == null ? null : val.toString());
         }
-        params.put("user", String.valueOf(userid));
 
-        Object o = deserializingConnector.post(ModelAccessPoint.RUN_MODEL_URL, Collections.<String, String>emptyMap(),String.valueOf(s.getId()));
+       Object o=manager.getAdaptor(deserializingConnector.post(ModelAccessPoint.RUN_MODEL_URL, params,String.valueOf(s.getId())));
         if (o instanceof Scenario) return (Scenario)o;
         else {
             log.warn("Error running model");
@@ -106,9 +115,12 @@ public class ClientRepository {
         }
 
         Map<String, Long> inputX = new HashMap<String, Long>();
+
         for (MetaData m : s.getInputs()) {
             if (m.getInternalName()!=null) {
                 inputX.put(m.getInternalName(), m.getId());
+            } else {
+                log.info(m.getId() + " is unresolved");
             }
         }
 

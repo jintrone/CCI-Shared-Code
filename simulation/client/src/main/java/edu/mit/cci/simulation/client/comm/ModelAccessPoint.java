@@ -1,5 +1,8 @@
 package edu.mit.cci.simulation.client.comm;
 
+import edu.mit.cci.simulation.client.MetaData;
+import edu.mit.cci.simulation.client.Scenario;
+import edu.mit.cci.simulation.client.Simulation;
 import edu.mit.cci.simulation.client.model.impl.ClientMetaData;
 import edu.mit.cci.simulation.client.model.impl.ClientScenario;
 import edu.mit.cci.simulation.client.model.impl.ClientSimulation;
@@ -13,11 +16,11 @@ import java.net.InetAddress;
 * Time: 4:12 PM
 */
 public enum ModelAccessPoint implements RestAccessPoint {
-    RUN_MODEL_URL("/simulations/defaultsimulations/%s/run"),
-    GET_SIMULATION("/simulations/defaultsimulations"),
-    GET_SCENARIO("/simulations/defaultscenarios"),
-    GET_VARIABLE("/simulations/variables"),
-    EDIT_SCENARIO_URL("/simulations/rest/scenariostate");
+    RUN_MODEL_URL("/simulation/defaultsimulations/%s/run"),
+    GET_SIMULATION("/simulation/defaultsimulations"),
+    GET_SCENARIO("/simulation/defaultscenarios"),
+    GET_VARIABLE("/simulation/variables"),
+    EDIT_SCENARIO_URL("/simulation/rest/scenariostate");
 
     String url;
 
@@ -30,10 +33,9 @@ public enum ModelAccessPoint implements RestAccessPoint {
         buf.append(base.getHostName());
         buf.append(":");
         buf.append(port);
-        buf.append("a").append("b");
         int start = StringUtils.countMatches(url, "%");
 
-        if (start > 0) {
+        if (start > -1) {
             buf.append(String.format(url,params));
 
         } else {
@@ -46,14 +48,14 @@ public enum ModelAccessPoint implements RestAccessPoint {
         return buf.toString();
     }
 
-    public static ModelAccessPoint forClass(Class clz) {
-      if (clz==ClientMetaData.class) {
-          return GET_VARIABLE;
-      } else if (clz==ClientSimulation.class) {
-          return GET_SIMULATION;
-      } else if (clz == ClientScenario.class) {
-          return GET_SCENARIO;
-      }
+    public static ModelAccessPoint forClass(Class clazz) {
+       if (Simulation.class.isAssignableFrom(clazz) || edu.mit.cci.simulation.model.Simulation.class.isAssignableFrom(clazz)) {
+            return GET_SIMULATION;
+        } else if (MetaData.class.isAssignableFrom(clazz) || edu.mit.cci.simulation.model.Variable.class.isAssignableFrom(clazz)) {
+            return GET_VARIABLE;
+        } else if (Scenario.class.isAssignableFrom(clazz) || edu.mit.cci.simulation.model.Scenario.class.isAssignableFrom(clazz)) {
+           return GET_SCENARIO;
+        }
         return null;
     }
 
