@@ -5,7 +5,7 @@ package edu.mit.cci.simulation.web;
 
 import edu.mit.cci.simulation.model.CompositeSimulation;
 import edu.mit.cci.simulation.model.CompositeStepMapping;
-import edu.mit.cci.simulation.model.Variable;
+import edu.mit.cci.simulation.model.DefaultVariable;
 import java.io.UnsupportedEncodingException;
 import java.lang.Integer;
 import java.lang.Long;
@@ -90,9 +90,9 @@ privileged aspect CompositeStepMappingController_Roo_Controller {
         return CompositeSimulation.findAllCompositeSimulations();
     }
     
-    @ModelAttribute("variables")
-    public Collection<Variable> CompositeStepMappingController.populateVariables() {
-        return Variable.findAllVariables();
+    @ModelAttribute("defaultvariables")
+    public Collection<DefaultVariable> CompositeStepMappingController.populateDefaultVariables() {
+        return DefaultVariable.findAllDefaultVariables();
     }
     
     String CompositeStepMappingController.encodeUrlPathSegment(String pathSegment, HttpServletRequest request) {

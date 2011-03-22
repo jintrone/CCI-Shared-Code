@@ -5,8 +5,8 @@ package edu.mit.cci.simulation.model;
 
 import org.springframework.beans.factory.annotation.Configurable;
 
-privileged aspect Variable_Roo_Configurable {
+privileged aspect DefaultVariable_Roo_Configurable {
     
-    declare @type: Variable: @Configurable;
+    declare @type: DefaultVariable: @Configurable;
     
 }

@@ -8,8 +8,9 @@
         <field:input field="description" id="c_edu_mit_cci_simulation_model_DefaultSimulation_description" z="MRqS+C2VTu21GDglUGKA05DJJ18="/>
         <field:input field="name" id="c_edu_mit_cci_simulation_model_DefaultSimulation_name" z="UdvCFXsf65PJEGmx/Uu6OmWx83U="/>
         <field:input field="url" id="c_edu_mit_cci_simulation_model_DefaultSimulation_url" z="4GIZ6qTUTJS21ost2afhDFrUuUk="/>
-        <field:select field="inputs" id="c_edu_mit_cci_simulation_model_DefaultSimulation_inputs" itemValue="id" items="${variables}" multiple="true" path="/variables" z="user-managed"/>
-        <field:select field="outputs" id="c_edu_mit_cci_simulation_model_DefaultSimulation_outputs" itemValue="id" items="${variables}" multiple="true" path="/variables" z="user-managed"/>
+        <field:input field="type" id="c_edu_mit_cci_simulation_model_DefaultSimulation_type" />
+        <field:select field="inputs" id="c_edu_mit_cci_simulation_model_DefaultSimulation_inputs" itemValue="id" items="${defaultVariables}" multiple="true" path="/variables" z="user-managed"/>
+        <field:select field="outputs" id="c_edu_mit_cci_simulation_model_DefaultSimulation_outputs" itemValue="id" items="${defaultVariables}" multiple="true" path="/variables" z="user-managed"/>
     </form:create>
     <form:dependency dependencies="${dependencies}" id="d_edu_mit_cci_simulation_model_DefaultSimulation" render="${not empty dependencies}" z="ywOAJ2eIH/J72lxz/gGksvhdA4A="/>
 </div>

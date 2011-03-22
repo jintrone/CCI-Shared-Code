@@ -24,22 +24,12 @@ privileged aspect Tuple_Roo_Entity {
     @PersistenceContext
     transient EntityManager Tuple.entityManager;
     
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    private Long Tuple.id;
+
     
     @Version
     @Column(name = "version")
     private Integer Tuple.version;
-    
-    public Long Tuple.getId() {
-        return this.id;
-    }
-    
-    public void Tuple.setId(Long id) {
-        this.id = id;
-    }
+
     
     public Integer Tuple.getVersion() {
         return this.version;

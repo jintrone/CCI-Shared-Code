@@ -3,7 +3,7 @@
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
     <form:create id="fc_edu_mit_cci_simulation_model_Tuple" modelAttribute="tuple" path="/tuples" render="${empty dependencies}" z="f36i+AlDFFrzV9UN+ED98vKqHQs=">
-        <field:select field="var" id="c_edu_mit_cci_simulation_model_Tuple_var" itemValue="id" items="${variables}" path="/variables" required="true" z="nxlJeOqDxR6KVHYyuDgraiSRa2E="/>
+        <field:select field="var" id="c_edu_mit_cci_simulation_model_Tuple_var" itemValue="id" items="${defaultvariables}" path="/variables" required="true" z="sIqpNvJw2cIlDe+sDNIfFQqeAlo="/>
         <field:input field="value_" id="c_edu_mit_cci_simulation_model_Tuple_value_" z="fGqb2/PtRCnRTn44jfh9yvPlRps="/>
     <field:input field="values" id="c_edu_mit_cci_simulation_model_Tuple_values" render="false" z="user-managed"/>
     

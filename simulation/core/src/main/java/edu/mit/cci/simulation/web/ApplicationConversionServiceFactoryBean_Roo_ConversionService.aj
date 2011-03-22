@@ -10,11 +10,11 @@ import edu.mit.cci.simulation.model.CompositeSimulation;
 import edu.mit.cci.simulation.model.CompositeStepMapping;
 import edu.mit.cci.simulation.model.DefaultScenario;
 import edu.mit.cci.simulation.model.DefaultSimulation;
+import edu.mit.cci.simulation.model.DefaultVariable;
 import edu.mit.cci.simulation.model.MappedSimulation;
 import edu.mit.cci.simulation.model.ScenarioList;
 import edu.mit.cci.simulation.model.Step;
 import edu.mit.cci.simulation.model.Tuple;
-import edu.mit.cci.simulation.model.Variable;
 import java.lang.String;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.format.FormatterRegistry;
@@ -37,9 +37,9 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
         };
     }
     
-    Converter<Variable, String> ApplicationConversionServiceFactoryBean.getVariableConverter() {
-        return new Converter<Variable, String>() {
-            public String convert(Variable source) {
+    Converter<DefaultVariable, String> ApplicationConversionServiceFactoryBean.getDefaultVariableConverter() {
+        return new Converter<DefaultVariable, String>() {
+            public String convert(DefaultVariable source) {
                 return new StringBuilder().append(source.getName()).append(" ").append(source.getDescription()).append(" ").append(source.getArity()).toString();
             }
         };
@@ -120,7 +120,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public void ApplicationConversionServiceFactoryBean.installLabelConverters(FormatterRegistry registry) {
         registry.addConverter(getExcelSimulationConverter());
         registry.addConverter(getScenarioListConverter());
-        registry.addConverter(getVariableConverter());
+        registry.addConverter(getDefaultVariableConverter());
         registry.addConverter(getCompositeScenarioConverter());
         registry.addConverter(getCompositeStepMappingConverter());
         registry.addConverter(getMappedSimulationConverter());

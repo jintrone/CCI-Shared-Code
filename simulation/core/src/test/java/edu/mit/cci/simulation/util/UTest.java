@@ -1,5 +1,6 @@
 package edu.mit.cci.simulation.util;
 
+import edu.mit.cci.simulation.model.DefaultVariable;
 import edu.mit.cci.simulation.model.SimulationException;
 import edu.mit.cci.simulation.model.Tuple;
 import edu.mit.cci.simulation.model.TupleStatus;
@@ -36,7 +37,7 @@ public class UTest {
 
     @Test
     public void unescape() {
-       Assert.assertEquals("5",U.unescape("5;", null)[0]);
+       Assert.assertEquals("5",U.unescape("5;", null, null)[0]);
     }
 
     @Test
@@ -59,8 +60,8 @@ public class UTest {
 
     @Test
     public void parseVariableMap() throws SimulationException {
-        Variable one = new Variable("test1","test1",3);
-        Variable two = new Variable("test2","test2",3);
+        DefaultVariable one = new DefaultVariable("test1","test1",3);
+        DefaultVariable two = new DefaultVariable("test2","test2",3);
         one.persist();
         two.persist();
         StringBuilder builder = new StringBuilder();
@@ -70,7 +71,7 @@ public class UTest {
         String[] vals2 = {"7", "8", "9"};
         builder.append(two.getId()).append("=").append(U.escape(vals2, null));
 
-        Map<Variable,String[]> expected = new HashMap<Variable,String[]>();
+        Map<DefaultVariable,String[]> expected = new HashMap<DefaultVariable,String[]>();
         expected.put(one,vals1);
         expected.put(two,vals2);
 
@@ -85,8 +86,8 @@ public class UTest {
 
     @Test
     public void stringRepresentationFromTuple() throws SimulationException {
-        Variable one = new Variable("test1","test1",3);
-        Variable two = new Variable("test2","test2",3);
+        DefaultVariable one = new DefaultVariable("test1","test1",3);
+        DefaultVariable two = new DefaultVariable("test2","test2",3);
         one.persist();
         two.persist();
         String[] vals1 = {"4", "5", "6"};
@@ -129,10 +130,10 @@ public class UTest {
     public void copyRange() throws Exception {
         String[] expect = new String[]{"2","3","1","2","3"};
 
-        Tuple t = new Tuple(new Variable("Test","Test",6));
+        Tuple t = new Tuple(new DefaultVariable("Test","Test",6));
         t.setValue_("1;2;3;1;2;3");
 
-        Tuple t1 = new Tuple(new Variable("Test","test",5));
+        Tuple t1 = new Tuple(new DefaultVariable("Test","test",5));
         t1.setValue_("4;5;6;");
 
         U.copyRange(t,t1,1,6);
@@ -145,10 +146,10 @@ public class UTest {
     public void append() throws Exception {
         String[] expect = new String[]{"1","2","3","1","2","3","4","5","6"};
 
-        Tuple t = new Tuple(new Variable("Test","test",9));
+        Tuple t = new Tuple(new DefaultVariable("Test","test",9));
         t.setValue_("1;2;3;1;2;3");
 
-        Tuple t1 = new Tuple(new Variable("Test","test",3));
+        Tuple t1 = new Tuple(new DefaultVariable("Test","test",3));
         t1.setValue_("4;5;6;");
 
         U.join(t, t1);
@@ -184,7 +185,7 @@ public class UTest {
 
         System.err.println(str);
        Map<Integer,TupleStatus> rmap = new HashMap<Integer,TupleStatus>();
-        String[] result = U.unescape(str,rmap);
+        String[] result = U.unescape(str,rmap, null);
         Assert.assertArrayEquals(expect,result);
         Assert.assertEquals(map,rmap);
 

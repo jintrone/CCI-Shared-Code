@@ -28,9 +28,9 @@ public class MappedSimulation extends DefaultSimulation {
     @ManyToOne
     private DefaultSimulation executorSimulation;
 
-    @ManyToMany
+    @ManyToMany(targetEntity = DefaultVariable.class)
     @JoinTable(name = "VAR_MAPPING")
-    private Map<Variable, Variable> variableMap = new HashMap<Variable, Variable>();
+    private Map<DefaultVariable, DefaultVariable> variableMap = new HashMap<DefaultVariable, DefaultVariable>();
 
     private Integer replication;
 
@@ -39,7 +39,7 @@ public class MappedSimulation extends DefaultSimulation {
     @Enumerated
     private ManyToOneMapping manyToOne;
 
-    @ManyToOne
+    @ManyToOne(targetEntity = DefaultVariable.class)
     private Variable indexingVariable;
 
 
@@ -81,7 +81,7 @@ public class MappedSimulation extends DefaultSimulation {
                     Tuple t = new Tuple(getVariableMap().get(ent.getKey()));
                     if (manyToOne != null) {
                         try {
-                            t.setValues(new String[]{manyToOne.reduce(U.unescape(ent.getValue(), null))});
+                            t.setValues(new String[]{manyToOne.reduce(U.unescape(ent.getValue(), null, null))});
                         } catch (SimulationComputationException ex) {
                             t.setValues(new String[] {null});
                             t.setStatus(0,TupleStatus.ERR_CALC);
@@ -148,20 +148,20 @@ public class MappedSimulation extends DefaultSimulation {
         getVariableMap().clear();
         DefaultSimulation esim = getExecutorSimulation();
         for (Variable mappedInput : esim.getInputs()) {
-            Variable v = new Variable();
-            v.persist();
+            DefaultVariable v = new DefaultVariable();
+            ((DefaultVariable)v).persist();
             getInputs().add(v);
-            getVariableMap().put(mappedInput, v);
+            getVariableMap().put((DefaultVariable)mappedInput, v);
             U.copy(mappedInput, v);
             v.setArity(replication * mappedInput.getArity());
         }
         int count =  (int) Math.ceil((double) replication / (double) samplingFrequency);
         int outputArity = manyToOne == null ? count : 1;
         for (Variable mo : esim.getOutputs()) {
-            Variable v = new Variable();
+            DefaultVariable v = new DefaultVariable();
 
             getOutputs().add(v);
-            getVariableMap().put(mo, v);
+            getVariableMap().put((DefaultVariable)mo, v);
             U.copy(mo, v);
             v.setArity(mo.getArity() * outputArity);
             if (getManyToOne() == ManyToOneMapping.SUM) {
@@ -173,7 +173,7 @@ public class MappedSimulation extends DefaultSimulation {
 
     }
 
-    public void setVariableMap(Map<Variable, Variable> map) {
+    public void setVariableMap(Map<DefaultVariable, DefaultVariable> map) {
         this.variableMap.clear();
         if (map != null) {
             variableMap.putAll(map);

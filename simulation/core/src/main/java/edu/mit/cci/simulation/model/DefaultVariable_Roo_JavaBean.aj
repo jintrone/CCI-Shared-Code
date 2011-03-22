@@ -9,85 +9,85 @@ import java.lang.Double;
 import java.lang.Integer;
 import java.lang.String;
 
-privileged aspect Variable_Roo_JavaBean {
+privileged aspect DefaultVariable_Roo_JavaBean {
     
-    public String Variable.getName() {
+    public String DefaultVariable.getName() {
         return this.name;
     }
     
-    public void Variable.setName(String name) {
+    public void DefaultVariable.setName(String name) {
         this.name = name;
     }
     
-    public String Variable.getDescription() {
+    public String DefaultVariable.getDescription() {
         return this.description;
     }
     
-    public void Variable.setDescription(String description) {
+    public void DefaultVariable.setDescription(String description) {
         this.description = description;
     }
     
-    public Integer Variable.getArity() {
+    public Integer DefaultVariable.getArity() {
         return this.arity;
     }
     
-    public void Variable.setArity(Integer arity) {
+    public void DefaultVariable.setArity(Integer arity) {
         this.arity = arity;
     }
     
-    public DataType Variable.getDataType() {
+    public DataType DefaultVariable.getDataType() {
         return this.dataType;
     }
     
-    public void Variable.setDataType(DataType dataType) {
+    public void DefaultVariable.setDataType(DataType dataType) {
         this.dataType = dataType;
     }
     
-    public Integer Variable.getPrecision_() {
+    public Integer DefaultVariable.getPrecision_() {
         return this.precision_;
     }
     
-    public void Variable.setPrecision_(Integer precision_) {
+    public void DefaultVariable.setPrecision_(Integer precision_) {
         this.precision_ = precision_;
     }
     
-    public Double Variable.getMax_() {
+    public Double DefaultVariable.getMax_() {
         return this.max_;
     }
     
-    public void Variable.setMax_(Double max_) {
+    public void DefaultVariable.setMax_(Double max_) {
         this.max_ = max_;
     }
     
-    public Double Variable.getMin_() {
+    public Double DefaultVariable.getMin_() {
         return this.min_;
     }
     
-    public void Variable.setMin_(Double min_) {
+    public void DefaultVariable.setMin_(Double min_) {
         this.min_ = min_;
     }
     
-    public String Variable.getExternalName() {
+    public String DefaultVariable.getExternalName() {
         return this.externalName;
     }
     
-    public void Variable.setExternalName(String externalName) {
+    public void DefaultVariable.setExternalName(String externalName) {
         this.externalName = externalName;
     }
     
-    public String Variable.get_optionsRaw() {
+    public String DefaultVariable.get_optionsRaw() {
         return this._optionsRaw;
     }
     
-    public void Variable.set_optionsRaw(String _optionsRaw) {
+    public void DefaultVariable.set_optionsRaw(String _optionsRaw) {
         this._optionsRaw = _optionsRaw;
     }
     
-    public Variable Variable.getIndexingVariable() {
+    public Variable DefaultVariable.getIndexingVariable() {
         return this.indexingVariable;
     }
     
-    public void Variable.setIndexingVariable(Variable indexingVariable) {
+    public void DefaultVariable.setIndexingVariable(Variable indexingVariable) {
         this.indexingVariable = indexingVariable;
     }
     

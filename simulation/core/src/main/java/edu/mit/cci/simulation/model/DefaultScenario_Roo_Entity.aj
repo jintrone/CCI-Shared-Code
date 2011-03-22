@@ -24,22 +24,13 @@ privileged aspect DefaultScenario_Roo_Entity {
     @PersistenceContext
     transient EntityManager DefaultScenario.entityManager;
     
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    private Long DefaultScenario.id;
+
     
     @Version
     @Column(name = "version")
     private Integer DefaultScenario.version;
-    
-    public Long DefaultScenario.getId() {
-        return this.id;
-    }
-    
-    public void DefaultScenario.setId(Long id) {
-        this.id = id;
-    }
+
+
     
     public Integer DefaultScenario.getVersion() {
         return this.version;

@@ -5,6 +5,7 @@
     <form:create id="fc_edu_mit_cci_simulation_model_DefaultScenario" modelAttribute="defaultScenario" path="/defaultscenarios" render="${empty dependencies}" z="I/pi7dlOopBFvxqW0r3bsVgQgkY=">
         <field:input field="simulation" id="c_edu_mit_cci_simulation_model_DefaultScenario_simulation" z="u4OmgqF5YkDrB9YsqERq9HD+hD8="/>
         <field:input field="values_" id="c_edu_mit_cci_simulation_model_DefaultScenario_values_" z="J68VuhkncZ1HCOay/KJ9PkEU1vE="/>
+        <field:input field="name"  id="c_edu_mit_cci_simulation_model_DefaultScenario_name"/>
         <field:datetime dateTimePattern="${defaultScenario_created_date_format}" field="created" id="c_edu_mit_cci_simulation_model_DefaultScenario_created" z="tH7C2scX6scV+uNcPlGzEgT1sEk="/>
     </form:create>
     <form:dependency dependencies="${dependencies}" id="d_edu_mit_cci_simulation_model_DefaultScenario" render="${not empty dependencies}" z="EIi6Nd6TMAQDQyHSuAHlqmV0B/E="/>

@@ -3,7 +3,7 @@
 
 package edu.mit.cci.simulation.model;
 
-import edu.mit.cci.simulation.model.Variable;
+import edu.mit.cci.simulation.model.DefaultVariable;
 import java.util.List;
 import java.util.Random;
 import org.springframework.stereotype.Component;
@@ -14,10 +14,10 @@ privileged aspect VariableDataOnDemand_Roo_DataOnDemand {
     
     private Random VariableDataOnDemand.rnd = new java.security.SecureRandom();
     
-    private List<Variable> VariableDataOnDemand.data;
+    private List<DefaultVariable> VariableDataOnDemand.data;
     
-    public Variable VariableDataOnDemand.getNewTransientVariable(int index) {
-        edu.mit.cci.simulation.model.Variable obj = new edu.mit.cci.simulation.model.Variable();
+    public DefaultVariable VariableDataOnDemand.getNewTransientDefaultVariable(int index) {
+        edu.mit.cci.simulation.model.DefaultVariable obj = new edu.mit.cci.simulation.model.DefaultVariable();
         obj.setName(null);
         obj.setDescription(null);
         obj.setArity(new Integer(index));
@@ -31,34 +31,34 @@ privileged aspect VariableDataOnDemand_Roo_DataOnDemand {
         return obj;
     }
     
-    public Variable VariableDataOnDemand.getSpecificVariable(int index) {
+    public DefaultVariable VariableDataOnDemand.getSpecificDefaultVariable(int index) {
         init();
         if (index < 0) index = 0;
         if (index > (data.size() - 1)) index = data.size() - 1;
-        Variable obj = data.get(index);
-        return Variable.findVariable(obj.getId());
+        DefaultVariable obj = data.get(index);
+        return DefaultVariable.findDefaultVariable(obj.getId());
     }
     
-    public Variable VariableDataOnDemand.getRandomVariable() {
+    public DefaultVariable VariableDataOnDemand.getRandomDefaultVariable() {
         init();
-        Variable obj = data.get(rnd.nextInt(data.size()));
-        return Variable.findVariable(obj.getId());
+        DefaultVariable obj = data.get(rnd.nextInt(data.size()));
+        return DefaultVariable.findDefaultVariable(obj.getId());
     }
     
-    public boolean VariableDataOnDemand.modifyVariable(Variable obj) {
+    public boolean VariableDataOnDemand.modifyDefaultVariable(DefaultVariable obj) {
         return false;
     }
     
     public void VariableDataOnDemand.init() {
-        data = edu.mit.cci.simulation.model.Variable.findVariableEntries(0, 10);
-        if (data == null) throw new IllegalStateException("Find entries implementation for 'Variable' illegally returned null");
+        data = edu.mit.cci.simulation.model.DefaultVariable.findDefaultVariableEntries(0, 10);
+        if (data == null) throw new IllegalStateException("Find entries implementation for 'DefaultVariable' illegally returned null");
         if (!data.isEmpty()) {
             return;
         }
         
-        data = new java.util.ArrayList<edu.mit.cci.simulation.model.Variable>();
+        data = new java.util.ArrayList<edu.mit.cci.simulation.model.DefaultVariable>();
         for (int i = 0; i < 10; i++) {
-            edu.mit.cci.simulation.model.Variable obj = getNewTransientVariable(i);
+            edu.mit.cci.simulation.model.DefaultVariable obj = getNewTransientDefaultVariable(i);
             obj.persist();
             obj.flush();
             data.add(obj);

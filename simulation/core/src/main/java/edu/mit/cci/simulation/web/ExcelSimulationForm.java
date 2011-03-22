@@ -4,7 +4,8 @@ import edu.mit.cci.simulation.excel.server.ExcelRunnerStrategy;
 import edu.mit.cci.simulation.excel.server.ExcelSimulation;
 import edu.mit.cci.simulation.excel.server.ExcelVariable;
 import edu.mit.cci.simulation.model.DefaultSimulation;
-import edu.mit.cci.simulation.model.Variable;
+import edu.mit.cci.simulation.model.DefaultVariable;
+import edu.mit.cci.simulation.model.DefaultVariable;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.tostring.RooToString;
 import org.springframework.stereotype.Controller;
@@ -45,9 +46,9 @@ public class ExcelSimulationForm {
 
     private List<String> outputWorksheetNames = new ArrayList<String>();
 
-    private List<Variable> inputVars = new ArrayList<Variable>();
+    private List<DefaultVariable> inputVars = new ArrayList<DefaultVariable>();
 
-    private List<Variable> outputVars = new ArrayList<Variable>();
+    private List<DefaultVariable> outputVars = new ArrayList<DefaultVariable>();
 
     @Size(max=75)
     private String simulationName;
@@ -89,7 +90,7 @@ public class ExcelSimulationForm {
         esim.setSimulation(sim);
         esim.persist();
         int i = 0;
-        for (Variable v:form.inputVars) {
+        for (DefaultVariable v:form.inputVars) {
             ExcelVariable var = new ExcelVariable();
             var.setWorksheetName(form.inputWorksheetNames.get(i));
             var.setCellRange(form.inputRanges.get(i));
@@ -101,7 +102,7 @@ public class ExcelSimulationForm {
         }
 
         i=0;
-        for (Variable v:form.outputVars) {
+        for (DefaultVariable v:form.outputVars) {
             ExcelVariable var = new ExcelVariable();
             var.setWorksheetName(form.outputWorksheetNames.get(i));
             var.setCellRange(form.outputRanges.get(i));
@@ -125,8 +126,8 @@ public class ExcelSimulationForm {
     }
 
     @ModelAttribute("variables")
-    public Collection<Variable> populateVariables() {
-        return Variable.findAllVariables();
+    public Collection<DefaultVariable> populateVariables() {
+        return DefaultVariable.findAllDefaultVariables();
     }
 
 

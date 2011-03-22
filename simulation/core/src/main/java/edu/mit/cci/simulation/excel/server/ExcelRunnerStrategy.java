@@ -63,7 +63,7 @@ public class ExcelRunnerStrategy implements RunStrategy {
                 log.warn("Missing input variable: " + ev);
 
             }
-            writeInput(ev, U.unescape(params.get(paramId), null), workbook);
+            writeInput(ev, U.unescape(params.get(paramId), null, null), workbook);
         }
 
         runForumlas(workbook);

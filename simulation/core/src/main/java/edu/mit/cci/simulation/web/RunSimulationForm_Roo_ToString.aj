@@ -9,7 +9,8 @@ privileged aspect RunSimulationForm_Roo_ToString {
     
     public String RunSimulationForm.toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Inputs: ").append(getInputs() == null ? "null" : getInputs().size());
+        sb.append("Inputs: ").append(getInputs() == null ? "null" : getInputs().size()).append(", ");
+        sb.append("Simid: ").append(getSimid());
         return sb.toString();
     }
     

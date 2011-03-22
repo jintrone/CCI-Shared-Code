@@ -6,7 +6,6 @@ package edu.mit.cci.simulation.web;
 import edu.mit.cci.simulation.model.CompositeSimulation;
 import edu.mit.cci.simulation.model.CompositeStepMapping;
 import edu.mit.cci.simulation.model.Step;
-import edu.mit.cci.simulation.model.Variable;
 import java.io.UnsupportedEncodingException;
 import java.lang.Integer;
 import java.lang.Long;
@@ -94,11 +93,6 @@ privileged aspect CompositeSimulationController_Roo_Controller {
     @ModelAttribute("steps")
     public Collection<Step> CompositeSimulationController.populateSteps() {
         return Step.findAllSteps();
-    }
-    
-    @ModelAttribute("variables")
-    public Collection<Variable> CompositeSimulationController.populateVariables() {
-        return Variable.findAllVariables();
     }
     
     void CompositeSimulationController.addDateTimeFormatPatterns(Model model) {

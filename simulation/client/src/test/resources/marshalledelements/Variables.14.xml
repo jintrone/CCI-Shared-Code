@@ -1,0 +1,1 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Variable Id="14"><Name>Simulation Year</Name><Description>Simulation Year</Description><Arity>101</Arity><DataType>NUM</DataType><Precision>0</Precision><Max>2100.0</Max><Min>2000.0</Min><ExternalName>Year</ExternalName><indexingVariable type="Variable" id="14"/><Units>Year</Units><labels>Year</labels></Variable>

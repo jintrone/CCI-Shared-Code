@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,9 +29,13 @@ import java.util.Map;
 @RooToString
 public class RunSimulationForm  {
 
+    public static String USER_PARAM = "userId";
+
     private static Logger log = Logger.getLogger(RunSimulationForm.class);
 
     private Map<String, String> inputs = new HashMap<String, String>();
+
+    private String userId;
 
     private Long simid;
 
@@ -44,21 +49,42 @@ public class RunSimulationForm  {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String processSubmit(RunSimulationForm form, Model model) throws SimulationException {
+    public String processSubmit(@PathVariable("simid") long simId, RunSimulationForm form, Model model, HttpServletRequest request) throws SimulationException {
 
         Map<String,Long> remap = new HashMap<String,Long>();
-        DefaultSimulation sim = DefaultSimulation.findDefaultSimulation(simid);
+        DefaultSimulation sim = null;
+        Map<String,String> linputs;
+        String userid = null;
+        if (this.simid == null) {
+            sim = DefaultSimulation.findDefaultSimulation(simId);
+            linputs = new HashMap<String,String>();
+            for (Object key:request.getParameterMap().keySet()) {
+                String skey = key.toString();
+                if (skey.equals(USER_PARAM)) {
+                    userid = request.getParameterValues(USER_PARAM)[0];
+
+                } else {
+                    linputs.put(skey,request.getParameterValues(skey)[0]);
+                }
+            }
+
+        } else {
+            sim = DefaultSimulation.findDefaultSimulation(simid);
+            userid = form.userId;
+            linputs = form.inputs;
+        }
+
+
         for (Variable v:sim.getInputs()) {
             if (v.getExternalName()!=null) {
                 remap.put(v.getExternalName(),v.getId());
             }
         }
+
         List<Tuple> simInputs = new ArrayList<Tuple>();
 
-
-
-        for (Map.Entry<String,String> ent:form.inputs.entrySet()) {
-            Variable v = Variable.findVariable(remap.containsKey(ent.getKey())?remap.get(ent.getKey()):Long.parseLong(ent.getKey()));
+        for (Map.Entry<String,String> ent:linputs.entrySet()) {
+            DefaultVariable v = DefaultVariable.findDefaultVariable(remap.containsKey(ent.getKey()) ? remap.get(ent.getKey()) : Long.parseLong(ent.getKey()));
             if (v == null) throw new SimulationException("Could not identify variable "+ent.getKey());
             Tuple t = new Tuple(v);
             t.setValue_(ent.getValue());
@@ -67,7 +93,9 @@ public class RunSimulationForm  {
 
 
         Scenario s = sim.run(simInputs);
-        return "redirect:/defaultsimulations";
+        s.setUser(userid);
+        ((DefaultScenario)s).persist();
+        return "redirect:/defaultscenarios/"+s.getId();
 
     }
 

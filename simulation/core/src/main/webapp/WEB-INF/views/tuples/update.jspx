@@ -4,7 +4,7 @@
     <jsp:output omit-xml-declaration="yes"/>
     <form:update id="fu_edu_mit_cci_simulation_model_Tuple" modelAttribute="tuple" path="/tuples" z="9WKIPaNq3MLOlfEEHcdBePXBQ3g=">
         <field:input field="values" id="c_edu_mit_cci_simulation_model_Tuple_values" z="KQPzatHROXWblAP/vJbmeq2lB9M="/>
-        <field:select field="var" id="c_edu_mit_cci_simulation_model_Tuple_var" itemValue="id" items="${variables}" path="/variables" required="true" z="nxlJeOqDxR6KVHYyuDgraiSRa2E="/>
+        <field:select field="var" id="c_edu_mit_cci_simulation_model_Tuple_var" itemValue="id" items="${defaultvariables}" path="/variables" required="true" z="sIqpNvJw2cIlDe+sDNIfFQqeAlo="/>
         <field:input field="value_" id="c_edu_mit_cci_simulation_model_Tuple_value_" z="fGqb2/PtRCnRTn44jfh9yvPlRps="/>
     
     </form:update>

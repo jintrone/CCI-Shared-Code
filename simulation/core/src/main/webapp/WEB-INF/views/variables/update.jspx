@@ -2,17 +2,18 @@
 <div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
-    <form:update id="fu_edu_mit_cci_simulation_model_Variable" modelAttribute="variable" path="/variables" z="nrDL4FQXqe+U8xnOP6Fw+nFlWsg=">
-        <field:input field="options" id="c_edu_mit_cci_simulation_model_Variable_options" z="OpolqboSsUeehrfhiqXjJRm+IwI="/>
-        <field:input field="name" id="c_edu_mit_cci_simulation_model_Variable_name" z="oG0B6njPAnm8Eah2NaNyzf4LSlU="/>
-        <field:input field="description" id="c_edu_mit_cci_simulation_model_Variable_description" z="pIRRMHNRBkzh98od+MpUaui7pHc="/>
-        <field:input field="arity" id="c_edu_mit_cci_simulation_model_Variable_arity" required="true" validationMessageCode="field_invalid_integer" z="NJHDj/8c+bw6pOqgL5LgnPATOSw="/>
-        <field:select field="dataType" id="c_edu_mit_cci_simulation_model_Variable_dataType" items="${datatypes}" path="datatypes" z="IiXYvFCXMSJjwp1OqkAEec+IMqs="/>
-        <field:input field="precision_" id="c_edu_mit_cci_simulation_model_Variable_precision_" validationMessageCode="field_invalid_integer" z="Rmqt209+TMJq780HL4Pun6D4Cr8="/>
-        <field:input field="max_" id="c_edu_mit_cci_simulation_model_Variable_max_" validationMessageCode="field_invalid_number" z="cYALmIJQEBKVD4ySKC1AXm5dKX4="/>
-        <field:input field="min_" id="c_edu_mit_cci_simulation_model_Variable_min_" validationMessageCode="field_invalid_number" z="n4zRNQs++OiJ4fHl2xZSa/qaX7s="/>
-        <field:input field="_optionsRaw" id="c_edu_mit_cci_simulation_model_Variable__optionsRaw" z="9Qr/UMwgETy+x6PZs5o7Q7dx7/4="/>
-        <field:select field="indexingVariable" id="c_edu_mit_cci_simulation_model_Variable_indexingVariable" itemValue="id" items="${variables}" path="/variables" z="FFFS30118hV41XVh5DZWGDAI3Xk="/>
-    <field:input field="externalName" id="c_edu_mit_cci_simulation_model_Variable_externalName" z="Ac5jQIQgSNEpY27wCFeIyxScyp4="/>
+    
+<form:update id="fu_edu_mit_cci_simulation_model_DefaultVariable" modelAttribute="defaultVariable" path="/variables" z="9LjB5UhFU71lziM1d+p8hCfy+Tc=">
+        <field:input field="options" id="c_edu_mit_cci_simulation_model_DefaultVariable_options" z="ucsi5Vynsvs2JC1U4FRzmbmDRiM="/>
+        <field:input field="name" id="c_edu_mit_cci_simulation_model_DefaultVariable_name" z="+c1FSDGuP5EZ/9EEgBg34r2QOjQ="/>
+        <field:input field="description" id="c_edu_mit_cci_simulation_model_DefaultVariable_description" z="nMP5heKvlqGrvlr4h/6sliR30L8="/>
+        <field:input field="arity" id="c_edu_mit_cci_simulation_model_DefaultVariable_arity" required="true" validationMessageCode="field_invalid_integer" z="ihPoX6xWWeHD4GKW31xuE2BE24o="/>
+        <field:select field="dataType" id="c_edu_mit_cci_simulation_model_DefaultVariable_dataType" items="${datatypes}" path="datatypes" z="UwYdTnsBzAlrd5r57BG0wU+/Mio="/>
+        <field:input field="precision_" id="c_edu_mit_cci_simulation_model_DefaultVariable_precision_" validationMessageCode="field_invalid_integer" z="UbxwKYyyqnUIPe1qeOiFs3GSJsA="/>
+        <field:input field="max_" id="c_edu_mit_cci_simulation_model_DefaultVariable_max_" validationMessageCode="field_invalid_number" z="0W9sjqQmxHc4i/rggr5sa/amQeY="/>
+        <field:input field="min_" id="c_edu_mit_cci_simulation_model_DefaultVariable_min_" validationMessageCode="field_invalid_number" z="8C/ujXRgu1B/FyQDQQDdAtETNU8="/>
+        <field:input field="externalName" id="c_edu_mit_cci_simulation_model_DefaultVariable_externalName" z="+0ZoqBryZ7PRrs9TeKisb74RP8Y="/>
+        <field:input field="_optionsRaw" id="c_edu_mit_cci_simulation_model_DefaultVariable__optionsRaw" z="eS2imX9ydiAcrT8ht3+u6hltAsA="/>
+        <field:select field="indexingVariable" id="c_edu_mit_cci_simulation_model_DefaultVariable_indexingVariable" itemValue="id" items="${defaultvariables}" path="/variables" z="rragpVpevJ2r4DvITqRJpBumG9M="/>
     </form:update>
 </div>

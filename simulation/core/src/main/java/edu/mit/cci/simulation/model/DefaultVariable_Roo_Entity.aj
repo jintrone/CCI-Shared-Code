@@ -3,7 +3,7 @@
 
 package edu.mit.cci.simulation.model;
 
-import edu.mit.cci.simulation.model.Variable;
+import edu.mit.cci.simulation.model.DefaultVariable;
 import java.lang.Integer;
 import java.lang.Long;
 import java.util.List;
@@ -17,90 +17,80 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Version;
 import org.springframework.transaction.annotation.Transactional;
 
-privileged aspect Variable_Roo_Entity {
+privileged aspect DefaultVariable_Roo_Entity {
     
-    declare @type: Variable: @Entity;
+    declare @type: DefaultVariable: @Entity;
     
     @PersistenceContext
-    transient EntityManager Variable.entityManager;
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    private Long Variable.id;
+    transient EntityManager DefaultVariable.entityManager;
+
     
     @Version
     @Column(name = "version")
-    private Integer Variable.version;
+    private Integer DefaultVariable.version;
+
+
     
-    public Long Variable.getId() {
-        return this.id;
-    }
-    
-    public void Variable.setId(Long id) {
-        this.id = id;
-    }
-    
-    public Integer Variable.getVersion() {
+    public Integer DefaultVariable.getVersion() {
         return this.version;
     }
     
-    public void Variable.setVersion(Integer version) {
+    public void DefaultVariable.setVersion(Integer version) {
         this.version = version;
     }
     
     @Transactional
-    public void Variable.persist() {
+    public void DefaultVariable.persist() {
         if (this.entityManager == null) this.entityManager = entityManager();
         this.entityManager.persist(this);
     }
     
     @Transactional
-    public void Variable.remove() {
+    public void DefaultVariable.remove() {
         if (this.entityManager == null) this.entityManager = entityManager();
         if (this.entityManager.contains(this)) {
             this.entityManager.remove(this);
         } else {
-            Variable attached = Variable.findVariable(this.id);
+            DefaultVariable attached = DefaultVariable.findDefaultVariable(this.id);
             this.entityManager.remove(attached);
         }
     }
     
     @Transactional
-    public void Variable.flush() {
+    public void DefaultVariable.flush() {
         if (this.entityManager == null) this.entityManager = entityManager();
         this.entityManager.flush();
     }
     
     @Transactional
-    public Variable Variable.merge() {
+    public DefaultVariable DefaultVariable.merge() {
         if (this.entityManager == null) this.entityManager = entityManager();
-        Variable merged = this.entityManager.merge(this);
+        DefaultVariable merged = this.entityManager.merge(this);
         this.entityManager.flush();
         return merged;
     }
     
-    public static final EntityManager Variable.entityManager() {
-        EntityManager em = new Variable().entityManager;
+    public static final EntityManager DefaultVariable.entityManager() {
+        EntityManager em = new DefaultVariable().entityManager;
         if (em == null) throw new IllegalStateException("Entity manager has not been injected (is the Spring Aspects JAR configured as an AJC/AJDT aspects library?)");
         return em;
     }
     
-    public static long Variable.countVariables() {
-        return entityManager().createQuery("select count(o) from Variable o", Long.class).getSingleResult();
+    public static long DefaultVariable.countDefaultVariables() {
+        return entityManager().createQuery("select count(o) from DefaultVariable o", Long.class).getSingleResult();
     }
     
-    public static List<Variable> Variable.findAllVariables() {
-        return entityManager().createQuery("select o from Variable o", Variable.class).getResultList();
+    public static List<DefaultVariable> DefaultVariable.findAllDefaultVariables() {
+        return entityManager().createQuery("select o from DefaultVariable o", DefaultVariable.class).getResultList();
     }
     
-    public static Variable Variable.findVariable(Long id) {
+    public static DefaultVariable DefaultVariable.findDefaultVariable(Long id) {
         if (id == null) return null;
-        return entityManager().find(Variable.class, id);
+        return entityManager().find(DefaultVariable.class, id);
     }
     
-    public static List<Variable> Variable.findVariableEntries(int firstResult, int maxResults) {
-        return entityManager().createQuery("select o from Variable o", Variable.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
+    public static List<DefaultVariable> DefaultVariable.findDefaultVariableEntries(int firstResult, int maxResults) {
+        return entityManager().createQuery("select o from DefaultVariable o", DefaultVariable.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
     }
     
 }

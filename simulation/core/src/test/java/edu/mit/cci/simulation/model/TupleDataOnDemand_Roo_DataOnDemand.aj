@@ -3,9 +3,11 @@
 
 package edu.mit.cci.simulation.model;
 
+import edu.mit.cci.simulation.model.VariableDataOnDemand;
 import edu.mit.cci.simulation.model.Tuple;
 import java.util.List;
 import java.util.Random;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 privileged aspect TupleDataOnDemand_Roo_DataOnDemand {
@@ -15,6 +17,9 @@ privileged aspect TupleDataOnDemand_Roo_DataOnDemand {
     private Random TupleDataOnDemand.rnd = new java.security.SecureRandom();
     
     private List<Tuple> TupleDataOnDemand.data;
+    
+    @Autowired
+    private VariableDataOnDemand TupleDataOnDemand.defaultVariableDataOnDemand;
     
     public Tuple TupleDataOnDemand.getSpecificTuple(int index) {
         init();

@@ -61,11 +61,7 @@
     </pluginRepositories>
     <dependencies>
         <!-- General dependencies for standard applications -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-            <version>3.0.5.RELEASE</version>
-        </dependency>
+
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -208,6 +204,11 @@
                     <artifactId>jaxb-impl</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-impl</artifactId>
+            <version>2.2.3-1</version>
         </dependency>
         <dependency>
             <groupId>javax.validation</groupId>
@@ -405,6 +406,7 @@
             <artifactId>commons-io</artifactId>
             <version>2.0.1</version>
         </dependency>
+
         <dependency>
 
             <groupId>org.springframework</groupId>
@@ -415,7 +417,13 @@
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
-            <version>6.0-SNAPSHOT</version>
+            <version>6.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.ostermiller</groupId>
+            <artifactId>utils</artifactId>
+            <version>1.07.00</version>
+            <scope>test</scope>
         </dependency>
         <!--   <dependency>
           <groupId>xstream</groupId>
@@ -428,6 +436,17 @@
     </dependencies>
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.3.1</version>
+                <configuration>
+                     <excludes>
+                        <exclude>**/web/*</exclude>
+                        <exclude>**/excel/*</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
@@ -449,7 +468,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>aspectj-maven-plugin</artifactId>
-                <version>1.0</version>
+                <version>1.3.1</version>
                 <dependencies>
                     <!-- NB: You must use Maven 2.0.9 or above or these are ignored (see MNG-2972) -->
                     <dependency>
@@ -473,6 +492,7 @@
                 </executions>
                 <configuration>
                     <outxml>true</outxml>
+                    <verbose>true</verbose>
                     <aspectLibraries>
                         <aspectLibrary>
                             <groupId>org.springframework</groupId>
@@ -482,6 +502,7 @@
                     <source>1.6</source>
                     <target>1.6</target>
                 </configuration>
+
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

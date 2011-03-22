@@ -12,7 +12,7 @@ public class TupleDataOnDemand {
       public Tuple getNewTransientTuple(int index) {
         edu.mit.cci.simulation.model.Tuple obj = new edu.mit.cci.simulation.model.Tuple();
 
-        obj.setVar(variableDataOnDemand.getRandomVariable());
+        obj.setVar(variableDataOnDemand.getRandomDefaultVariable());
 
           return obj;
     }

@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
+import edu.mit.cci.simulation.model.DefaultVariable;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -119,14 +120,14 @@ public class ManageCompositeSimulationController {
 		// update input variables
 		Set<Variable> inputs = new HashSet<Variable>();
 		for (Long variableId: compSimBean.getInputs()) {
-			inputs.add(Variable.findVariable(variableId));
+			inputs.add(DefaultVariable.findDefaultVariable(variableId));
 		}
 		compSim.setInputs(inputs);
 		
 		// update output variables
 		Set<Variable> outputs = new HashSet<Variable>();
 		for (Long variableId: compSimBean.getOutputs()) {
-			outputs.add(Variable.findVariable(variableId));
+			outputs.add(DefaultVariable.findDefaultVariable(variableId));
 		}
 		compSim.setOutputs(outputs);
 		
@@ -169,8 +170,8 @@ public class ManageCompositeSimulationController {
 					fromVarId = (Long) fromVarIdObj;
 				}
 				
-				Variable fromVar = Variable.findVariable(fromVarId);
-				Variable toVar = Variable.findVariable(mappingBean.getMapping().get(fromVarIdObj));
+				Variable fromVar = DefaultVariable.findDefaultVariable(fromVarId);
+				Variable toVar = DefaultVariable.findDefaultVariable(mappingBean.getMapping().get(fromVarIdObj));
 				
 				mapping.addLink(fromVar, toVar);
 			}
@@ -223,7 +224,7 @@ public class ManageCompositeSimulationController {
 		model.addAttribute("simulationInputs", serializer.include("*").serialize(simulationInputs));
 		model.addAttribute("simulationOutputs", serializer.serialize(simulationOutputs));
 
-		List variables = Variable.findAllVariables();
+		List variables = DefaultVariable.findAllDefaultVariables();
 		model.addAttribute("variables", variables);
 		model.addAttribute("variablesJson", serializer.serialize(variables));
 

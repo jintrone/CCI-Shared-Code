@@ -4,7 +4,7 @@
 package edu.mit.cci.simulation.web;
 
 import edu.mit.cci.simulation.model.DataType;
-import edu.mit.cci.simulation.model.Variable;
+import edu.mit.cci.simulation.model.DefaultVariable;
 import java.io.UnsupportedEncodingException;
 import java.lang.Integer;
 import java.lang.Long;
@@ -26,40 +26,40 @@ import org.springframework.web.util.WebUtils;
 privileged aspect VariableController_Roo_Controller {
     
     @RequestMapping(method = RequestMethod.POST)
-    public String VariableController.create(@Valid Variable variable, BindingResult result, Model model, HttpServletRequest request) {
+    public String VariableController.create(@Valid DefaultVariable defaultVariable, BindingResult result, Model model, HttpServletRequest request) {
         if (result.hasErrors()) {
-            model.addAttribute("variable", variable);
+            model.addAttribute("defaultVariable", defaultVariable);
             return "variables/create";
         }
-        variable.persist();
-        return "redirect:/variables/" + encodeUrlPathSegment(variable.getId().toString(), request);
+        defaultVariable.persist();
+        return "redirect:/variables/" + encodeUrlPathSegment(defaultVariable.getId().toString(), request);
     }
     
     @RequestMapping(params = "form", method = RequestMethod.GET)
     public String VariableController.createForm(Model model) {
-        model.addAttribute("variable", new Variable());
+        model.addAttribute("defaultVariable", new DefaultVariable());
         return "variables/create";
     }
     
     @RequestMapping(method = RequestMethod.PUT)
-    public String VariableController.update(@Valid Variable variable, BindingResult result, Model model, HttpServletRequest request) {
+    public String VariableController.update(@Valid DefaultVariable defaultVariable, BindingResult result, Model model, HttpServletRequest request) {
         if (result.hasErrors()) {
-            model.addAttribute("variable", variable);
+            model.addAttribute("defaultVariable", defaultVariable);
             return "variables/update";
         }
-        variable.merge();
-        return "redirect:/variables/" + encodeUrlPathSegment(variable.getId().toString(), request);
+        defaultVariable.merge();
+        return "redirect:/variables/" + encodeUrlPathSegment(defaultVariable.getId().toString(), request);
     }
     
     @RequestMapping(value = "/{id}", params = "form", method = RequestMethod.GET)
     public String VariableController.updateForm(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("variable", Variable.findVariable(id));
+        model.addAttribute("defaultVariable", DefaultVariable.findDefaultVariable(id));
         return "variables/update";
     }
     
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public String VariableController.delete(@PathVariable("id") Long id, @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model model) {
-        Variable.findVariable(id).remove();
+        DefaultVariable.findDefaultVariable(id).remove();
         model.addAttribute("page", (page == null) ? "1" : page.toString());
         model.addAttribute("size", (size == null) ? "10" : size.toString());
         return "redirect:/variables?page=" + ((page == null) ? "1" : page.toString()) + "&size=" + ((size == null) ? "10" : size.toString());
@@ -70,9 +70,9 @@ privileged aspect VariableController_Roo_Controller {
         return Arrays.asList(DataType.class.getEnumConstants());
     }
     
-    @ModelAttribute("variables")
-    public Collection<Variable> VariableController.populateVariables() {
-        return Variable.findAllVariables();
+    @ModelAttribute("defaultvariables")
+    public Collection<DefaultVariable> VariableController.populateDefaultVariables() {
+        return DefaultVariable.findAllDefaultVariables();
     }
     
     String VariableController.encodeUrlPathSegment(String pathSegment, HttpServletRequest request) {

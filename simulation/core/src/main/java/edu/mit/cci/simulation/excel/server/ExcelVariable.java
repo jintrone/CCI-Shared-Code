@@ -1,6 +1,6 @@
 package edu.mit.cci.simulation.excel.server;
 
-import edu.mit.cci.simulation.model.Variable;
+import edu.mit.cci.simulation.model.DefaultVariable;
 import org.springframework.roo.addon.entity.RooEntity;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.tostring.RooToString;
@@ -20,5 +20,5 @@ public class ExcelVariable {
     private String cellRange;
 
     @ManyToOne
-    private Variable simulationVariable;
+    private DefaultVariable simulationVariable;
 }

@@ -20,28 +20,24 @@ import java.util.*;
 @Transactional
 public class DefaultSimulationTest {
 
-    @Autowired
-    private DefaultSimulationDataOnDemand dod;
 
-    @Autowired
-    private VariableDataOnDemand vdod;
-
-    @Autowired
-    private TupleDataOnDemand tdod;
 
 
     @Test
     public void testRunSimulation() throws IOException, SimulationException {
 
 
-        DefaultSimulation sim = dod.getRandomDefaultSimulation();
+        DefaultSimulation sim = new DefaultSimulation();
+        sim.setSimulationVersion(1l);
+
+
 
         sim.setUrl("http://localhost:8080/canned");
 
-        Variable one = new Variable("Test1","Test",3);
-        Variable two = new Variable("Test2","Test",3);
-        Variable three = new Variable("Test3","Test",3);
-        Variable four = new Variable("Test4","Test",3);
+        DefaultVariable one = new DefaultVariable("Test1","Test",3);
+        DefaultVariable two = new DefaultVariable("Test2","Test",3);
+        DefaultVariable three = new DefaultVariable("Test3","Test",3);
+        DefaultVariable four = new DefaultVariable("Test4","Test",3);
         one.persist();
         two.persist();
         three.persist();
@@ -73,6 +69,8 @@ public class DefaultSimulationTest {
         sim.getInputs().add(two);
         sim.getOutputs().add(three);
         sim.getOutputs().add(four);
+
+         sim.persist();
 
         Map<Variable,Object[]> m = new HashMap<Variable,Object[]>();
         m.put(three,threev);

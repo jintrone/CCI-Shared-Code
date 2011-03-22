@@ -4,7 +4,7 @@
 package edu.mit.cci.simulation.excel.server;
 
 import edu.mit.cci.simulation.excel.server.ExcelSimulation;
-import edu.mit.cci.simulation.model.Variable;
+import edu.mit.cci.simulation.model.DefaultVariable;
 import java.lang.String;
 
 privileged aspect ExcelVariable_Roo_JavaBean {
@@ -33,11 +33,11 @@ privileged aspect ExcelVariable_Roo_JavaBean {
         this.cellRange = cellRange;
     }
     
-    public Variable ExcelVariable.getSimulationVariable() {
+    public DefaultVariable ExcelVariable.getSimulationVariable() {
         return this.simulationVariable;
     }
     
-    public void ExcelVariable.setSimulationVariable(Variable simulationVariable) {
+    public void ExcelVariable.setSimulationVariable(DefaultVariable simulationVariable) {
         this.simulationVariable = simulationVariable;
     }
     
