@@ -95,7 +95,7 @@ public class TupleTest {
 
         System.err.println(str);
        Map<Integer,TupleStatus> rmap = new HashMap<Integer,TupleStatus>();
-        String[] result = U.unescape(str,rmap);
+        String[] result = U.unescape(str,rmap, null);
         Assert.assertArrayEquals(expect,result);
         Assert.assertEquals(map,rmap);
     }

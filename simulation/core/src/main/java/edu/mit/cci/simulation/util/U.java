@@ -5,7 +5,6 @@ import edu.mit.cci.simulation.model.DefaultVariable;
 import edu.mit.cci.simulation.model.SimulationException;
 import edu.mit.cci.simulation.model.Tuple;
 import edu.mit.cci.simulation.model.TupleStatus;
-import edu.mit.cci.simulation.model.DefaultVariable;
 import edu.mit.cci.simulation.model.Variable;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -85,7 +84,7 @@ public class U {
         return URLEncoder.encode(val, "UTF-8");
     }
 
-    public static String[] unescape(String vals, Map<Integer, TupleStatus> status) {
+    public static String[] unescape(String vals, Map<Integer, TupleStatus> status, Integer precision) {
         List<String> result = new ArrayList<String>();
         if (vals != null && !vals.trim().isEmpty()) {
             String[] str = vals.split(VAL_SEP);
@@ -99,31 +98,15 @@ public class U {
                         if (status != null) {
                             status.put(i, TupleStatus.decode(val));
                         }
-                    } else result.add(URLDecoder.decode(val, "UTF-8"));
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return result.toArray(new String[]{});
-    }
-
-    public static String[] unescapeNumeric(String vals, int precision) {
-        List<String> result = new ArrayList<String>();
-        if (vals != null && !vals.trim().isEmpty()) {
-            for (String val : vals.split(VAL_SEP)) {
-                try {
-                    if (val.equals(NULL_VAL)) {
-                        result.add(null);
-                    } else if (TupleStatus.decode(val) != null) {
-                        result.add(null);
                     } else {
                         String tmp = URLDecoder.decode(val, "UTF-8");
-                        Double num = Double.valueOf(tmp);
-                        Validation.notNull(num, "Parsed value from tuple");
-                        result.add(String.format("%." + precision + "f", num));
+                        if (precision!=null) {
+                            Double num = Double.valueOf(tmp);
+                            Validation.notNull(num, "Parsed value from tuple");
+                            result.add(String.format("%." + precision + "f", num));
+                        } else result.add(tmp);
                     }
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -131,6 +114,8 @@ public class U {
         }
         return result.toArray(new String[]{});
     }
+
+
 
     public static String executePost(String url, Map<String, String> params) throws IOException, MalformedURLException {
         new URL(url);
@@ -242,7 +227,7 @@ public class U {
             for (String part : parts) {
                 String[] vv = part.split(VAR_VAL_SEP);
                 if (vv.length < 2) continue;
-                String[] val = unescape(vv[1], null);
+                String[] val = unescape(vv[1], null, null);
                 if (val.length < 1) continue;
                 if (val.length > 1) {
                     log.warn("Encountered an encoded array; return first value and dumping the rest");
@@ -360,7 +345,7 @@ public class U {
             for (String part : parts) {
                 String[] vv = part.split(VAR_VAL_SEP);
                 if (vv.length < 2) continue;
-                String[] val = unescape(vv[1], null);
+                String[] val = unescape(vv[1], null, null);
                 if (val.length < 1) continue;
                 TupleStatus[] statuses = new TupleStatus[val.length];
                 for (int i = 0; i < val.length; i++) {
@@ -395,7 +380,7 @@ public class U {
 
     public static String updateEscapedArray(int i,String arry, TupleStatus status) {
         Map<Integer,TupleStatus> statuses = new HashMap<Integer,TupleStatus>();
-        String[] vals = unescape(arry,statuses);
+        String[] vals = unescape(arry,statuses, null);
         statuses.put(i,status);
         return escape(vals,statuses);
     }

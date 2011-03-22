@@ -33,6 +33,10 @@ public interface Simulation {
     public Set<Variable> getOutputs();
     public  void setOutputs(Set<Variable> o);
 
+    public String getType();
+
+    public void setType(String type);
+
     public String getUrl();
     public void setUrl(String str);
 

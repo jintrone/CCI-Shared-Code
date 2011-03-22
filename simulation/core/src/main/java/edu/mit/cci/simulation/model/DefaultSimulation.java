@@ -25,6 +25,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -79,6 +80,19 @@ public class DefaultSimulation implements Simulation {
 
     @XmlElement(name = "Url")
     private String url;
+
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    @XmlElement(name = "Type")
+    @Column(columnDefinition = "LONGTEXT")
+    private String type;
 
 
     @ManyToMany(cascade = CascadeType.ALL, targetEntity = DefaultVariable.class)
@@ -172,6 +186,18 @@ public class DefaultSimulation implements Simulation {
 
     public void setRunStrategy(RunStrategy r) {
         this.runStrategy = r;
+    }
+
+    public static Map<String, String> parseTypes(Simulation sim) {
+        if (sim.getType() == null) return Collections.emptyMap();
+        Map<String, String> result = new HashMap<String, String>();
+        for (String type : sim.getType().split(";")) {
+            String[] kv = type.split("=");
+            if (kv.length > 1) {
+                result.put(kv[0], kv[1]);
+            }
+        }
+        return result;
     }
 
 

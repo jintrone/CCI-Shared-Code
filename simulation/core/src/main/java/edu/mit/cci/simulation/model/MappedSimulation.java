@@ -81,7 +81,7 @@ public class MappedSimulation extends DefaultSimulation {
                     Tuple t = new Tuple(getVariableMap().get(ent.getKey()));
                     if (manyToOne != null) {
                         try {
-                            t.setValues(new String[]{manyToOne.reduce(U.unescape(ent.getValue(), null))});
+                            t.setValues(new String[]{manyToOne.reduce(U.unescape(ent.getValue(), null, null))});
                         } catch (SimulationComputationException ex) {
                             t.setValues(new String[] {null});
                             t.setStatus(0,TupleStatus.ERR_CALC);

@@ -4,7 +4,6 @@ import edu.mit.cci.simulation.model.DefaultVariable;
 import edu.mit.cci.simulation.model.SimulationException;
 import edu.mit.cci.simulation.model.Tuple;
 import edu.mit.cci.simulation.model.TupleStatus;
-import edu.mit.cci.simulation.model.DefaultVariable;
 import edu.mit.cci.simulation.model.Variable;
 import edu.mit.cci.simulation.model.VariableDataOnDemand;
 import org.junit.Assert;
@@ -38,7 +37,7 @@ public class UTest {
 
     @Test
     public void unescape() {
-       Assert.assertEquals("5",U.unescape("5;", null)[0]);
+       Assert.assertEquals("5",U.unescape("5;", null, null)[0]);
     }
 
     @Test
@@ -186,7 +185,7 @@ public class UTest {
 
         System.err.println(str);
        Map<Integer,TupleStatus> rmap = new HashMap<Integer,TupleStatus>();
-        String[] result = U.unescape(str,rmap);
+        String[] result = U.unescape(str,rmap, null);
         Assert.assertArrayEquals(expect,result);
         Assert.assertEquals(map,rmap);
 

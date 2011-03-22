@@ -83,7 +83,7 @@ public class SimulationMockFactory {
                         String[] outputvals = new String[params.size()];
                         int i = 0;
                         for (String s:params.values()) {
-                            outputvals[i++] = U.unescape(s, null)[0];
+                            outputvals[i++] = U.unescape(s, null, null)[0];
                         }
                         for (Variable v : getOutputs()) {
                             String[] output = new String[v.getArity()];

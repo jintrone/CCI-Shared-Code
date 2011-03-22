@@ -106,7 +106,7 @@ public class DefaultVariable implements Variable {
         if (_optionsRaw == null) {
             return null;
         } else if (options == null) {
-            options = U.unescape(_optionsRaw, null);
+            options = U.unescape(_optionsRaw, null, null);
         }
         return options;
     }

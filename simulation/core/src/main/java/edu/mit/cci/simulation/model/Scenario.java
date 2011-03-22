@@ -32,6 +32,12 @@ public interface Scenario {
     public Long getId();
 
 
+    String getName();
 
+    void setName(String name);
+
+    public String getUser();
+
+    public void setUser(String user);
 }
 

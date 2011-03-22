@@ -29,9 +29,13 @@ import java.util.Map;
 @RooToString
 public class RunSimulationForm  {
 
+    public static String USER_PARAM = "userId";
+
     private static Logger log = Logger.getLogger(RunSimulationForm.class);
 
     private Map<String, String> inputs = new HashMap<String, String>();
+
+    private String userId;
 
     private Long simid;
 
@@ -50,16 +54,23 @@ public class RunSimulationForm  {
         Map<String,Long> remap = new HashMap<String,Long>();
         DefaultSimulation sim = null;
         Map<String,String> linputs;
+        String userid = null;
         if (this.simid == null) {
             sim = DefaultSimulation.findDefaultSimulation(simId);
             linputs = new HashMap<String,String>();
             for (Object key:request.getParameterMap().keySet()) {
                 String skey = key.toString();
-               linputs.put(skey,request.getParameterValues(skey)[0]);
+                if (skey.equals(USER_PARAM)) {
+                    userid = request.getParameterValues(USER_PARAM)[0];
+
+                } else {
+                    linputs.put(skey,request.getParameterValues(skey)[0]);
+                }
             }
 
         } else {
             sim = DefaultSimulation.findDefaultSimulation(simid);
+            userid = form.userId;
             linputs = form.inputs;
         }
 
@@ -82,6 +93,8 @@ public class RunSimulationForm  {
 
 
         Scenario s = sim.run(simInputs);
+        s.setUser(userid);
+        ((DefaultScenario)s).persist();
         return "redirect:/defaultscenarios/"+s.getId();
 
     }

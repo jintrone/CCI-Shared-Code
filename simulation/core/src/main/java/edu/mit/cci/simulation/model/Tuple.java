@@ -4,6 +4,7 @@ import edu.mit.cci.simulation.jaxb.JaxbReference;
 import edu.mit.cci.simulation.util.SimulationValidationException;
 import edu.mit.cci.simulation.util.U;
 import edu.mit.cci.simulation.util.Validation;
+import org.apache.log4j.Logger;
 import org.springframework.roo.addon.entity.RooEntity;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.tostring.RooToString;
@@ -30,6 +31,7 @@ import java.util.Map;
 @XmlAccessorType(XmlAccessType.NONE)
 public class Tuple {
 
+    private static Logger log = Logger.getLogger(Tuple.class);
 
     public Tuple(Variable v) {
         setVar(v);
@@ -56,8 +58,10 @@ public class Tuple {
 
         if (values == null) {
             if (value_ == null) return null;
-            else
-                values = var != null && var.getDataType() == DataType.NUM ? U.unescapeNumeric(value_, var.getPrecision_()) : U.unescape(value_, null);
+            else {
+                this.statuses.clear();
+                values = U.unescape(value_, this.statuses, var.getDataType() == DataType.NUM ? var.getPrecision_() : null);
+            }
         }
         return values;
     }
@@ -83,7 +87,7 @@ public class Tuple {
 
     public void setValue_(String val) throws SimulationValidationException {
         this.statuses.clear();
-        _setValues(U.unescape(val, this.statuses));
+        _setValues(U.unescape(val, this.statuses, null));
     }
 
 
@@ -106,7 +110,7 @@ public class Tuple {
         String encoded = U.escape(vals, null);
         System.err.println(encoded);
 
-        vals = U.unescape(encoded, null);
+        vals = U.unescape(encoded, null, null);
         for (String val : vals) {
             System.err.println(val);
         }
