@@ -7,10 +7,10 @@ import edu.mit.cci.simulation.jaxb.JaxbReferenceResolver;
  * Date: 3/18/11
  * Time: 5:17 PM
  */
-public class TestResolver implements JaxbReferenceResolver.Factory, JaxbReferenceResolver {
+public class MockResolver implements JaxbReferenceResolver.Factory, JaxbReferenceResolver {
 
 
-    private static TestResolver instance;
+    private static MockResolver instance;
 
 
     public Object resolve(String id, String type) {
@@ -20,7 +20,7 @@ public class TestResolver implements JaxbReferenceResolver.Factory, JaxbReferenc
 
     public JaxbReferenceResolver instance() {
         if (instance == null) {
-            instance = new TestResolver();
+            instance = new MockResolver();
         }
         return instance;
     }

@@ -152,7 +152,7 @@ public class AdaptedSimulation extends AdaptedObject<edu.mit.cci.simulation.mode
 
     @Override
     public String getType() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return model().getType();
     }
 
     @Override

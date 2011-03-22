@@ -1,19 +1,22 @@
 package edu.mit.cci.simulation.client.comm;
 
-import edu.mit.cci.simulation.client.EntityState;
+import edu.mit.cci.simulation.client.HasId;
 import edu.mit.cci.simulation.client.MetaData;
 import edu.mit.cci.simulation.client.Scenario;
 import edu.mit.cci.simulation.client.Simulation;
 import edu.mit.cci.simulation.client.model.impl.ClientMetaData;
 import edu.mit.cci.simulation.client.model.impl.ClientScenario;
 import edu.mit.cci.simulation.client.model.impl.ClientSimulation;
+import edu.mit.cci.simulation.web.RunSimulationForm;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author: jintrone
@@ -40,7 +43,7 @@ public class ClientRepository {
         return instance;
     }
 
-    public static ClientRepository instance(RepositoryManager manager,DeserializingConnector connector) throws IOException {
+    public static ClientRepository instance(RepositoryManager manager, DeserializingConnector connector) throws IOException {
         if (instance == null) {
             instance = new ClientRepository();
             instance.deserializingConnector = connector;
@@ -77,15 +80,17 @@ public class ClientRepository {
     }
 
 
-    public void saveScenario(Scenario s) throws ScenarioNotFoundException, IOException {
-        Scenario existing = getScenario(s.getId());
-        if (existing == null) {
-            throw new ScenarioNotFoundException("Scenario with id " + s.getId() + " could not be found");
+    public Set<Simulation> getSimulationsOfType(String type) {
+        Set<Simulation> result = new HashSet<Simulation>();
+        if (type == null) return Collections.emptySet();
+        for (HasId elt : getAllSimulations()) {
+            if (elt instanceof Simulation && type.equals(ClientSimulation.parseTypes((Simulation) elt).get("type"))) {
+                result.add((Simulation) elt);
+            }
         }
-        Map<String, String> params = new HashMap<String, String>();
-        params.put("state", EntityState.PUBLIC.name());
-        deserializingConnector.post(ModelAccessPoint.EDIT_SCENARIO_URL, params, String.valueOf(s.getId()));
+        return result;
     }
+
 
     public Scenario runModel(Simulation s, Map<Long, Object> inputs, Long userid, boolean save) throws ModelNotFoundException, IOException, ScenarioNotFoundException {
         Simulation existing = getSimulation(s.getId());
@@ -96,11 +101,13 @@ public class ClientRepository {
         Map<String, String> params = new HashMap<String, String>();
         for (MetaData input : s.getInputs()) {
             Object val = inputs.get(input.getId());
-            params.put(input.getId()+"", val == null ? null : val.toString());
+            params.put(input.getId() + "", val == null ? null : val.toString());
         }
 
-       Object o=manager.getAdaptor(deserializingConnector.post(ModelAccessPoint.RUN_MODEL_URL, params,String.valueOf(s.getId())));
-        if (o instanceof Scenario) return (Scenario)o;
+        params.put(RunSimulationForm.USER_PARAM,userid+"");
+
+        Object o = manager.getAdaptor(deserializingConnector.post(ModelAccessPoint.RUN_MODEL_URL, params, String.valueOf(s.getId())));
+        if (o instanceof Scenario) return (Scenario) o;
         else {
             log.warn("Error running model");
         }
@@ -117,7 +124,7 @@ public class ClientRepository {
         Map<String, Long> inputX = new HashMap<String, Long>();
 
         for (MetaData m : s.getInputs()) {
-            if (m.getInternalName()!=null) {
+            if (m.getInternalName() != null) {
                 inputX.put(m.getInternalName(), m.getId());
             } else {
                 log.info(m.getId() + " is unresolved");
@@ -134,7 +141,6 @@ public class ClientRepository {
 
         return runModel(s, ninputs, userid, save);
     }
-
 
 
 }
