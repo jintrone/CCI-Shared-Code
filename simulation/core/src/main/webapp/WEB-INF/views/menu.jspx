@@ -56,5 +56,9 @@
             <menu:item id="i_excelsimulation_new" messageCode="global_menu_new" url="/excelsimulations?form" z="c6dX+rw47I59X6+B0kOtu60JXc8="/>
         <menu:item id="i_excelsimulation_list" messageCode="global_menu_list" url="/excelsimulations?page=1&amp;size=${empty param.size ? 10 : param.size}" z="v9plCMhYphzZqroQXyjAg0rSN58="/>
         </menu:category>
+    <menu:category id="c_manage" z="uyUns6U1YBW7B8HFh2BYKZdlqI8=">
+        <menu:item id="i_compositesimulation_list" messageCode="global_menu_list" url="/manage/compositeSimulation/list" z="cd6X+rw47I59X6+B0kOtu60JX8c="/>
+        <menu:item id="i_compositesimulation_new" messageCode="global_menu_new" url="/manage/compositeSimulation/edit" z="cd6X+rw47I5X96+B0kOtu60JX8c="/>
+    </menu:category>
     </menu:menu>
 </div>

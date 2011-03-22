@@ -24,7 +24,7 @@ import java.util.Set;
 public class CompositeSimulation extends DefaultSimulation {
 
     @ManyToMany(cascade = CascadeType.ALL)
-    @OrderBy(clause = "order_ ASC")
+    @javax.persistence.OrderBy("order_")
     private List<Step> steps = new ArrayList<Step>();
 
     @ManyToMany(cascade = CascadeType.ALL)
