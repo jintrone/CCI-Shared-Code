@@ -5,6 +5,7 @@ import edu.mit.cci.simulation.util.SimulationValidationException;
 import edu.mit.cci.simulation.util.U;
 import edu.mit.cci.simulation.util.Validation;
 import org.apache.log4j.Logger;
+import org.aspectj.weaver.ast.Var;
 import org.springframework.roo.addon.entity.RooEntity;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.tostring.RooToString;
@@ -53,6 +54,8 @@ public class Tuple {
     public Tuple() {
 
     }
+
+
 
     public String[] getValues() {
 

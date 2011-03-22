@@ -6,7 +6,7 @@ package edu.mit.cci.simulation.model;
  * Time: 3:49 PM
  */
 public enum TupleStatus {
-    ERR_OOB("&ERR_OOB"), ERR_CALC("&ERR_CALC");
+    ERR_OOB("@ERR_OOB"), ERR_CALC("@ERR_CALC");
 
     final String encoded;
 

@@ -36,7 +36,7 @@ public class VariableControllerIntegrationTest extends SpringControllerEnvironme
 
     @Test
     public void testVariables() throws Exception {
-        String expect = "<DefaultVariable Id=\"1\"><Name>Test</Name><Description>Test</Description><Arity>1</Arity><DataType>NUM</DataType><Precision>1</Precision></DefaultVariable>";
+
 
         DefaultVariable v = new DefaultVariable();
         v.setDataType(DataType.NUM);
@@ -45,12 +45,13 @@ public class VariableControllerIntegrationTest extends SpringControllerEnvironme
         v.setDescription("Test");
         v.setArity(1);
         v.persist();
+        String expect = String.format("<DefaultVariable Id=\"%d\"><Name>Test</Name><Description>Test</Description><Arity>1</Arity><DataType>NUM</DataType><Precision>1</Precision><indexingVariable/></DefaultVariable>",v.getId());
 
         request.setRequestURI("/variables/");
         request.addHeader("accept","text/xml");
         request.setMethod("GET");
         final ModelAndView mav = handle(request, response);
-        log.info(response.getContentAsString());
+
         Assert.assertTrue(response.getContentAsString().contains(expect));
 
     }

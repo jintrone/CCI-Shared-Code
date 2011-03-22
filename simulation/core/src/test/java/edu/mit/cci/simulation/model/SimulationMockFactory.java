@@ -33,8 +33,17 @@ public class SimulationMockFactory {
     MappedSimulationDataOnDemand mdod = new MappedSimulationDataOnDemand();
 
 
+    public DefaultSimulation createNewDefaultSimulation() {
+        DefaultSimulation simulation = new DefaultSimulation();
+        simulation.setSimulationVersion(1l);
+        simulation.setName("Test");
+        simulation.setDescription("Test description");
+        simulation.persist();
+        return simulation;
+    }
+
     public DefaultSimulation getScalarSimulation(int simId, final int output, int varId) {
-        DefaultSimulation sim = dod.getSpecificDefaultSimulation(simId);
+        DefaultSimulation sim = createNewDefaultSimulation();
 
         DefaultVariable vin = vdod.getSpecificDefaultVariable(varId);
         vin.setArity(1);
