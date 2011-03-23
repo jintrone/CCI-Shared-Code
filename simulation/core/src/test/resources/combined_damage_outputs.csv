@@ -1,0 +1,6 @@
+"description","id","internalname","name","profile","vartype","units","labels","external","varcontext","indexingid","defaultval","id","max","metadata","min","categories"
+"Year",3651,"Time1_output0","Time1","java.lang.Integer","RANGE","Year","Year","","INDEX",3651,"",3631,2100.0,3651,2000.0,NULL
+"Expected % Change in GDP versus baseline due to damages",3652,"change_in_GDP_vs_baseline_page_output1","% change in GDP vs. baseline.page","java.lang.Double","RANGE","%GDP","Damage Cost","","INDEXED",3651,"",3632,0,3652,-11,NULL
+"Expected % Change in GDP versus baseline due to damages, 5% level",3653,"change_in_GDP_vs_baseline_page_5__output2","% change in GDP vs. baseline.page (5%)","java.lang.Double","RANGE","%GDP","Damage Cost","","INDEXED",3651,"",3633,0,3653,-11,NULL
+"Expected % Change in GDP versus baseline due to damages, 95% level",3654,"change_in_GDP_vs_baseline_page_95__output3","% change in GDP vs. baseline.page (95%)","java.lang.Double","RANGE","%GDP","Damage Cost","","INDEXED",3651,"",3634,0,3654,-11,NULL
+"Expected % Change in GDP versus baseline due to damages",3655,"change_in_GDP_vs_baseline_dice_output4","% change in GDP vs. baseline.dice","java.lang.Double","RANGE","%GDP","Damage Cost","","INDEXED",3651,"",3635,0,3655,-11,NULL

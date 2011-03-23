@@ -11,6 +11,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -68,7 +69,7 @@ public class SimulationMockFactory {
                 delegate.setRunStrategy(new RunStrategy() {
 
                     @Override
-                    public String run(String url, Map<String, String> params) throws SimulationException {
+                    public String run(String url, List<Tuple> params) throws SimulationException {
                         Map<Variable, Object[]> data = new HashMap<Variable, Object[]>();
                         Variable v = getOutputs().iterator().next();
                         data.put(v, new String[]{output + ""});
@@ -87,12 +88,12 @@ public class SimulationMockFactory {
                 delegate.setRunStrategy(new RunStrategy() {
 
                     @Override
-                    public String run(String url, Map<String, String> params) throws SimulationException {
+                    public String run(String url, List<Tuple> params) throws SimulationException {
                         Map<Variable, Object[]> data = new HashMap<Variable, Object[]>();
                         String[] outputvals = new String[params.size()];
                         int i = 0;
-                        for (String s:params.values()) {
-                            outputvals[i++] = U.unescape(s, null, null)[0];
+                        for (Tuple t:params) {
+                            outputvals[i++] = t.getValues()[0];
                         }
                         for (Variable v : getOutputs()) {
                             String[] output = new String[v.getArity()];

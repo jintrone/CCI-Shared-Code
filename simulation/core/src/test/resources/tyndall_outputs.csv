@@ -1,0 +1,8 @@
+"description","id","internalname","name","profile","vartype","units","labels","external","varcontext","indexingid","defaultval","id","max","metadata","min","categories"
+"Temperature Change",2889,"Temperature_Change_output","Temperature Change","java.lang.String","FREE","Degrees C","","","INDEX",2889,"",2869,6.0,2889,1.0,NULL
+"Water Impacts",2890,"Water_Impacts_output","Water","java.lang.String","FREE","Degrees C","Tyndall Center","","INDEXED",2889,"",2870,6.5,2890,0.5,NULL
+"Food Impacts",2891,"Food_Impacts_output","Food/Agriculture","java.lang.String","FREE","Degrees C","Tyndall Center","","INDEXED",2889,"",2871,6.5,2891,0.5,NULL
+"Health Impacts",2892,"Health_Impacts_output","Health","java.lang.String","FREE","Degrees C","Tyndall Center","","INDEXED",2889,"",2872,6.5,2892,0.5,NULL
+"Land Impacts",2893,"Land_Impacts_output","Land/Coastal","java.lang.String","FREE","Degrees C","Tyndall Center","","INDEXED",2889,"",2873,6.5,2893,0.5,NULL
+"Environment Impacts",2894,"Environment_Impacts_output","Environment/Ecosystems","java.lang.String","FREE","Degrees C","Tyndall Center","","INDEXED",2889,"",2874,6.5,2894,0.5,NULL
+"Abrupt and Large-Scale Impacts",2895,"Abrupt_and_Large_Scale_Impacts_output","Abrupt/Singular Events","java.lang.String","FREE","Degrees C","Tyndall Center","","INDEXED",2889,"",2875,6.5,2895,0.5,NULL

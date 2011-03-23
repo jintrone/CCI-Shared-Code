@@ -106,7 +106,7 @@ privileged aspect TupleIntegrationTest_Roo_IntegrationTest {
         v.persist();
         edu.mit.cci.simulation.model.Tuple obj = new Tuple(v);
 
-        obj.persist();;
+        obj.persist();
         org.junit.Assert.assertNotNull("'Tuple' failed to initialize correctly", obj);
         java.lang.Long id = obj.getId();
         org.junit.Assert.assertNotNull("'Tuple' failed to provide an identifier", id);

@@ -37,7 +37,7 @@ public class DefaultVariable implements Variable {
 
     }
 
-    public DefaultVariable(String name, String description, int arity, int precision, double min, double max) {
+    public DefaultVariable(String name, String description, Integer arity, Integer precision, Double min, Double max) {
         setName(name);
         setDescription(description);
         setArity(arity);
@@ -47,7 +47,7 @@ public class DefaultVariable implements Variable {
         setDataType(DataType.NUM);
     }
 
-    public DefaultVariable(String name, String description, int arity, String[] options) {
+    public DefaultVariable(String name, String description, Integer arity, String[] options) {
         setName(name);
         setDescription(description);
         setArity(arity);
@@ -55,7 +55,7 @@ public class DefaultVariable implements Variable {
         setDataType(DataType.CAT);
     }
 
-    public DefaultVariable(String name, String description, int arity) {
+    public DefaultVariable(String name, String description, Integer arity) {
         setName(name);
         setDescription(description);
         setArity(arity);
@@ -158,6 +158,8 @@ public class DefaultVariable implements Variable {
     public void setId(Long id) {
         this.id = id;
     }
+
+
 
 
 }

@@ -56,7 +56,7 @@ public class Validation {
             throw new SimulationValidationException("Variable is null");
         }
         if (v.getDataType() == null || v.getArity() == null ||
-                (v.getDataType()==DataType.NUM && (v.getMin_()==null || v.getMax_()==null)) ||
+                (v.getDataType()==DataType.NUM && (v.getMin_()!=null && v.getMax_()!=null && v.getMin_()>v.getMax_())) ||
                 (v.getDataType()==DataType.CAT && (v.getOptions()==null || v.getOptions().length==0))) {
             throw new SimulationValidationException("Variable is not completely specified");
         }

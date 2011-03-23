@@ -1,0 +1,3 @@
+"description","id","internalname","name","profile","vartype","units","labels","external","varcontext","indexingid","defaultval","id","max","metadata","min","categories"
+"Year",3640,"Time_input0","Time","java.lang.Integer","RANGE","Year","Year","","LIST",NULL,"",3620,2100.0,3640,2020.0,NULL
+"CO2e for all GHGs combined.",3641,"CO2e_input1","CO2e","java.lang.Double","RANGE","W/m^2","CO2e","","LIST",NULL,"",3621,"",3641,"",NULL

@@ -1,0 +1,2 @@
+"description","id","internalname","name","profile","vartype","units","labels","external","varcontext","indexingid","defaultval","id","max","metadata","min","categories"
+"Degrees Temperature Change",3650,"Temperature_input0","Temperature","java.lang.Double","RANGE","Degrees C","Temp. Change","","LIST",NULL,"",3630,10.0,3650,0.0,NULL

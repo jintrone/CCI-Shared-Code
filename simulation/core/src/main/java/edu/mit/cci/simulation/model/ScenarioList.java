@@ -6,6 +6,7 @@ import org.springframework.roo.addon.tostring.RooToString;
 
 import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import java.util.HashSet;
 import java.util.Set;

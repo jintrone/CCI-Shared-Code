@@ -1,0 +1,2 @@
+"description","id","internalname","name","profile","vartype","units","labels","external","varcontext","indexingid","defaultval","id","max","metadata","min","categories"
+"Degrees Temperature Change - not dependant on time",2888,"Temperature_Change","Temperature Change","java.lang.Integer","RANGE","Degrees C","Temp. Change.","","SCALAR",NULL,1.0,2868,6.5,2888,0.5,NULL

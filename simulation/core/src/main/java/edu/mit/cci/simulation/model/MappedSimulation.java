@@ -15,6 +15,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -47,8 +48,11 @@ public class MappedSimulation extends DefaultSimulation {
         setRunStrategy(new RunStrategy() {
 
             @Override
-            public String run(String url, Map<String, String> params) throws SimulationException {
-                Map<Variable, Tuple> inputs = U.convertToVarTupleMap(params);
+            public String run(String url, List<Tuple> params) throws SimulationException {
+                Map<Variable, Tuple> inputs = new HashMap<Variable,Tuple>();
+                for (Tuple t:params) {
+                    inputs.put(t.getVar(),t);
+                }
                 Map<Variable, String> mergedresults = new HashMap<Variable, String>();
                 Set<Tuple> thisrun = new HashSet<Tuple>();
                 for (int i = 0; i < replication; i += samplingFrequency) {
@@ -128,8 +132,9 @@ public class MappedSimulation extends DefaultSimulation {
     }
 
     private void updateIndexVariable() {
-        Variable myindex = getVariableMap().get(indexingVariable);
+        if (indexingVariable==null) return;
         if (getOutputs() == null || getOutputs().size() == 0) return;
+        Variable myindex = getVariableMap().get(indexingVariable);
         for (Variable mo : getOutputs()) {
             mo.setIndexingVariable(null);
             if (myindex != null) {
@@ -167,8 +172,15 @@ public class MappedSimulation extends DefaultSimulation {
             if (getManyToOne() == ManyToOneMapping.SUM) {
                 v.setMax_(mo.getMax_()*count);
             }
+
             v.persist();
         }
+
+        for (Variable mo : getOutputs()) {
+            mo.setIndexingVariable(variableMap.get(mo.getIndexingVariable()));
+            ((DefaultVariable)mo).persist();
+        }
+
         updateIndexVariable();
 
     }

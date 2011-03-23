@@ -1,0 +1,8 @@
+"description","id","internalname","name","profile","vartype","units","labels","external","varcontext","indexingid","defaultval","id","max","metadata","min","categories"
+"Temperature Change",3009,"Temperature_Change1_output","Temperature Change","java.lang.String","FREE","Degrees C","","","INDEX",3009,"",2989,5.5,3009,0.5,NULL
+"Water Impacts",3010,"Water1_output","Water","java.lang.String","FREE","Degrees C","IPCC","","INDEXED",3009,"",2990,6.5,3010,0.5,NULL
+"Food Impacts",3011,"Food_Agriculture1_output","Food/Agriculture","java.lang.String","FREE","Degrees C","IPCC","","INDEXED",3009,"",2991,6.5,3011,0.5,NULL
+"Health Impacts",3012,"Health1_output","Health","java.lang.String","FREE","Degrees C","IPCC","","INDEXED",3009,"",2992,6.5,3012,0.5,NULL
+"Land Impacts",3013,"Land_Coastal1_output","Land/Coastal","java.lang.String","FREE","Degrees C","IPCC","","INDEXED",3009,"",2993,6.5,3013,0.5,NULL
+"Environment Impacts",3014,"Environment_Ecosystems1_output","Environment/Ecosystems","java.lang.String","FREE","Degrees C","IPCC","","INDEXED",3009,"",2994,6.5,3014,0.5,NULL
+"Abrupt and Large-Scale Impacts",3015,"Abrupt_Singular_Events1_output","Abrupt/Singular Events","java.lang.String","FREE","Degrees C","IPCC","","INDEXED",3009,"",2995,6.5,3015,0.5,NULL

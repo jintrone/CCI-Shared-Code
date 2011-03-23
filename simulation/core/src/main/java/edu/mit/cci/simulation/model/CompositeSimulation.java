@@ -74,9 +74,11 @@ public class CompositeSimulation extends DefaultSimulation {
             List<Tuple> toNextStep = new ArrayList<Tuple>();
             for (Tuple t : fromPriorStep) {
                 if (m.getMapping().containsKey(t.getVar())) {
-                    Tuple nt = Tuple.copy(t);
-                    nt.setVar(m.getMapping().get(t.getVar()));
-                    toNextStep.add(nt);
+                    for (DefaultVariable v:m.getMapping().get(t.getVar()).getVariables()) {
+                        Tuple nt = Tuple.copy(t);
+                        nt.setVar(v);
+                        toNextStep.add(nt);
+                    }
                 }
             }
 
@@ -95,9 +97,11 @@ public class CompositeSimulation extends DefaultSimulation {
                     for (Variable v : scenario.getSimulation().getOutputs()) {
                         if (m.getFromVars().contains(v)) {
                             Tuple old = scenario.getVariableValue(v);
-                            Tuple n = Tuple.copy(old);
-                            n.setVar(m.getMapping().get(v));
-                            result.getValues_().add(n);
+                            for (DefaultVariable nv:m.getMapping().get(old.getVar()).getVariables()) {
+                                Tuple n = Tuple.copy(old);
+                                n.setVar(nv);
+                                result.getValues_().add(n);
+                            }
                         }
 
                     }

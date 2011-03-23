@@ -71,7 +71,7 @@ public class MappedSimulationTest {
     @Test
     public void testRun_oneToOne() throws SimulationException {
        DefaultSimulation sim = mock.getScalarSimulation(10,9,0);
-        DefaultVariable idx = new DefaultVariable("Index","Test",1,0,0,20);
+        DefaultVariable idx = new DefaultVariable("Index","Test",1,0,0d,20d);
         idx.persist();
         sim.getInputs().add(idx);
 
@@ -114,7 +114,7 @@ public class MappedSimulationTest {
      @Test
     public void testRun_oneToOne_Err() throws SimulationException {
        DefaultSimulation sim = mock.getScalarSimulation(0,12,0);
-        DefaultVariable idx = new DefaultVariable("Index","Test",1,0,0,20);
+        DefaultVariable idx = new DefaultVariable("Index","Test",1,0,0d,20d);
         idx.persist();
         sim.getInputs().add(idx);
 
@@ -158,7 +158,7 @@ public class MappedSimulationTest {
         @Test
     public void testRun_oneToOne_subSelect() throws SimulationException {
        DefaultSimulation sim = mock.getScalarSimulation(0,9,0);
-        DefaultVariable idx = new DefaultVariable("Index","Test",1,0,0,20);
+        DefaultVariable idx = new DefaultVariable("Index","Test",1,0,0d,20d);
 
         MappedSimulation msim = mock.getMappedSimulation(0,sim,123,1,null);
         msim.setSamplingFrequency(10);
@@ -198,7 +198,7 @@ public class MappedSimulationTest {
         @Test
     public void testRun_oneToOne_subSelect_reduce() throws SimulationException {
        DefaultSimulation sim = mock.getScalarSimulation(0,9,0);
-       DefaultVariable idx = new DefaultVariable("Index","Test",1,0,0,20);
+       DefaultVariable idx = new DefaultVariable("Index","Test",1,0,0d,20d);
         idx.persist();
         sim.getInputs().add(idx);
 
@@ -242,7 +242,7 @@ public class MappedSimulationTest {
      @Test
     public void testRun_oneToOne_subSelect_reduce_err() throws SimulationException {
        DefaultSimulation sim = mock.getScalarSimulation(0,21,0);
-       DefaultVariable idx = new DefaultVariable("Index","Test",1,0,0,20);
+       DefaultVariable idx = new DefaultVariable("Index","Test",1,0,0d,20d);
         idx.persist();
         sim.getInputs().add(idx);
 

@@ -1,5 +1,7 @@
 package edu.mit.cci.simulation.model;
 
+import edu.mit.cci.simulation.excel.server.ExcelRunnerStrategy;
+import edu.mit.cci.simulation.excel.server.ExcelSimulation;
 import edu.mit.cci.simulation.jaxb.JaxbCollection;
 import edu.mit.cci.simulation.util.U;
 import org.apache.log4j.Logger;
@@ -24,6 +26,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
@@ -109,6 +112,7 @@ public class DefaultSimulation implements Simulation {
 
 
     public Scenario run(List<Tuple> siminputs) throws SimulationException {
+
         DefaultScenario result = new DefaultScenario();
         result.setSimulation(this);
         Set<Tuple> response = runRaw(siminputs);
@@ -164,21 +168,18 @@ public class DefaultSimulation implements Simulation {
     protected Set<Tuple> runRaw(Collection<Tuple> siminputs) throws SimulationException {
         Set<Variable> mine = new HashSet<Variable>(getInputs());
         Set<Tuple> result = new HashSet<Tuple>();
-        Map<String, String> params = new HashMap<String, String>();
+
+        List<Tuple> selectedinputs = new ArrayList<Tuple>();
         for (Tuple t : siminputs) {
             if (mine.remove(t.getVar())) {
-                if (t.getVar().getExternalName() != null) {
-                    params.put(t.getVar().getExternalName() + "", t.getValue_());
-                } else {
-                    params.put(t.getVar().getId() + "", t.getValue_());
-                }
+                selectedinputs.add(t);
             }
         }
         if (!mine.isEmpty()) {
             throw new SimulationException("Missing input variables: " + mine);
         }
         String response = null;
-        response = runStrategy.run(url, params);
+        response = getRunStrategy().run(url, selectedinputs);
 
         result.addAll(U.parseVariableMap(response, getOutputs()));
         return result;
@@ -187,6 +188,14 @@ public class DefaultSimulation implements Simulation {
     public void setRunStrategy(RunStrategy r) {
         this.runStrategy = r;
     }
+
+    public RunStrategy getRunStrategy() {
+        if (getUrl()!=null && getUrl().startsWith(ExcelSimulation.EXCEL_URL) && !(runStrategy instanceof ExcelRunnerStrategy)) {
+            new ExcelRunnerStrategy(this);
+        }
+        return runStrategy;
+    }
+
 
     public static Map<String, String> parseTypes(Simulation sim) {
         if (sim.getType() == null) return Collections.emptyMap();
@@ -198,6 +207,16 @@ public class DefaultSimulation implements Simulation {
             }
         }
         return result;
+    }
+
+    public DefaultVariable findVariableWithExternalName(String name, boolean input) {
+        Set<Variable> vs = input?getInputs():getOutputs();
+        for (Variable v:vs) {
+            if (name.equals(v.getExternalName())) return (DefaultVariable) v;
+
+        }
+        return null;
+
     }
 
 

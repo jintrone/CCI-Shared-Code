@@ -16,6 +16,7 @@ import org.apache.poi.ss.util.AreaReference;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -34,7 +35,7 @@ public class ExcelRunnerStrategy implements RunStrategy {
         sim.setRunStrategy(this);
     }
 
-    public String run(String url, Map<String, String> params) throws SimulationException {
+    public String run(String url, List<Tuple> params) throws SimulationException {
         Validation.excelUrl(url);
 
         Long id = Long.parseLong(url.substring(ExcelSimulation.EXCEL_URL.length()));
@@ -56,14 +57,19 @@ public class ExcelRunnerStrategy implements RunStrategy {
             throw new SimulationException("Workbook could not be found");
         }
 
+        Map<Variable,Tuple> vmap = new HashMap<Variable,Tuple>();
+        for (Tuple t:params) {
+           vmap.put(t.getVar(),t);
+        }
+
         for (ExcelVariable ev : esim.getInputs()) {
 
-            String paramId = String.valueOf(ev.getSimulationVariable().getId());
-            if (!params.containsKey(paramId)) {
-                log.warn("Missing input variable: " + ev);
-
+            String paramId = ev.getSimulationVariable().getExternalName();
+            Tuple input = vmap.get(ev.getSimulationVariable());
+            if (input == null) {
+              log.warn("Missing input variable: " + ev.getSimulationVariable());
             }
-            writeInput(ev, U.unescape(params.get(paramId), null, null), workbook);
+            writeInput(ev, input.getValues(), workbook);
         }
 
         runForumlas(workbook);
@@ -157,6 +163,10 @@ public class ExcelRunnerStrategy implements RunStrategy {
         for (int i = 0; i < Math.max(width, height); i++) {
             try {
                 result[i] = U.getCellValueAsString(sheet,startrow + (dy * i),startcol + (i * dx),null);
+                TupleStatus status = TupleStatus.decode((String)result[i]);
+                if (status!=null) {
+                    result[i] = status;
+                }
             } catch (SimulationComputationException ex) {
 
                 result[i] = TupleStatus.ERR_CALC;

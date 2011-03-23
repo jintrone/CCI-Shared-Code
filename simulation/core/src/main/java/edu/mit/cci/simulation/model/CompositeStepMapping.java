@@ -11,6 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -38,9 +39,9 @@ public class CompositeStepMapping {
     private final Set<Variable> toVars = new HashSet<Variable>();
 
 
-    @ManyToMany(targetEntity = DefaultVariable.class)
+    @ManyToMany(targetEntity = VariableList.class)
     @JoinTable(name="STEP_VAR_TO_VAR")
-    private Map<DefaultVariable,DefaultVariable> mapping = new HashMap<DefaultVariable,DefaultVariable>();
+    private Map<DefaultVariable,VariableList> mapping = new HashMap<DefaultVariable,VariableList>();
 
 
 
@@ -65,6 +66,10 @@ public class CompositeStepMapping {
     }
 
 
+//    private void put(DefaultVariable from, DefaultVariable to) {
+//        if (!mapping.containsKey())
+//    }
+
     public void addLink(Variable fromVar, Variable toVar) throws SimulationCreationException {
 
         if (!fromVars.contains(fromVar) || !toVars.contains(toVar)) {
@@ -73,10 +78,21 @@ public class CompositeStepMapping {
              throw new SimulationCreationException("From and to variables must have same arity and datatype");
 
         } else {
-                mapping.put((DefaultVariable)fromVar,(DefaultVariable)toVar);
+                put((DefaultVariable)fromVar,(DefaultVariable)toVar);
 
         }
 
+    }
+
+    private void put(DefaultVariable from, DefaultVariable to) {
+        VariableList list = mapping.get(from);
+        if (list == null) {
+            list = new VariableList();
+            list.persist();
+            mapping.put(from,list);
+
+        }
+        list.getVariables().add(to);
     }
 
 

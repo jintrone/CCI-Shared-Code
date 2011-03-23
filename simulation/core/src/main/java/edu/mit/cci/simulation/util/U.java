@@ -247,9 +247,11 @@ public class U {
         to.setMax_(from.getMax_());
         to.setMin_(from.getMin_());
         to.setDescription(from.getDescription());
+        to.setExternalName(from.getExternalName());
         ((DefaultVariable)to).set_optionsRaw(((DefaultVariable)from).get_optionsRaw());
         to.setPrecision_(from.getPrecision_());
         to.setArity(from.getArity());
+        to.setIndexingVariable(from.getIndexingVariable());
         return to;
     }
 
@@ -392,13 +394,22 @@ public class U {
 
     }
 
+    public static Map<String,String> prepareInput(List<Tuple> params, boolean useExternalNames) {
+        Map<String,String> inputs = new HashMap<String,String>();
+            for (Tuple t:params) {
+                Variable v = t.getVar();
+                inputs.put((useExternalNames && v.getExternalName()!=null)?v.getExternalName():v.getId()+"",t.getValue_());
+            }
+        return inputs;
+    }
+
     public static void process(Variable var, int index, String[] values, Map<Integer, TupleStatus> statuses) {
         if (var.getDataType() == DataType.NUM && values[index] != null) {
             if (statuses.get(index) != null) {
                 values[index] = null;
             } else {
                 Double num = Double.parseDouble(values[index]);
-                if (num < var.getMin_() || num > var.getMax_()) {
+                if ((var.getMin_()!=null && num < var.getMin_()) || (var.getMax_()!=null && num > var.getMax_())) {
                     statuses.put(index, TupleStatus.ERR_OOB);
                     values[index] = null;
                 } else {
