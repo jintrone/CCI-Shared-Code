@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns="http://java.sun.com/xml/ns/javaee"
+xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
+	<servlet>
+		<servlet-name>WikipediaViz</servlet-name>
+		<servlet-class>edu.mit.cci.wikipediaviz.WikipediaUsertalkVizServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>WikipediaViz</servlet-name>
+		<url-pattern>/wikipediaviz</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>WikipediaEditViz</servlet-name>
+		<servlet-class>edu.mit.cci.wikipediaviz.WikipediaEditVizServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>WikipediaEditViz</servlet-name>
+		<url-pattern>/wikipediaeditviz</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>WikipediaMultiEditViz</servlet-name>
+		<servlet-class>edu.mit.cci.wikipediaviz.WikipediaMultiEditVizServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>WikipediaMultiEditViz</servlet-name>
+		<url-pattern>/wikipediamultieditviz</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>WikipediaStats</servlet-name>
+		<servlet-class>edu.mit.cci.wikipediaviz.StatServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>WikipediaStats</servlet-name>
+		<url-pattern>/wikipediastats</url-pattern>
+	</servlet-mapping>
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
+</web-app>
