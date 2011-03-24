@@ -31,9 +31,10 @@ import org.w3c.dom.Element;
 import edu.mit.cci.wikipedia.collector.GetRevisions;
 import edu.mit.cci.wikipedia.util.TimeWindowCount;
 
+@SuppressWarnings("serial")
 public class StatServlet extends HttpServlet {
 
-	private static final Logger log = Logger.getLogger(WikipediaUsertalkVizServlet.class.getName());
+	private static final Logger log = Logger.getLogger(StatServlet.class.getName());
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 	throws ServletException, IOException {
