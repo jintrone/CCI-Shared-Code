@@ -79,12 +79,18 @@ public class CreateSimulations {
         tyndall_m.setReplication(101);
         tyndall_m.setManyToOne(ManyToOneMapping.LAST);
         tyndall_m.setExecutorSimulation(tyndall);
+        tyndall_m.setName("tyndall_m");
+        tyndall_m.setDescription("tyndall_m");
+        tyndall_m.setCreated(new Date());
 
         MappedSimulation ipcc_m = new MappedSimulation();
         ipcc_m.setSimulationVersion(1l);
         ipcc_m.setReplication(101);
         ipcc_m.setManyToOne(ManyToOneMapping.LAST);
         ipcc_m.setExecutorSimulation(ipcc);
+        ipcc_m.setName("ipcc_m");
+        ipcc_m.setDescription("tyndall_m");
+        ipcc_m.setCreated(new Date());
 
 
         Simulation[] all = new Simulation[]{pangaea, damage, mitigation, tyndall_m, ipcc_m};

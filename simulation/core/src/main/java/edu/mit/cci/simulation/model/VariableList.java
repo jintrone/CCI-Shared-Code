@@ -1,6 +1,5 @@
 package edu.mit.cci.simulation.model;
 
-import com.sun.tools.javac.resources.version;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.roo.addon.entity.RooEntity;
 import org.springframework.transaction.annotation.Transactional;

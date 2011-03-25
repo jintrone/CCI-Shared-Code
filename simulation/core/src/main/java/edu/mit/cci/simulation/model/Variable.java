@@ -49,6 +49,9 @@ public interface Variable {
 
     public Variable getIndexingVariable();
     public void setIndexingVariable(Variable v);
+    
+    public String getLabels();
+    public void setLabels(String labels);
 
     public Long getId();
 

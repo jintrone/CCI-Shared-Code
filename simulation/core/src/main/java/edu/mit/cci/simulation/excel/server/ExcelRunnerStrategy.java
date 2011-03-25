@@ -54,7 +54,7 @@ public class ExcelRunnerStrategy implements RunStrategy {
         }
 
         if (workbook == null) {
-            throw new SimulationException("Workbook could not be found");
+            throw new SimulationException("Workbook could not be found for simulation " + esim.getSimulation().getName());
         }
 
         Map<Variable,Tuple> vmap = new HashMap<Variable,Tuple>();

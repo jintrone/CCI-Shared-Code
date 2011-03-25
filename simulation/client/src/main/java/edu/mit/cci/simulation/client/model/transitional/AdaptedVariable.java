@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import net.sf.json.JSONArray;
+
 /**
  * User: jintrone
  * Date: 3/20/11
@@ -72,5 +74,15 @@ public class AdaptedVariable extends AdaptedObject<edu.mit.cci.simulation.model.
 
     @Override
     public void addValue(Tuple t) {
+    }
+    
+    public String getValueAsJSON() {
+        List<Tuple> value = getValue();
+        String[][] valueForJSON = new String[value.size()][2];
+        int i=0;
+        for (Tuple val: value) {
+            valueForJSON[i++] = val.getValues();
+        }
+        return JSONArray.fromObject(valueForJSON).toString();
     }
 }

@@ -9,9 +9,11 @@ import org.springframework.roo.addon.tostring.RooToString;
 
 import javax.persistence.*;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -48,8 +50,10 @@ public class ExcelSimulation {
 
     public ExcelSimulation(DefaultSimulation sim, File f) throws IOException {
         this.setSimulation(sim);
-        setFile(IOUtils.toByteArray(new FileReader(f)));
+        InputStream is = new FileInputStream(f);
+        setFile(IOUtils.toByteArray(is));
         setCreation(new Date());
+        is.close();
     }
 
 }

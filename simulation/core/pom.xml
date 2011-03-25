@@ -4,13 +4,13 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>edu.mit.cci.simulation</groupId>
     <artifactId>simulation</artifactId>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <version>0.1.0.BUILD-SNAPSHOT</version>
     <name>simulation</name>
     <properties>
         <roo.version>1.1.1.RELEASE</roo.version>
         <spring.version>3.0.5.RELEASE</spring.version>
-        <aspectj.version>1.6.11.M1</aspectj.version>
+        <aspectj.version>1.6.11</aspectj.version>
         <slf4j.version>1.6.1</slf4j.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -441,10 +441,12 @@
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>2.3.1</version>
                 <configuration>
+                <!--
                      <excludes>
                         <exclude>**/web/*</exclude>
                         <exclude>**/excel/*</exclude>
                     </excludes>
+                    -->
                 </configuration>
             </plugin>
             <plugin>
@@ -454,16 +456,6 @@
                 <!--
 					<configuration> <webXml>target/web.xml</webXml> </configuration>
 				-->
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.1</version>
-                <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
-                    <encoding>UTF-8</encoding>
-                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -484,6 +476,7 @@
                 </dependencies>
                 <executions>
                     <execution>
+                    
                         <goals>
                             <goal>compile</goal>
                             <goal>test-compile</goal>
@@ -493,6 +486,7 @@
                 <configuration>
                     <outxml>true</outxml>
                     <verbose>true</verbose>
+                    
                     <aspectLibraries>
                         <aspectLibrary>
                             <groupId>org.springframework</groupId>
@@ -589,6 +583,17 @@
                     </webAppConfig>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.1</version>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
         </plugins>
+        
     </build>
 </project>

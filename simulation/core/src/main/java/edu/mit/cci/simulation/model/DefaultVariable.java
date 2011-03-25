@@ -128,10 +128,12 @@ public class DefaultVariable implements Variable {
     @XmlElement(name = "Units")
     private String units;
 
+    @Override
     public String getLabels() {
         return labels;
     }
 
+    @Override
     public void setLabels(String labels) {
         this.labels = labels;
     }

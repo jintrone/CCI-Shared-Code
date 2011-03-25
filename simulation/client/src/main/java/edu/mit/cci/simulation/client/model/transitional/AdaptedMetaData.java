@@ -18,6 +18,7 @@ public class AdaptedMetaData extends AdaptedObject<Variable> implements MetaData
     private String[] units;
     private String[] max;
     private String[] min;
+    private String[] labels;
 
     private boolean isIndex = false;
 
@@ -90,12 +91,22 @@ public class AdaptedMetaData extends AdaptedObject<Variable> implements MetaData
 
     @Override
     public String[] getLabels() {
-        return new String[0];  //To change body of implemented methods use File | Settings | File Templates.
+        if (labels == null) {
+            Variable v = model().getIndexingVariable();
+            if (v != null) {
+                labels = new String[]{v.getIndexingVariable().getLabels(), model().getLabels() };
+            }
+            else {
+                labels = new String[]{ model().getLabels() };
+            }
+            
+        }
+        return labels;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @Override
     public void setLabels(String[] lables) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        this.labels = labels;
     }
 
     @Override
@@ -105,7 +116,7 @@ public class AdaptedMetaData extends AdaptedObject<Variable> implements MetaData
             if (v != null) {
                 max = new String[] {v.getMax_()+"", model().getMax_()+""};
             } else {
-                max = new String[] {v.getMax_()+""};
+                max = new String[] {model().getMax_()+""};
             }
             
 
@@ -125,7 +136,7 @@ public class AdaptedMetaData extends AdaptedObject<Variable> implements MetaData
             if (v != null) {
                 min = new String[] {v.getMin_()+"", model().getMin_()+""};
             } else {
-                min = new String[] {v.getMin_()+""};
+                min = new String[] {model().getMin_()+""};
             }
             
 
