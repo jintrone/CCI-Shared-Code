@@ -27,13 +27,7 @@ privileged aspect CompositeStepMapping_Roo_JavaBean {
         return this.toStep;
     }
     
-    public Set<Variable> CompositeStepMapping.getFromVars() {
-        return this.fromVars;
-    }
-    
-    public Set<Variable> CompositeStepMapping.getToVars() {
-        return this.toVars;
-    }
+
     
     public Map<DefaultVariable, VariableList> CompositeStepMapping.getMapping() {
         return this.mapping;

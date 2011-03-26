@@ -15,7 +15,7 @@ import java.util.Map;
 @RooJavaBean
 @RooToString
 @RooEntity
-@XmlRootElement(name="CompositeScenario")
+@XmlRootElement(name="Scenario")
 @XmlAccessorType(XmlAccessType.NONE)
 public class CompositeScenario extends DefaultScenario {
 

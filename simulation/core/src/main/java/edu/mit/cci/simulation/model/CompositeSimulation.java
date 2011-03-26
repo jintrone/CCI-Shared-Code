@@ -1,7 +1,6 @@
 package edu.mit.cci.simulation.model;
 
 import org.apache.log4j.Logger;
-import org.hibernate.annotations.OrderBy;
 import org.springframework.roo.addon.entity.RooEntity;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.tostring.RooToString;
@@ -12,14 +11,17 @@ import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 @RooJavaBean
 @RooToString
 @RooEntity
-@XmlRootElement(name="CompositeSimulation")
+@XmlRootElement(name = "CompositeSimulation")
 @XmlAccessorType(XmlAccessType.NONE)
 public class CompositeSimulation extends DefaultSimulation {
 
@@ -38,7 +40,7 @@ public class CompositeSimulation extends DefaultSimulation {
         result.setSimulation(this);
         Collections.sort(steps, new Comparator<Step>() {
             public int compare(Step step, Step step1) {
-                return (int)Math.signum(step.getOrder_()-step1.getOrder_());
+                return (int) Math.signum(step.getOrder_() - step1.getOrder_());
             }
         });
 
@@ -54,7 +56,7 @@ public class CompositeSimulation extends DefaultSimulation {
             if (m == null) {
                 throw new SimulationException("Missing a mapping step; cannot reach step " + s.getOrder_());
             }
-
+            log.debug("Running step " + s.getOrder_() + " with step mapping from " + (m.getFromStep()==null?"start":m.getFromStep().getOrder_()));
             List<Tuple> fromPriorStep = new ArrayList<Tuple>();
             if (m.getFromStep() == null) {
                 fromPriorStep.addAll(siminputs);
@@ -74,7 +76,7 @@ public class CompositeSimulation extends DefaultSimulation {
             List<Tuple> toNextStep = new ArrayList<Tuple>();
             for (Tuple t : fromPriorStep) {
                 if (m.getMapping().containsKey(t.getVar())) {
-                    for (DefaultVariable v:m.getMapping().get(t.getVar()).getVariables()) {
+                    for (DefaultVariable v : m.getMapping().get(t.getVar()).getVariables()) {
                         Tuple nt = Tuple.copy(t);
                         nt.setVar(v);
                         toNextStep.add(nt);
@@ -97,7 +99,7 @@ public class CompositeSimulation extends DefaultSimulation {
                     for (Variable v : scenario.getSimulation().getOutputs()) {
                         if (m.getFromVars().contains(v)) {
                             Tuple old = scenario.getVariableValue(v);
-                            for (DefaultVariable nv:m.getMapping().get(old.getVar()).getVariables()) {
+                            for (DefaultVariable nv : m.getMapping().get(old.getVar()).getVariables()) {
                                 Tuple n = Tuple.copy(old);
                                 n.setVar(nv);
                                 result.getValues_().add(n);
@@ -109,10 +111,9 @@ public class CompositeSimulation extends DefaultSimulation {
             }
 
         }
-            result.getValues_().addAll(siminputs);
-            result.persist();
-            return result;
-
+        result.getValues_().addAll(siminputs);
+        result.persist();
+        return result;
 
 
     }

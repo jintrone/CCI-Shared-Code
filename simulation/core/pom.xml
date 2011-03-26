@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>edu.mit.cci.simulation</groupId>
     <artifactId>simulation</artifactId>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
     <version>0.1.0.BUILD-SNAPSHOT</version>
     <name>simulation</name>
     <properties>
