@@ -69,7 +69,7 @@ public class CompositeStepMapping {
 
     public void addLink(Variable fromVar, Variable toVar) throws SimulationCreationException {
 
-        if (!fromVars.contains(fromVar) || !toVars.contains(toVar)) {
+        if (!getFromVars().contains(fromVar) || !getToVars().contains(toVar)) {
             throw new SimulationCreationException("From and to variables must correspond to the steps they connect");
         } else if (fromVar.getArity().intValue() != toVar.getArity() || !(fromVar.getDataType().equals(toVar.getDataType()))) {
             throw new SimulationCreationException("From and to variables must have same arity and datatype");
@@ -93,6 +93,7 @@ public class CompositeStepMapping {
     }
 
     public Set<Variable> getFromVars() {
+        if (parentsim==null) throw new RuntimeException("Parent simulation for step mapping should never be null");
         if (fromVars == null) {
             fromVars = new HashSet<Variable>();
             if (getFromStep() == null) {
@@ -107,12 +108,15 @@ public class CompositeStepMapping {
     }
 
     public Set<Variable> getToVars() {
-        if (toStep == null) {
+        if (parentsim==null) throw new RuntimeException("Parent simulation for step mapping should never be null");
+        if (toVars == null) {
             toVars = new HashSet<Variable>();
-            toVars.addAll(parentsim.getOutputs());
-        } else {
-            for (DefaultSimulation s : toStep.getSimulations()) {
-                toVars.addAll(s.getInputs());
+            if (getToStep() == null) {
+                toVars.addAll(parentsim.getOutputs());
+            } else {
+                for (DefaultSimulation s : toStep.getSimulations()) {
+                    toVars.addAll(s.getInputs());
+                }
             }
         }
         return this.toVars;
