@@ -53,6 +53,9 @@ public interface Variable {
     public String getLabels();
     public void setLabels(String labels);
 
+    public String getUnits();
+    public void setUnits(String units);
+
     public Long getId();
 
 

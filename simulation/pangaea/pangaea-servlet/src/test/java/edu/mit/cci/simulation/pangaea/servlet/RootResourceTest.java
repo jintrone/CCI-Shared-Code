@@ -37,6 +37,7 @@ public class RootResourceTest {
 
         initParams.put("com.sun.jersey.config.property.packages", "edu.mit.cci.simulation.pangaea.servlet");
         threadSelector = GrizzlyWebContainerFactory.create(baseUri, initParams);
+        System.in.read();
 	}
 	
 	@AfterClass

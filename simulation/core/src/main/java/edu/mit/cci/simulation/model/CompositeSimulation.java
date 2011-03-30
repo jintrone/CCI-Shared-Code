@@ -45,43 +45,46 @@ public class CompositeSimulation extends DefaultSimulation {
         });
 
         for (Step s : steps) {
-            CompositeStepMapping m = null;
-            for (CompositeStepMapping mapping : stepMapping) {
-                if (s.equals(mapping.getToStep())) {
-                    m = mapping;
-                    break;
-                }
-            }
-
-            if (m == null) {
-                throw new SimulationException("Missing a mapping step; cannot reach step " + s.getOrder_());
-            }
-            log.debug("Running step " + s.getOrder_() + " with step mapping from " + (m.getFromStep()==null?"start":m.getFromStep().getOrder_()));
-            List<Tuple> fromPriorStep = new ArrayList<Tuple>();
-            if (m.getFromStep() == null) {
-                fromPriorStep.addAll(siminputs);
-            } else {
-                ScenarioList sl = result.getChildScenarios().get(m.getFromStep());
-                if (sl == null) {
-                    throw new SimulationException("Missing scenario information required for step");
-                }
-                for (DefaultScenario scenario : sl.getScenarios()) {
-                    for (Variable v : scenario.getSimulation().getOutputs()) {
-                        fromPriorStep.add(scenario.getVariableValue(v));
-                    }
-
-                }
-            }
-
             List<Tuple> toNextStep = new ArrayList<Tuple>();
-            for (Tuple t : fromPriorStep) {
-                if (m.getMapping().containsKey(t.getVar())) {
-                    for (DefaultVariable v : m.getMapping().get(t.getVar()).getVariables()) {
-                        Tuple nt = Tuple.copy(t);
-                        nt.setVar(v);
-                        toNextStep.add(nt);
-                    }
-                }
+            boolean mappingFound = false;
+            
+            for (CompositeStepMapping m : stepMapping) {
+            	if (! s.equals(m.getToStep())) {
+            		continue;
+            	}
+            	mappingFound = true;
+
+            	log.debug("Running step " + s.getOrder_() + " with step mapping from " + (m.getFromStep()==null?"start":m.getFromStep().getOrder_()));
+            	List<Tuple> fromPriorStep = new ArrayList<Tuple>();
+            	if (m.getFromStep() == null) {
+            		fromPriorStep.addAll(siminputs);
+            	} else {
+            		ScenarioList sl = result.getChildScenarios().get(m.getFromStep());
+            		if (sl == null) {
+            			throw new SimulationException("Missing scenario information required for step");
+            		}
+            		for (DefaultScenario scenario : sl.getScenarios()) {
+            			for (Variable v : scenario.getSimulation().getOutputs()) {
+            				fromPriorStep.add(scenario.getVariableValue(v));
+            			}
+
+            		}
+            	}
+
+            	for (Tuple t : fromPriorStep) {
+            		if (m.getMapping().containsKey(t.getVar())) {
+            			for (DefaultVariable v : m.getMapping().get(t.getVar()).getVariables()) {
+            				Tuple nt = Tuple.copy(t);
+            				nt.setVar(v);
+            				toNextStep.add(nt);
+            			}
+            		}
+            	}
+
+            }
+
+            if (! mappingFound) {
+                throw new SimulationException("Missing a mapping step; cannot reach step " + s.getOrder_());
             }
 
             for (DefaultSimulation sim : s.getSimulations()) {
