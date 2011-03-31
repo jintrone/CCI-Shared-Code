@@ -152,6 +152,7 @@ public class MigrationTool {
 				continue;
 			}
 			*/
+			
 			int step = (100 * current) / scrCount;
 			int prevStep = (100 * (current - 1)) / scrCount;
 			

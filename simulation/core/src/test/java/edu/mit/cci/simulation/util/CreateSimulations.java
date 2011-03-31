@@ -116,6 +116,15 @@ public class CreateSimulations {
         ipcc_m.persist();
 
         Simulation[] all = new Simulation[]{pangaea, damage, mitigation, tyndall_m, ipcc_m};
+        
+        Set<String> ignoredOutputs = new HashSet<String>();
+        /*
+        ignoredOutputs.add("Year"); // pangaea index
+        ignoredOutputs.add("Time_output0"); // mitigation index
+        ignoredOutputs.add("Time1_output0");  // damage index
+        ignoredOutputs.add("Temperature_Change_output"); // tyndall index
+        ignoredOutputs.add("Temperature_Change1_output"); // ipcc index
+        */
 
 
 
@@ -162,8 +171,9 @@ public class CreateSimulations {
         for (Simulation s : s2.getSimulations()) {
 
             for (Variable v : s.getOutputs()) {
-
-                mapping3.addLink(v, v);
+            	if (! ignoredOutputs.contains(v.getExternalName())) {
+            		mapping3.addLink(v, v);
+            	}
             }
         }
 
@@ -171,8 +181,9 @@ public class CreateSimulations {
         for (Simulation s : s1.getSimulations()) {
 
             for (Variable v : s.getOutputs()) {
-
-                mapping4.addLink(v, v);
+            	if (! ignoredOutputs.contains(v.getExternalName())) {
+            		mapping4.addLink(v, v);
+            	}
             }
         }
 
@@ -257,7 +268,6 @@ public class CreateSimulations {
         /* Map pangaea related inputs to step 2 (pangaea) */ 
         CompositeStepMapping mapping2_7reg = new CompositeStepMapping(csim_7reg, null, s2_7reg);
         for (Variable v: pangaea.getInputs()) {
-        	System.out.println(v.getName() + "\t" + v.getExternalName());
         	if (! inputsNotIncludedInDisagModels.contains(v.getExternalName())) {
         		mapping2_7reg.addLink(v, v);
         	}
@@ -282,7 +292,9 @@ public class CreateSimulations {
         CompositeStepMapping mapping5_7reg = new CompositeStepMapping(csim_7reg, s3_7reg, null);
         for (Simulation s : s3_7reg.getSimulations()) {
             for (Variable v : s.getOutputs()) {
-            	mapping5_7reg.addLink(v, v);
+            	if (! ignoredOutputs.contains(v.getExternalName())) {
+            		mapping5_7reg.addLink(v, v);
+            	}
             }
         }
 
@@ -290,7 +302,9 @@ public class CreateSimulations {
         CompositeStepMapping mapping6_7reg = new CompositeStepMapping(csim_7reg, s2_7reg, null);
         for (Simulation s : s2_7reg.getSimulations()) {
             for (Variable v : s.getOutputs()) {
-            	mapping6_7reg.addLink(v, v);
+            	if (! ignoredOutputs.contains(v.getExternalName())) {
+            		mapping6_7reg.addLink(v, v);
+            	}
             }
         }
         
@@ -371,7 +385,9 @@ public class CreateSimulations {
         CompositeStepMapping mapping5_15reg = new CompositeStepMapping(csim_15reg, s3_15reg, null);
         for (Simulation s : s3_15reg.getSimulations()) {
             for (Variable v : s.getOutputs()) {
-            	mapping5_15reg.addLink(v, v);
+            	if (! ignoredOutputs.contains(v.getExternalName())) {
+            		mapping5_15reg.addLink(v, v);
+            	}
             }
         }
 
@@ -379,7 +395,9 @@ public class CreateSimulations {
         CompositeStepMapping mapping6_15reg = new CompositeStepMapping(csim_15reg, s2_15reg, null);
         for (Simulation s : s2_15reg.getSimulations()) {
             for (Variable v : s.getOutputs()) {
-            	mapping6_15reg.addLink(v, v);
+            	if (! ignoredOutputs.contains(v.getExternalName())) {
+            		mapping6_15reg.addLink(v, v);
+            	}
             }
         }
         
@@ -572,6 +590,7 @@ public class CreateSimulations {
             v.setExternalName(get(line, "internalname"));
             v.setOptions(parseCategories(get(line, "categories")));
             v.setDataType(inferDataType(get(line, "vartype")));
+            //v.setVarContext(get(line, "varcontext"));
 
             v.persist();
             map.put(v.getId_() + "", get(line, "metadata"));

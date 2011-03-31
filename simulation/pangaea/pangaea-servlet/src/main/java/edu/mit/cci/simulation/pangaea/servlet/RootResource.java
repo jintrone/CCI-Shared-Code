@@ -88,7 +88,7 @@ public class  RootResource {
 				return Double.parseDouble(str);
 			}
 			catch (NumberFormatException e) {
-				log.error("Can't parse parameter " + name + ", value: " + str);
+				log.warn("Can't parse parameter " + name + ", value: " + str);
 			}
 		}
 		return defaultVal;

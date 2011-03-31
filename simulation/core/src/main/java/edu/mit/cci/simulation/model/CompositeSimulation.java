@@ -102,13 +102,15 @@ public class CompositeSimulation extends DefaultSimulation {
                     for (Variable v : scenario.getSimulation().getOutputs()) {
                         if (m.getFromVars().contains(v)) {
                             Tuple old = scenario.getVariableValue(v);
-                            for (DefaultVariable nv : m.getMapping().get(old.getVar()).getVariables()) {
-                                Tuple n = Tuple.copy(old);
-                                n.setVar(nv);
-                                result.getValues_().add(n);
+                            // if there is a mapping for current variable, add it to output set
+                            if (m.getMapping().containsKey(old.getVar())) {
+                            	for (DefaultVariable nv : m.getMapping().get(old.getVar()).getVariables()) {
+                            		Tuple n = Tuple.copy(old);
+                            		n.setVar(nv);
+                            		result.getValues_().add(n);
+                            	}
                             }
                         }
-
                     }
                 }
             }
