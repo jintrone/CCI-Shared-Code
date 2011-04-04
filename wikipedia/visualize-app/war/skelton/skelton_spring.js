@@ -40,6 +40,7 @@ var ParticleEngine = function() {
 			var s = this.springs[i];
 			s.draw();
 		}
+		strokeWeight(1);
 		for (int i = 0; i < this.particles.length; i++) {
 			var p = this.particles[i];
 			p.draw();
@@ -77,7 +78,7 @@ var ParticleEngine = function() {
 		var particle1 = this.findParticle(label1);
 		var particle2 = this.findParticle(label2);
 		if (particle1 != null && particle2 != null) {
-			this.addSpring(new Spring(particle1, particle2, thick, 60, 0.02));
+			this.addSpring(new Spring(particle1, particle2, thick, 100, 0.02));
 		}
 	};
 }
@@ -130,7 +131,7 @@ var Particle = function(label, x, y, size, velocityX, velocityY, col) {
 	this.gravityX = random(-0.1,0.1);
 	this.gravityY = random(-0.1,0.1);
 	
-	this.damping = 0.5;
+	this.damping = 0.3;
 	this.col = col;
 	
 	this.life = -1;
@@ -170,8 +171,21 @@ var Particle = function(label, x, y, size, velocityX, velocityY, col) {
 		this.velocityX *= this.damping;
 		this.velocityY *= this.damping;
 		
-		this.x += this.velocityX;
-		this.y += this.velocityY;
+		if ((this.x-this.size) <= 0 || (this.x+this.size) >= canvasSize) {
+			this.velocityX = 0;
+			this.x -= this.velocityX;
+		} else {
+			this.x += this.velocityX;
+		}
+		if ((this.y-this.size) <= 0 || (this.y+this.size) >= canvasSize) {
+			this.velocityY = 0;
+			this.y -= this.velocityY;
+		} else {
+			this.y += this.velocityY;
+		}
+
+		//this.x += this.velocityX;
+		//this.y += this.velocityY;
 		if (this.life > 0) {
 			this.life--;
 			if (this.life <= 0) {
@@ -186,6 +200,7 @@ var Particle = function(label, x, y, size, velocityX, velocityY, col) {
 		}
 		noStroke();
 		fill(this.col);
+		
 		stroke(150);
 		ellipse(this.x, this.y, this.size, this.size);
 
@@ -214,9 +229,9 @@ void setup() {
 	textFont(font);
 
 #NODES
-
+			
 #PINNED
-
+	
 #EDGES
 
 }
