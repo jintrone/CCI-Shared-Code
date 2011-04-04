@@ -26,6 +26,8 @@ public class Processing {
 
 			double nodeSize = Double.parseDouble(node.split("\t")[1]);
 			nodeSize = Math.log10(nodeSize) * 20;
+			if (nodeSize < 10)
+				nodeSize = 10;
 			int numOfArticles = Integer.parseInt(node.split("\t")[2]);
 			String color = "";
 			if (numOfArticles < 4) {
