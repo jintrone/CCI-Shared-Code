@@ -123,7 +123,7 @@ public class CreateSimulations {
         ignoredOutputs.add("Time_output0"); // mitigation index
         ignoredOutputs.add("Time1_output0");  // damage index
         ignoredOutputs.add("Temperature_Change_output"); // tyndall index
-        ignoredOutputs.add("Temperature_Change1_output"); // ipcc index
+        ignoredOutputs.add("Temperature_Change1_ou1tput"); // ipcc index
         */
 
 
@@ -434,7 +434,7 @@ public class CreateSimulations {
 
         esim.getInputs().add(new ExcelVariable(esim, sim.findVariableWithExternalName("Time_input0", true), "Sheet2", "A13:A113"));
         esim.getInputs().add(new ExcelVariable(esim, sim.findVariableWithExternalName("CO2e_input1", true), "Sheet2", "B13:B113"));
-        esim.getOutputs().add(new ExcelVariable(esim, sim.findVariableWithExternalName("Time_output0", false), "Sheet3", "B13:B23"));
+        esim.getOutputs().add(new ExcelVariable(esim, sim.findVariableWithExternalName("Time_output0", false), "Sheet3", "A13:A23"));
         esim.getOutputs().add(new ExcelVariable(esim, sim.findVariableWithExternalName("Change_in_GDP_vs_baseline_witch_emf22_output1", false), "Sheet3", "B13:B23"));
         esim.getOutputs().add(new ExcelVariable(esim, sim.findVariableWithExternalName("Change_in_GDP_vs_baseline_minicam_emf22_output2", false), "Sheet3", "C13:C23"));
         esim.getOutputs().add(new ExcelVariable(esim, sim.findVariableWithExternalName("Change_in_GDP_vs_baseline_merge_emf22_output3", false), "Sheet3", "D13:D23"));
