@@ -153,7 +153,8 @@ public class WikipediaEditVizServlet extends HttpServlet {
 				String nodes = "";
 				for (int i = 0; i < lines.size(); i++) {
 					// editor name<tab># of edits<tab>total edit size
-					nodes += lines.get(i).split("\t")[1] + "\t" + lines.get(i).split("\t")[0] + "\t" + lines.get(i).split("\t")[2] + "\n";
+					//nodes += lines.get(i).split("\t")[1] + "\t" + lines.get(i).split("\t")[0] + "\t" + lines.get(i).split("\t")[2] + "\n";
+					nodes += lines.get(i).split("\t")[1] + "\t" + lines.get(i).split("\t")[0] + "\t1\n";
 				}
 				log.info(nodes);
 				// Get edge data

@@ -59,17 +59,17 @@ public class WikipediaMultiUsertalkVizServlet extends HttpServlet {
 
 			String tableContents = "";
 			String code = "";
-			boolean includeMe = false;
-			int myNumber = -1;
-			// UTF-8で入力を受付
+
 			request.setCharacterEncoding("UTF-8");
-			
 			
 			// Set arguments
 			//String pageTitle = request.getParameter("name"); // WikiPedia article title
 			String titleParam = request.getParameter("name");
 			String[] pageTitles;
-			if (titleParam.indexOf("|") > 0)
+			if (titleParam == null) {
+				pageTitles = null;
+			}
+			else if (titleParam.indexOf("|") > 0)
 				 pageTitles = request.getParameter("name").split("\\|"); // WikiPedia article title
 			else {
 				pageTitles = new String[1];
@@ -112,6 +112,12 @@ public class WikipediaMultiUsertalkVizServlet extends HttpServlet {
 			GetRevisions gr = new GetRevisions();
 			Set<String> dataSet = new HashSet<String>();
 			
+			if (titleParam == null) {
+				//出力ストリームを取得する
+				out = response.getWriter();
+				out.write("Plsease set page_name (name) splited by '|'.");
+				out.close();
+			} else {
 			for (String pageTitle:pageTitles) {
 			//if (pageTitle != null) {
 				if (loginUser.length() == 0){
@@ -288,6 +294,7 @@ public class WikipediaMultiUsertalkVizServlet extends HttpServlet {
 			
 			out.println(responseStr);
 			out.close();
+			}
 		}
 		catch(Exception e){
 			e.printStackTrace();

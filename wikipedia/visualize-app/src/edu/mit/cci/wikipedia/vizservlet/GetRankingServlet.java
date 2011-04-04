@@ -17,12 +17,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import edu.mit.cci.wikipedia.collector.GetRevisions;
+import edu.mit.cci.wikipedia.util.MapSorter;
 import edu.mit.cci.wikipedia.util.TimeWindowCount;
 
 @SuppressWarnings("serial")
-public class StatServlet extends HttpServlet {
+public class GetRankingServlet extends HttpServlet {
 
-	private static final Logger log = Logger.getLogger(StatServlet.class.getName());
+	private static final Logger log = Logger.getLogger(GetRankingServlet.class.getName());
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 	throws ServletException, IOException {
@@ -39,6 +40,11 @@ public class StatServlet extends HttpServlet {
 				String lang = "en";
 				if (request.getParameter("lang") != null) {
 					lang = request.getParameter("lang");
+				}
+				
+				String nodeLimit = "10";
+				if (request.getParameter("nodelimit") != null) {
+					nodeLimit = request.getParameter("nodelimit");
 				}
 				
 				PersistenceManager pm = PMF.get().getPersistenceManager();
@@ -75,42 +81,17 @@ public class StatServlet extends HttpServlet {
 						data += ac.getPageTitle() + "\t" + ac.getAuthor() + "\t" + df.format(ac.getDate()) + "\t0\t" + String.valueOf(ac.getSize()) + "\n";
 					}
 				}
-				//log.info(data);
-				TimeWindowCount twc = new TimeWindowCount();
-				String cvsData = twc.run(data);
-				log.info(cvsData);
-				String createDate = twc.getCreateDate();
-				String allEdits = twc.getAllEdits();
-				//String stat = "<p class=\"stat\">Creation: " + createDate + " Edits: " + allEdits + "</p>" + eol;
-				String stat = "";
-
-				String script = "";
-				String[] cvs = cvsData.split("\n");
-				for (int i = 0; i < cvs.length; i++) {
-					String date = cvs[i].split(",")[0];
-					String edit = cvs[i].split(",")[1];
-					String year = date.substring(0,4);
-					String month = date.substring(5,7);
-					int imonth = Integer.parseInt(month);
-					imonth--;
-					month = String.valueOf(imonth);
-					String day = date.substring(8,10);
-					script += "[new Date(" + year + "," + month + "," + day + ")," + edit + "]," + eol;
+				
+				List<String> editRanking = new MapSorter().sortMap(data,Integer.parseInt(nodeLimit));
+				for (int i = 0; i < editRanking.size(); i++) {
+					String[] tmpArray = editRanking.get(i).split("\t");
+					
+					String name = tmpArray[1]; // Editor name
+					String num = tmpArray[0]; // # of edits
+					//String editSize = tmpArray[2]; // total byte change by this user
+					
+					output += num + "\t" + name + eol;
 				}
-				ServletContext context = this.getServletContext();
-				String skeltonPath = context.getRealPath("/skelton/google.html");
-				BufferedReader skelton = new BufferedReader(new FileReader(skeltonPath));
-				String line = "";
-				while ((line = skelton.readLine()) != null) {
-					if (line.startsWith("###script")) { // Insert data at ## line
-						output += script + eol;
-					} else if (line.startsWith("###stat")) {
-						output += stat;
-					}else {
-						output += line + eol;
-					}
-				}
-
 			}
 
 			//Set MIME type and Char set
