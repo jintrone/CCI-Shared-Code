@@ -57,6 +57,9 @@ public interface Variable {
     public void setUnits(String units);
 
     public Long getId();
+    
+    public String getDefaultValue();
+    public void setDefaultValue(String defaultValue);
 
 
 

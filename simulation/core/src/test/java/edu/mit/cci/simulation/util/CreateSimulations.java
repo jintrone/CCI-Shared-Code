@@ -587,6 +587,7 @@ public class CreateSimulations {
                     getDouble(line, "max"));
             v.setUnits(get(line, "units"));
             v.setLabels(get(line, "labels"));
+            v.setDefaultValue(get(line, "defaultval"));
             v.setExternalName(get(line, "internalname"));
             v.setOptions(parseCategories(get(line, "categories")));
             v.setDataType(inferDataType(get(line, "vartype")));
