@@ -13,8 +13,6 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.logging.Logger;
 
-import org.mortbay.log.Log;
-
 import com.google.appengine.api.urlfetch.HTTPHeader;
 import com.google.appengine.api.urlfetch.HTTPMethod;
 import com.google.appengine.api.urlfetch.HTTPRequest;
@@ -39,7 +37,7 @@ public class GetRevisions {
 		try {
 			title = title.replaceAll(" ", "_");
 			String xml = getArticleRevisionsXML(lang, title,"");
-			log.info(xml);
+			log.
 			XMLParseRevision parse = new XMLParseRevision(title,result,xml);
 			//parse.setUserName(userName);
 			parse.parse();
