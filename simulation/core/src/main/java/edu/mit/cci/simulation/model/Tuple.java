@@ -11,6 +11,7 @@ import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.tostring.RooToString;
 
 import javax.persistence.Column;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -39,7 +40,7 @@ public class Tuple {
     }
 
     @NotNull
-    @ManyToOne(targetEntity = DefaultVariable.class)
+    @ManyToOne(targetEntity = DefaultVariable.class, fetch = FetchType.EAGER)
     @XmlJavaTypeAdapter(JaxbReference.Adapter.class)
     private Variable var;
 

@@ -141,6 +141,8 @@ public class DefaultVariable implements Variable {
     @XmlElement
     private String labels;
 
+    @XmlElement(name = "Defaults")
+    private String defaultValue;
 
     @Override
     public String getId_() {
@@ -160,8 +162,5 @@ public class DefaultVariable implements Variable {
     public void setId(Long id) {
         this.id = id;
     }
-
-
-
 
 }

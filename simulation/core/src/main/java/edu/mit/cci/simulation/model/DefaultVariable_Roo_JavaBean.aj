@@ -91,4 +91,11 @@ privileged aspect DefaultVariable_Roo_JavaBean {
         this.indexingVariable = indexingVariable;
     }
     
+    public String DefaultVariable.getDefaultValue() {
+    	return this.defaultValue;
+    }
+    
+    public void DefaultVariable.setDefaultValue(String defaultValue) {
+    	this.defaultValue = defaultValue;
+    }
 }
