@@ -68,7 +68,7 @@ public class WikipediaMultiEditVizServlet extends HttpServlet {
 			if (pageTitleStr == null){
 				pageTitles = null;
 			}
-			else if (pageTitleStr.indexOf("|") > 0)
+			else if (pageTitleStr.indexOf("\\|") > 0)
 				pageTitles = pageTitleStr.split("\\|");
 			else {
 				pageTitles = new String[1];
