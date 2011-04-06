@@ -84,6 +84,7 @@ public class GetUsertalkNetwork {
 			//log.info(urlStr);
 			URL url = new URL(urlStr);
 			HttpURLConnection urlCon = (HttpURLConnection)url.openConnection();
+			urlCon.setRequestProperty("User-Agent", "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_3; ja-jp) AppleWebKit/533.16 (KHTML, like Gecko) Version/5.0 Safari/533.16");
 			urlCon.setRequestMethod("GET");
 			urlCon.setInstanceFollowRedirects(false);
 
