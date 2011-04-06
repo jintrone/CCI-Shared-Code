@@ -70,7 +70,7 @@ public class WikipediaMultiUsertalkVizServlet extends HttpServlet {
 				pageTitles = null;
 			}
 			else if (titleParam.indexOf("\\|") > 0)
-				 pageTitles = request.getParameter("name").split("\\|"); // WikiPedia article title
+				 pageTitles = request.getParameter("name").split("\\\\|"); // WikiPedia article title
 			else {
 				pageTitles = new String[1];
 				pageTitles[0] = titleParam;

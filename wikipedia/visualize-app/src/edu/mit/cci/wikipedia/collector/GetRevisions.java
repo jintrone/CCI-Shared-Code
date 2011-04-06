@@ -37,7 +37,7 @@ public class GetRevisions {
 		try {
 			title = title.replaceAll(" ", "_");
 			String xml = getArticleRevisionsXML(lang, title,"");
-			log.
+			log.info(xml);
 			XMLParseRevision parse = new XMLParseRevision(title,result,xml);
 			//parse.setUserName(userName);
 			parse.parse();
