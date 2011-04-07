@@ -5,6 +5,8 @@ import org.apache.log4j.Logger;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.tostring.RooToString;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,6 +51,7 @@ public class RunSimulationForm  {
     }
 
     @RequestMapping(method = RequestMethod.POST)
+    @Transactional()
     public String processSubmit(@PathVariable("simid") long simId, RunSimulationForm form, Model model, HttpServletRequest request) throws SimulationException {
 
         Map<String,Long> remap = new HashMap<String,Long>();

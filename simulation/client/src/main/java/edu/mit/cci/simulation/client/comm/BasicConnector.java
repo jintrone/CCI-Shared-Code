@@ -90,7 +90,7 @@ public class BasicConnector implements DeserializingConnector {
      * @return The raw xml of the of the scenario
      */
     @Override
-    public Object post(RestAccessPoint location, Map<String, String> postparams, String... pathparam) throws IOException {
+    public synchronized Object post(RestAccessPoint location, Map<String, String> postparams, String... pathparam) throws IOException {
 
         HttpPost post = new HttpPost(location.create(serverAddress, port, pathparam));
         //post.setFollowRedirects(true);
@@ -123,7 +123,7 @@ public class BasicConnector implements DeserializingConnector {
         return rawGet(location.create(serverAddress, port, pathparam), queryparams);
     }
 
-    private Object rawGet(String location, Map<String, String> queryparams) throws IOException {
+    private synchronized Object rawGet(String location, Map<String, String> queryparams) throws IOException {
         HttpGet get = new HttpGet(location);
          get.addHeader("accept", "text/xml");
         if (queryparams != null && queryparams.size() > 0) {

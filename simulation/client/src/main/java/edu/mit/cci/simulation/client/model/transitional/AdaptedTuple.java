@@ -34,6 +34,9 @@ public class AdaptedTuple implements Tuple {
 
     @Override
     public TupleStatus getStatus(int index) {
+        if (statuses.size() <= index) {
+            return null;
+        }
         return statuses.get(index);
     }
 

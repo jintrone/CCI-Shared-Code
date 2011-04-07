@@ -39,7 +39,7 @@ public class DefaultScenario implements Scenario {
 
 
     @XmlElement(name = "Tuples")
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Tuple> values_ = new HashSet<Tuple>();
 
     @XmlElement(name = "Created")

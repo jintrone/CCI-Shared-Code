@@ -62,8 +62,8 @@ public class XMLParseRevision extends DefaultHandler {
 					minor = "1";
 				} else {
 					String user = attributes.getValue("user");
-					if (user.split("\\.").length != 4) // Remove IP editors (xxx.xxx.xxx.xxx)
-						result.append(getUserName() + "\t" + attributes.getValue("user") + "\t" + attributes.getValue("timestamp") + "\t" + minor + "\t" + attributes.getValue("size") + "\n");
+					//if (user.split("\\.").length != 4) // Remove IP editors (xxx.xxx.xxx.xxx)
+					result.append(getUserName() + "\t" + attributes.getValue("user") + "\t" + attributes.getValue("timestamp") + "\t" + minor + "\t" + attributes.getValue("size") + "\n");
 				}
 			}
 		}

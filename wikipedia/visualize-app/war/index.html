@@ -13,14 +13,38 @@
   </head>
 
   <body>
-    <h1>Hello App Engine!</h1>
+    <h1>Hello Wikipedia Visualizer</h1>
 	
     <table>
       <tr>
-        <td colspan="2" style="font-weight:bold;">Available Servlets:</td>        
+        <th>Available Servlets:</th>
+        <th>Description</th>
+        <th>Usage</th>
       </tr>
       <tr>
-        <td><a href="wikipediaviz">WikipediaViz</a></td>
+        <td><a href="utviz">User talk network</a></td>
+        <td>User talk network of active editors</td>
+        <td>name=Page_name, cache=Using cache, size=desiplay canvas size (pixels)</td>
+      </tr>
+      <tr>
+        <td><a href="editviz">Edit network</a></td>
+        <td>Sequential collaboration network among editors</td>
+        <td>name=Page_name, cache=Using cache, size=desiplay canvas size (pixels)</td>
+      </tr>
+      <tr>
+        <td><a href="mutviz">Multiple User talk network</a></td>
+        <td>User talk network in multiple articles</td>
+        <td>name=Page_name|Page_name|Page_name, cache=Using cache, size=desiplay canvas size (pixels)</td>
+      </tr>
+      <tr>
+        <td><a href="meditviz">Multiple Edit network</a></td>
+        <td>Sequential collaboration network in multiple articles</td>
+        <td>name=Page_name|Page_name|Page_name, cache=Using cache, size=desiplay canvas size (pixels)</td>
+      </tr>
+       <tr>
+        <td><a href="statsviz">Monthly edits line-chart</a></td>
+        <td>Monthly total edit change</td>
+        <td>name=Page_name cache=Using cache(true/false), size=desiplay canvas size (pixels)</td>
       </tr>
     </table>
   </body>

@@ -63,8 +63,17 @@ public class WikipediaMultiEditVizServlet extends HttpServlet {
 			
 			request.setCharacterEncoding("UTF-8");
 			// Get arguments
-			String[] pageTitles = request.getParameter("name").split("|"); // WikiPedia article title
-			
+			String pageTitleStr = request.getParameter("name"); // WikiPedia article title
+			String[] pageTitles;
+			if (pageTitleStr == null){
+				pageTitles = null;
+			}
+			else if (pageTitleStr.indexOf("|") > 0)
+				pageTitles = pageTitleStr.split("\\|");
+			else {
+				pageTitles = new String[1];
+				pageTitles[0] = pageTitleStr;
+			}
 			boolean CACHE = true;
 			if (request.getParameter("cache") != null) {
 				if (request.getParameter("cache").equals("true"))
@@ -96,7 +105,13 @@ public class WikipediaMultiEditVizServlet extends HttpServlet {
 			GetRevisions gr = new GetRevisions();
 			 // User name
 			Set<String> dataSet = new HashSet<String>();
-
+			
+			if (pageTitleStr == null) {
+				//出力ストリームを取得する
+				out = response.getWriter();
+				out.write("Plsease set page_name (name) splited by '|'.");
+				out.close();
+			} else {
 			for (String pageTitle:pageTitles) {
 				if (pageTitle != null) {
 					log.info("name " + pageTitle);
@@ -108,7 +123,7 @@ public class WikipediaMultiEditVizServlet extends HttpServlet {
 					String query = "select from " + ArticleCache.class.getName() + " where pageTitle==\'" + pageTitle.replaceAll("\'", "\\\\\'") + "\'";
 					List<ArticleCache> articleCaches = (List<ArticleCache>)pm.newQuery(query).execute();
 					
-					// No cache
+					// No cache or Don't use cache
 					if (articleCaches.isEmpty() || (!articleCaches.isEmpty() && !CACHE)) {
 						if (!articleCaches.isEmpty()) {
 							// Clear cached data
@@ -118,9 +133,10 @@ public class WikipediaMultiEditVizServlet extends HttpServlet {
 						}
 						// Get # of edits on the pageTitle
 						String download = gr.getArticleRevisions(LANG, pageTitle, REV_LIMIT);
-						String[] line = download.split("\n");
-						for (int i = 0; i < line.length; i++) {
-							String[] arr = line[i].split("\t");
+						String[] lines = download.split("\n");
+						for (String line : lines) {
+							log.info(line);
+							String[] arr = line.split("\t");
 							//arr[0] pageTitle, arr[1] userName, arr[2] timestamp, arr[3] minor, arr[4] size
 							String timestamp = arr[2];
 							timestamp = timestamp.replaceAll("T", " ");
@@ -155,8 +171,9 @@ public class WikipediaMultiEditVizServlet extends HttpServlet {
 			// nodeEditMap key:node name, value: sum # of edits
 			Map<String,Integer> nodeEditMap = new HashMap<String,Integer>();
 			for (String data:dataSet) {
-				String[] lines = data.split("\t");
+				String[] lines = data.split("\n");
 				for (String line:lines) {
+					//log.info(line);
 					String pageTitle = line.split("\t")[0];
 					String editorName = line.split("\t")[1];
 					
@@ -191,7 +208,7 @@ public class WikipediaMultiEditVizServlet extends HttpServlet {
 				nodes += editorName + "\t" + numOfEdits + "\t" + numOfArticles + "\n";
 			}
 			
-			log.info(nodes);
+			log.info("\nNode_name\tTotal edits\tTotal articles\n" + nodes);
 			// Get edge data
 			// From editor \t To editor \t weight
 			//log.info(data);
@@ -211,7 +228,8 @@ public class WikipediaMultiEditVizServlet extends HttpServlet {
 			for (int i = 0; i < matrix.length; i++) {
 				for (int j = i+1; j < matrix.length; j++) {
 					int tie = matrix[i][j] + matrix[j][i]; // undirect
-					edges += nodeList.get(i) + "\t" + nodeList.get(j) + "\t" + tie + "\n";
+					if (tie > 0)
+						edges += nodeList.get(i) + "\t" + nodeList.get(j) + "\t" + tie + "\n";
 				}
 			}
 			log.info(edges);
@@ -254,6 +272,7 @@ public class WikipediaMultiEditVizServlet extends HttpServlet {
 			
 			out.println(responseStr);
 			out.close();
+			}
 		}
 		catch(Exception e){
 			e.printStackTrace();

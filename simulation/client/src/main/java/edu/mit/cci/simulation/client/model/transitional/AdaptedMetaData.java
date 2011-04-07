@@ -63,12 +63,21 @@ public class AdaptedMetaData extends AdaptedObject<Variable> implements MetaData
 
     @Override
     public String[] getUnits() {
-        return new String[0];  //To change body of implemented methods use File | Settings | File Templates.
+    	if (units == null) {
+            Variable v = model().getIndexingVariable();
+            if (v != null) {
+            	units = new String[] {v.getUnits(), model().getUnits()};
+            }
+            else {
+            	units = new String[] { model.getUnits() };
+            }
+    	}
+        return units; 
     }
 
     @Override
     public void setUnits(String[] units) {
-        //To change body of implemented methods use File | Settings | File Templates.
+    	this.units = units;
     }
 
     @Override
@@ -105,7 +114,7 @@ public class AdaptedMetaData extends AdaptedObject<Variable> implements MetaData
     }
 
     @Override
-    public void setLabels(String[] lables) {
+    public void setLabels(String[] labels) {
         this.labels = labels;
     }
 
@@ -178,13 +187,20 @@ public class AdaptedMetaData extends AdaptedObject<Variable> implements MetaData
     public VarContext getVarContext() {
         if (vc == null) {
             Variable v = model();
+
             if (v.getIndexingVariable() != null) {
-                vc = VarContext.INDEXED;
+                if (v.getIndexingVariable().getId().equals(model.getId())) {
+                    vc = VarContext.INDEX;
+                }
+                else {
+                    vc = VarContext.INDEXED;
+                }
             } else if (v.getArity() == 1) {
                 vc = VarContext.SCALAR;
             } else if (v.getArity() > 1) {
                 vc = VarContext.LIST;
             }
+            
         }
         return vc;
     }
@@ -228,14 +244,15 @@ public class AdaptedMetaData extends AdaptedObject<Variable> implements MetaData
 
     @Override
     public boolean getIndex() {
-        return isIndex;
+        //return model.getVarContext() != null ? model.getVarContext().equals("INDEX") : false;
+    	return isIndex;
     }
 
     @Override
     public void setIndex(boolean b) {
         isIndex = b;
+        
     }
-
     @Override
     public void setCategories(String[] categories) {
         //To change body of implemented methods use File | Settings | File Templates.

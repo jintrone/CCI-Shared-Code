@@ -13,8 +13,6 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.logging.Logger;
 
-import org.mortbay.log.Log;
-
 import com.google.appengine.api.urlfetch.HTTPHeader;
 import com.google.appengine.api.urlfetch.HTTPMethod;
 import com.google.appengine.api.urlfetch.HTTPRequest;
@@ -82,6 +80,7 @@ public class GetRevisions {
 			log.info(urlStr);
 			URL url = new URL(urlStr);
 			HttpURLConnection urlCon = (HttpURLConnection)url.openConnection();
+			urlCon.setRequestProperty("User-Agent", "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_3; ja-jp) AppleWebKit/533.16 (KHTML, like Gecko) Version/5.0 Safari/533.16");
 			urlCon.setRequestMethod("GET");
 			urlCon.setInstanceFollowRedirects(false);
 			/*urlCon.addRequestProperty("format", "xml");

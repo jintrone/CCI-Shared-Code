@@ -242,16 +242,18 @@ public class U {
 
 
     public static Variable copy(Variable from, Variable to) {
-        to.setName(from.getName());
+        to.setArity(from.getArity());
         to.setDataType(from.getDataType());
-        to.setMax_(from.getMax_());
-        to.setMin_(from.getMin_());
         to.setDescription(from.getDescription());
         to.setExternalName(from.getExternalName());
+        to.setIndexingVariable(from.getIndexingVariable());
+        to.setLabels(from.getLabels());
+        to.setMax_(from.getMax_());
+        to.setMin_(from.getMin_());
+        to.setName(from.getName());
         ((DefaultVariable)to).set_optionsRaw(((DefaultVariable)from).get_optionsRaw());
         to.setPrecision_(from.getPrecision_());
-        to.setArity(from.getArity());
-        to.setIndexingVariable(from.getIndexingVariable());
+        to.setUnits(from.getUnits());
         return to;
     }
 
