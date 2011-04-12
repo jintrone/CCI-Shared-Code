@@ -1,0 +1,24 @@
+<f:view xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+    <ice:outputDeclaration doctypeRoot="HTML"
+                           doctypePublic="-//W3C//DTD XHTML 1.0 Transitional//EN"
+                           doctypeSystem="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"/>
+<html>
+    <head>
+    	<title>Sample page</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"></meta>
+    </head>
+    <body>
+    <ice:outputText value="#{sampleBean.scenariosCount }" /><br />
+   	<ice:outputText value="#{sampleBean.name }"/>
+    <ice:form>
+    	<h3>Update name</h3>
+    	<ice:inputText value="#{sampleBean.name }" />
+    	<ice:commandButton value="update name" actionListener="#{sampleBean.updateName}" />
+        
+    </ice:form>
+    </body>
+</html>
+</f:view>
