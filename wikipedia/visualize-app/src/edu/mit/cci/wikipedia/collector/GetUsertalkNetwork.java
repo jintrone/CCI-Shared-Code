@@ -43,8 +43,11 @@ public class GetUsertalkNetwork {
 					to = to.replaceAll(" ", "_");
 
 					String xml = getUserTalkContribs(lang, to,from,"");
-					XMLParseUserTalk parse = new XMLParseUserTalk(to,result,xml);
-					parse.parse();
+					if (xml.indexOf("<revisions>") > 0) {
+						log.info(xml);
+						XMLParseUserTalk parse = new XMLParseUserTalk(to,result,xml);
+						parse.parse();
+					}
 					String out = result.getResult();
 					
 					//log.info(i + "-" + from + " " + j + "-" + to + " " + out);
@@ -84,6 +87,7 @@ public class GetUsertalkNetwork {
 			//log.info(urlStr);
 			URL url = new URL(urlStr);
 			HttpURLConnection urlCon = (HttpURLConnection)url.openConnection();
+			urlCon.setRequestProperty("User-Agent", "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_3; ja-jp) AppleWebKit/533.16 (KHTML, like Gecko) Version/5.0 Safari/533.16");
 			urlCon.setRequestMethod("GET");
 			urlCon.setInstanceFollowRedirects(false);
 

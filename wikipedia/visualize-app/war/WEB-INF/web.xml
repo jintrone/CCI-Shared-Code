@@ -5,12 +5,12 @@ xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
 http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	<servlet>
-		<servlet-name>WikipediaViz</servlet-name>
+		<servlet-name>WikipediaUsertalkViz</servlet-name>
 		<servlet-class>edu.mit.cci.wikipedia.vizservlet.WikipediaUsertalkVizServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>WikipediaViz</servlet-name>
-		<url-pattern>/wikipediaviz</url-pattern>
+		<servlet-name>WikipediaUsertalkViz</servlet-name>
+		<url-pattern>/utviz</url-pattern>
 	</servlet-mapping>
 	<servlet>
 		<servlet-name>WikipediaEditViz</servlet-name>
@@ -18,7 +18,15 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>WikipediaEditViz</servlet-name>
-		<url-pattern>/wikipediaeditviz</url-pattern>
+		<url-pattern>/editviz</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>WikipediaMultiUsertalkViz</servlet-name>
+		<servlet-class>edu.mit.cci.wikipedia.vizservlet.WikipediaMultiUsertalkVizServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>WikipediaMultiUsertalkViz</servlet-name>
+		<url-pattern>/mutviz</url-pattern>
 	</servlet-mapping>
 	<servlet>
 		<servlet-name>WikipediaMultiEditViz</servlet-name>
@@ -26,7 +34,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>WikipediaMultiEditViz</servlet-name>
-		<url-pattern>/wikipediamultieditviz</url-pattern>
+		<url-pattern>/meditviz</url-pattern>
 	</servlet-mapping>
 	<servlet>
 		<servlet-name>WikipediaStats</servlet-name>
@@ -34,7 +42,15 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>WikipediaStats</servlet-name>
-		<url-pattern>/wikipediastats</url-pattern>
+		<url-pattern>/statsviz</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>WikipediaRanking</servlet-name>
+		<servlet-class>edu.mit.cci.wikipedia.vizservlet.GetRankingServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>WikipediaRanking</servlet-name>
+		<url-pattern>/ranklist</url-pattern>
 	</servlet-mapping>
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
