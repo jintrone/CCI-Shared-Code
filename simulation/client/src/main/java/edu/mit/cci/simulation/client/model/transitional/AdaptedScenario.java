@@ -148,4 +148,19 @@ public class AdaptedScenario extends AdaptedObject<edu.mit.cci.simulation.model.
     public EntityState getState() {
         return EntityState.PUBLIC;
     }
+    
+    public Variable getVariableForInternalname(String internalname) {
+        if (internalname==null) return null;
+        for (Variable input:getInputSet()) {
+            if (internalname.equals(input.getMetaData().getInternalName())) {
+                return input;
+            }
+        }
+        for (Variable output:getOutputSet()) {
+            if (internalname.equals(output.getMetaData().getInternalName())) {
+                return output;
+            }
+        }
+        return null;
+    }
 }

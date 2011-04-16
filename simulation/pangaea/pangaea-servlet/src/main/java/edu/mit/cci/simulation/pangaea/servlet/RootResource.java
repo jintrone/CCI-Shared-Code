@@ -35,16 +35,16 @@ public class  RootResource {
 	@Produces("text/plain")
 	public Response runSimulation(
 			@FormParam("Pct change in Developed FF emissions") String devdchange,
-			@FormParam("Pct change in DevelopString A FF emissions") String devingchange,
-			@FormParam("Pct change in DevelopString B FF emissions") String nonchange,
+			@FormParam("Pct change in Developing A FF emissions") String devingchange,
+			@FormParam("Pct change in Developing B FF emissions") String nonchange,
 			@FormParam("Global land use emissions change") String landUseChange,
 			@FormParam("Target Sequestration") String targSequestration,
 			@FormParam("Developed start year") String devdStart,
 			@FormParam("Developed target year") String devdTarget,
-			@FormParam("DevelopString A start year") String devingAStart,
-			@FormParam("DevelopString A target year") String devingATarget,
-			@FormParam("DevelopString B start year") String devingBStart,
-			@FormParam("DevelopString B target year") String devingBTarget,
+			@FormParam("Developing A start year") String devingAStart,
+			@FormParam("Developing A target year") String devingATarget,
+			@FormParam("Developing B start year") String devingBStart,
+			@FormParam("Developing B target year") String devingBTarget,
 			@FormParam("Goal for CO2 in the atmosphere") String co2inAtm) {
 
 		SimulationInput input = new SimulationInput();

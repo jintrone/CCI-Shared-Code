@@ -2,6 +2,7 @@ package edu.mit.cci.simulation.client.model.transitional;
 
 import edu.mit.cci.simulation.client.MetaData;
 import edu.mit.cci.simulation.client.Tuple;
+import edu.mit.cci.simulation.client.TupleStatus;
 import edu.mit.cci.simulation.client.Variable;
 import edu.mit.cci.simulation.client.comm.RepositoryManager;
 
@@ -84,5 +85,12 @@ public class AdaptedVariable extends AdaptedObject<edu.mit.cci.simulation.model.
             valueForJSON[i++] = val.getValues();
         }
         return JSONArray.fromObject(valueForJSON).toString();
+    }
+    
+    public boolean hasError(TupleStatus status) {
+        for (Tuple t:getValue()) {
+            if (t.getAllStatuses().contains(status)) return true;
+        }
+        return false;
     }
 }
