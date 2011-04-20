@@ -46,7 +46,8 @@ public class CreateSimulations {
 
     public static String SIM_MAP = "SimulationMapping.txt";
     public static String VAR_MAP = "VariableMapping.txt";
-    
+
+    public static Long CSIM_OLD_ID=760L;
     public static Long CSIM_3REGION_ID = 862L;
     public static Long CSIM_7REGION_ID = 863L;
     public static Long CSIM_15REGION_ID = 864L;
@@ -75,6 +76,111 @@ public class CreateSimulations {
         addVars(sim, path, true, inputArity);
         addVars(sim, path, false, outputArity);
         return sim;
+    }
+
+
+    public DefaultSimulation findOrCreate(String namefragment) {
+       List<DefaultSimulation> existing = DefaultSimulation.findAllDefaultSimulations();
+        for (DefaultSimulation sim:existing) {
+            if (sim.getName().contains(namefragment)) {
+                return sim;
+            }
+        }
+        return null;
+    }
+
+     @Test
+    @Transactional
+    @Rollback(false)
+    public void createOld760() throws IOException, ParseException, SimulationCreationException {
+       new File(SIM_MAP).delete();
+       new File(VAR_MAP).delete();
+
+        DefaultSimulation pangaea = findOrCreate("C-LEARN");
+        DefaultSimulation damage = findOrCreate("damage costs");
+        DefaultSimulation tyndall_m = findOrCreate("tyndall_m");
+        DefaultSimulation ipcc_m = findOrCreate("ipcc_m");
+        DefaultSimulation mitigation = createOldMitigation();
+
+        Simulation[] all = new Simulation[]{pangaea, damage, mitigation, tyndall_m, ipcc_m};
+
+        Set<String> ignoredOutputs = new HashSet<String>();
+        /*
+        ignoredOutputs.add("Year"); // pangaea index
+        ignoredOutputs.add("Time_output0"); // mitigation index
+        ignoredOutputs.add("Time1_output0");  // damage index
+        ignoredOutputs.add("Temperature_Change_output"); // tyndall index
+        ignoredOutputs.add("Temperature_Change1_ou1tput"); // ipcc index
+        */
+
+
+
+        CompositeSimulation csim = new CompositeSimulation();
+
+        csim.setName("MIT Composite Model, 2009 version");
+        csim.setSimulationVersion(1l);
+        csim.setCreated(new Date());
+
+        Step s1 = new Step(1, pangaea);
+        Step s2 = new Step(2, mitigation, damage, tyndall_m, ipcc_m);
+
+        csim.getSteps().add(s1);
+        csim.getSteps().add(s2);
+
+
+        for (Variable v : pangaea.getInputs()) {
+            csim.getInputs().add(v);
+        }
+        for (Simulation s : all) {
+            for (Variable v : s.getOutputs()) {
+                csim.getOutputs().add(v);
+            }
+        }
+
+
+        CompositeStepMapping mapping1 = new CompositeStepMapping(csim, null, s1);
+        for (Variable v : csim.getInputs()) {
+            mapping1.addLink(v, v);
+        }
+
+        CompositeStepMapping mapping2 = new CompositeStepMapping(csim, s1, s2);
+        Variable pYear = pangaea.findVariableWithExternalName("Year", false);
+        Variable pTemp = pangaea.findVariableWithExternalName("GlobalTempChange", false);
+        Variable /*pCumEmissions*/pAtmConcentation = pangaea.findVariableWithExternalName("AtmosphericCO2Concentration", false);
+
+        mapping2.addLink(pTemp, damage.findVariableWithExternalName("Temperature_input0", true));
+        mapping2.addLink(pYear, mitigation.findVariableWithExternalName("Time_input0", true));
+        mapping2.addLink(/*pCumEmissions*/pAtmConcentation, mitigation.findVariableWithExternalName("Atmospheric_CO2_concentration", true));
+        mapping2.addLink(pTemp, tyndall_m.findVariableWithExternalName("Temperature_Change", true));
+        mapping2.addLink(pTemp, ipcc_m.findVariableWithExternalName("Temperature_Change", true));
+
+        CompositeStepMapping mapping3 = new CompositeStepMapping(csim, s2, null);
+        for (Simulation s : s2.getSimulations()) {
+
+            for (Variable v : s.getOutputs()) {
+            	if (! ignoredOutputs.contains(v.getExternalName())) {
+            		mapping3.addLink(v, v);
+            	}
+            }
+        }
+
+        CompositeStepMapping mapping4 = new CompositeStepMapping(csim, s1, null);
+        for (Simulation s : s1.getSimulations()) {
+
+            for (Variable v : s.getOutputs()) {
+            	if (! ignoredOutputs.contains(v.getExternalName())) {
+            		mapping4.addLink(v, v);
+            	}
+            }
+        }
+
+        csim.setType(SIMULATION_TYPE_PLAN);
+        csim.persist();
+
+        // add mapping for 3 region composite simulation
+        addMapping(csim.getId(), CSIM_OLD_ID, SIM_MAP);
+
+
     }
 
 
@@ -111,7 +217,7 @@ public class CreateSimulations {
         ipcc_m.setManyToOne(ManyToOneMapping.LAST);
         ipcc_m.setExecutorSimulation(ipcc);
         ipcc_m.setName("ipcc_m");
-        ipcc_m.setDescription("tyndall_m");
+        ipcc_m.setDescription("ipcc_m");
         ipcc_m.setCreated(new Date());
         ipcc_m.persist();
 
@@ -443,6 +549,28 @@ public class CreateSimulations {
         esim.getOutputs().add(new ExcelVariable(esim, sim.findVariableWithExternalName("Change_in_GDP_vs_baseline_merge_optimistic_emf25_output6", false), "Sheet3", "G13:G23"));
         esim.getOutputs().add(new ExcelVariable(esim, sim.findVariableWithExternalName("Change_in_GDP_vs_baseline_merge_pessimistic_emf26_output7", false), "Sheet3", "H13:H23"));
         esim.getOutputs().add(new ExcelVariable(esim, sim.findVariableWithExternalName("Change_in_GDP_vs_baseline_message_emf26_output8", false), "Sheet3", "I13:I23"));
+
+        esim.persist();
+        sim.setUrl(ExcelSimulation.EXCEL_URL + esim.getId());
+        sim.persist();
+        return sim;
+
+
+    }
+
+     public DefaultSimulation createOldMitigation() throws IOException, ParseException {
+        DefaultSimulation sim = (DefaultSimulation) createBaseSim("./target/test-classes/old_mitigation", 101, 11);
+        ExcelSimulation esim = new ExcelSimulation();
+        esim.setSimulation(sim);
+        esim.setCreation(new Date());
+        esim.setFile(IOUtils.toByteArray(new FileInputStream("./target/test-classes/old_mitigation.xls")));
+
+        esim.getInputs().add(new ExcelVariable(esim, sim.findVariableWithExternalName("Time_input0", true), "Sheet2", "A13:A113"));
+        esim.getInputs().add(new ExcelVariable(esim, sim.findVariableWithExternalName("Atmospheric_CO2_concentration", true), "Sheet2", "B13:B113"));
+        esim.getOutputs().add(new ExcelVariable(esim, sim.findVariableWithExternalName("Time_output0", false), "Sheet3", "A13:A23"));
+        esim.getOutputs().add(new ExcelVariable(esim, sim.findVariableWithExternalName("_Change_in_GDP_vs__baseline_igsm_output", false), "Sheet3", "E13:E23"));
+        esim.getOutputs().add(new ExcelVariable(esim, sim.findVariableWithExternalName("_Change_in_GDP_vs__baseline_merge_output", false), "Sheet3", "F13:F23"));
+        esim.getOutputs().add(new ExcelVariable(esim, sim.findVariableWithExternalName("_Change_in_GDP_vs__baseline_minicam_output", false), "Sheet3", "I13:I23"));
 
         esim.persist();
         sim.setUrl(ExcelSimulation.EXCEL_URL + esim.getId());
