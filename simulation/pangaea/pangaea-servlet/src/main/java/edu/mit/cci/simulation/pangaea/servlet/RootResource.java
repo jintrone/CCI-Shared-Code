@@ -49,9 +49,9 @@ public class  RootResource {
 
 		SimulationInput input = new SimulationInput();
 		try {
-			input.setVariable(SimulationInput.InputVariable.DEVELOPED_FF_CHANGE, getDouble(devdchange, "Pct change in Developed FF emissions", null));
-			input.setVariable(SimulationInput.InputVariable.DEVELOPINGA_FF_CHANGE, getDouble(devingchange, "Pct change in Developing A FF emissions", null));
-			input.setVariable(SimulationInput.InputVariable.DEVELOPINGB_FF_CHANGE, getDouble(nonchange, "Pct change in Developing B FF emissions", null));
+			input.setVariable(SimulationInput.InputVariable.DEVELOPED_FF_CHANGE, getDouble(devdchange, 1., "Pct change in Developed FF emissions", null));
+			input.setVariable(SimulationInput.InputVariable.DEVELOPINGA_FF_CHANGE, getDouble(devingchange, 1., "Pct change in Developing A FF emissions", null));
+			input.setVariable(SimulationInput.InputVariable.DEVELOPINGB_FF_CHANGE, getDouble(nonchange, 1., "Pct change in Developing B FF emissions", null));
 			input.setVariable(SimulationInput.InputVariable.DEFORESTATION, getDouble(landUseChange, "Global land use emissions change", null));
 			input.setVariable(SimulationInput.InputVariable.AFFORESTATION, getDouble(targSequestration, "Target Sequestration", null));
 			input.setVariable(SimulationInput.InputVariable.DEVELOPED_FF_START, getDouble(devdStart, "Developed start year", null));
@@ -83,9 +83,13 @@ public class  RootResource {
 	}
 
 	private Double getDouble(String str, String name, Double defaultVal) {
+		return getDouble(str, 1., name, defaultVal);
+	}
+
+	private Double getDouble(String str, Double rescale, String name, Double defaultVal) {
 		if (str != null) {
 			try {
-				return Double.parseDouble(str);
+				return Double.parseDouble(str) * rescale;
 			}
 			catch (NumberFormatException e) {
 				log.warn("Can't parse parameter " + name + ", value: " + str);
