@@ -27,7 +27,7 @@ public class ExcelResponseSurfaceWriter {
      * @param <T> The datatype of the boundaries of each data set
      * @param <U> The indices within each data set at which the surface is evaluated
      */
-    public static <T extends Comparable<T>,U extends Comparable<U>> void writeSpreadSheet(String filename, int numInputsAndOutputs, SimpleResponseSurface<T,U> responseSurface) {
+    public static <T extends Comparable<T>,U extends Comparable<U>> String writeSpreadSheet(String filename, int numInputsAndOutputs, SimpleResponseSurface<T,U> responseSurface) {
 
         //Keren's code 
 
@@ -138,17 +138,22 @@ public class ExcelResponseSurfaceWriter {
         }
         
         /**Create new file (Can be done at the end) **/
+        String toReturn = "";
         try{
         	File f = new File(filename);
-        	System.out.println("File Created");
+        	System.out.println(f.getAbsolutePath());
+        	toReturn = f.getAbsolutePath();
+        	System.out.println("File Created...");
         	FileOutputStream fOut = new FileOutputStream(f);
         
 			workbook.write(fOut);
 			fOut.close();
+		
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
         
+		return toReturn;
     }
     
     //Return expression needed for output

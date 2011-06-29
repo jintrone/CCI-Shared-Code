@@ -8,7 +8,8 @@ import edu.mit.cci.simulation.model.DefaultScenario;
 
 public class SampleBean {
 	
-	private String name = "This is sample name";
+	private String name = "This is kerengu";
+	private String instruction = "Follow the instruction to upload file.";
 
 	public void setName(String name) {
 	    this.name = name;
@@ -22,16 +23,23 @@ public class SampleBean {
 		return DefaultScenario.countDefaultScenarios();
 	}
 	
-	
+	public String getInstruction() {
+		return instruction;
+	}
+
+	public void setInstruction(String instruction) {
+		this.instruction = instruction;
+	}
+
 	public void updateName(ActionEvent e) {
 		// ignore
 		try {
-		DefaultScenario s = DefaultScenario.findAllDefaultScenarios().get(0);
+		//DefaultScenario s = DefaultScenario.findAllDefaultScenarios().get(0);
 		
-		s.setName("kokojambo! " + new Date());
-		s.merge();
-		
-		System.out.println("merged? " + s.getName());
+//		s.setName("kokojambo! " + new Date());
+//		s.merge();
+//		
+//		System.out.println("merged? " + s.getName());
 		}
 		catch (Throwable ex) {
 			ex.printStackTrace();

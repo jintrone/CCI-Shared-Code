@@ -22,7 +22,7 @@ public class SliceSegment<T extends Comparable<T>,U extends Comparable<U>>  {
 
     public SliceSegment(T from, T to, U index, Polynomial function) {
         this.function = function;
-        if (from.compareTo(to)>=0) throw new IllegalArgumentException("From must be less to");
+        if (from.compareTo(to)>0) throw new IllegalArgumentException("From must be less to");
         this.fromCriterion = from;
         this.toCriterion = to;
         this.index = index;

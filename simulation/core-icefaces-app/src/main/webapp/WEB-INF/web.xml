@@ -48,6 +48,11 @@
         <param-name>com.icesoft.faces.concurrentDOMViews</param-name>
         <param-value>true</param-value>
     </context-param>
+    
+    <context-param>
+        <param-name>com.icesoft.faces.uploadDirectory</param-name>
+        <param-value>upload</param-value>
+    </context-param>
 
 <!-- Specifies to the ICEfaces framework that synchronous update mode is to be 
      used.  By default, ICEfaces uses asynchronous update mode to support 
@@ -170,11 +175,25 @@
         <servlet-class>com.icesoft.faces.webapp.xmlhttp.BlockingServlet</servlet-class>
         <load-on-startup> 1 </load-on-startup>
     </servlet>
+    
+    <!-- file upload Servlet -->
+    <servlet>
+         <servlet-name>uploadServlet</servlet-name>
+         <servlet-class>com.icesoft.faces.component.inputfile.FileUploadServlet</servlet-class>
+         <load-on-startup> 1 </load-on-startup>
+    </servlet>
+    
 
     <!-- Faces Servlet Mapping -->
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>*.faces</url-pattern>
+    </servlet-mapping>
+    
+    <!-- Upload Servlet Mapping -->
+    <servlet-mapping>
+         <servlet-name>uploadServlet</servlet-name>
+         <url-pattern>/uploadHtml</url-pattern>
     </servlet-mapping>
 
     <!-- Persistent Faces Servlet Mapping -->

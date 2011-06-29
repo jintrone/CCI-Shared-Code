@@ -44,5 +44,34 @@
     <managed-bean-class>edu.mit.cci.simulation.ice.beans.SampleBean</managed-bean-class>
     <managed-bean-scope>request</managed-bean-scope>
   </managed-bean>
-
+  
+  <managed-bean>
+                <description>Response Surface</description>
+                <managed-bean-name>responseSurface</managed-bean-name>
+                <managed-bean-class>edu.mit.cci.simulation.ice.beans.ResponseSurface</managed-bean-class>
+                <managed-bean-scope>session</managed-bean-scope>
+  </managed-bean>
+  
+  <managed-bean>
+                <description>File Uploader</description>
+                <managed-bean-name>fileUploader</managed-bean-name>
+                <managed-bean-class>edu.mit.cci.simulation.ice.beans.FileUploader</managed-bean-class>
+                <managed-bean-scope>request</managed-bean-scope>
+                <managed-property>
+                	<property-name>responseSurface</property-name>
+                	<value>#{responseSurface}</value>
+                </managed-property>
+  </managed-bean>
+  
+  <managed-bean>
+                <description>Navigation</description>
+                <managed-bean-name>navigation</managed-bean-name>
+                <managed-bean-class>edu.mit.cci.simulation.ice.beans.Navigation</managed-bean-class>
+                <managed-bean-scope>session</managed-bean-scope>
+                <managed-property>
+                	<property-name>responseSurface</property-name>
+                	<value>#{responseSurface}</value>
+                </managed-property>
+  </managed-bean>
+  
 </faces-config>
