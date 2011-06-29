@@ -35,23 +35,23 @@ public class  RootResource {
 	@Produces("text/plain")
 	public Response runSimulation(
 			@FormParam("Pct change in Developed FF emissions") String devdchange,
-			@FormParam("Pct change in DevelopString A FF emissions") String devingchange,
-			@FormParam("Pct change in DevelopString B FF emissions") String nonchange,
+			@FormParam("Pct change in Developing A FF emissions") String devingchange,
+			@FormParam("Pct change in Developing B FF emissions") String nonchange,
 			@FormParam("Global land use emissions change") String landUseChange,
 			@FormParam("Target Sequestration") String targSequestration,
 			@FormParam("Developed start year") String devdStart,
 			@FormParam("Developed target year") String devdTarget,
-			@FormParam("DevelopString A start year") String devingAStart,
-			@FormParam("DevelopString A target year") String devingATarget,
-			@FormParam("DevelopString B start year") String devingBStart,
-			@FormParam("DevelopString B target year") String devingBTarget,
+			@FormParam("Developing A start year") String devingAStart,
+			@FormParam("Developing A target year") String devingATarget,
+			@FormParam("Developing B start year") String devingBStart,
+			@FormParam("Developing B target year") String devingBTarget,
 			@FormParam("Goal for CO2 in the atmosphere") String co2inAtm) {
 
 		SimulationInput input = new SimulationInput();
 		try {
-			input.setVariable(SimulationInput.InputVariable.DEVELOPED_FF_CHANGE, getDouble(devdchange, "Pct change in Developed FF emissions", null));
-			input.setVariable(SimulationInput.InputVariable.DEVELOPINGA_FF_CHANGE, getDouble(devingchange, "Pct change in Developing A FF emissions", null));
-			input.setVariable(SimulationInput.InputVariable.DEVELOPINGB_FF_CHANGE, getDouble(nonchange, "Pct change in Developing B FF emissions", null));
+			input.setVariable(SimulationInput.InputVariable.DEVELOPED_FF_CHANGE, getDouble(devdchange, 1., "Pct change in Developed FF emissions", null));
+			input.setVariable(SimulationInput.InputVariable.DEVELOPINGA_FF_CHANGE, getDouble(devingchange, 1., "Pct change in Developing A FF emissions", null));
+			input.setVariable(SimulationInput.InputVariable.DEVELOPINGB_FF_CHANGE, getDouble(nonchange, 1., "Pct change in Developing B FF emissions", null));
 			input.setVariable(SimulationInput.InputVariable.DEFORESTATION, getDouble(landUseChange, "Global land use emissions change", null));
 			input.setVariable(SimulationInput.InputVariable.AFFORESTATION, getDouble(targSequestration, "Target Sequestration", null));
 			input.setVariable(SimulationInput.InputVariable.DEVELOPED_FF_START, getDouble(devdStart, "Developed start year", null));
@@ -83,9 +83,13 @@ public class  RootResource {
 	}
 
 	private Double getDouble(String str, String name, Double defaultVal) {
+		return getDouble(str, 1., name, defaultVal);
+	}
+
+	private Double getDouble(String str, Double rescale, String name, Double defaultVal) {
 		if (str != null) {
 			try {
-				return Double.parseDouble(str);
+				return Double.parseDouble(str) * rescale;
 			}
 			catch (NumberFormatException e) {
 				log.warn("Can't parse parameter " + name + ", value: " + str);
