@@ -89,12 +89,9 @@ public class CreateSimulations {
         return null;
     }
 
-     @Test
-    @Transactional
-    @Rollback(false)
     public void createOld760() throws IOException, ParseException, SimulationCreationException {
-       new File(SIM_MAP).delete();
-       new File(VAR_MAP).delete();
+       //new File(SIM_MAP).delete();
+       //new File(VAR_MAP).delete();
 
         DefaultSimulation pangaea = findOrCreate("C-LEARN");
         DefaultSimulation damage = findOrCreate("damage costs");
@@ -174,7 +171,7 @@ public class CreateSimulations {
             }
         }
 
-        csim.setType(SIMULATION_TYPE_PLAN);
+        //csim.setType(SIMULATION_TYPE_PLAN);
         csim.persist();
 
         // add mapping for 3 region composite simulation
@@ -514,6 +511,8 @@ public class CreateSimulations {
         addMapping(csim_15reg.getId(), CSIM_15REGION_ID, SIM_MAP);
         
         
+
+        createOld760();
     }
 
 

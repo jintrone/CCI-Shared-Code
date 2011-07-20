@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>edu.mit.cci.simulation</groupId>
     <artifactId>simulation</artifactId>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
     <version>0.1.0.BUILD-SNAPSHOT</version>
     <name>simulation</name>
     <properties>
@@ -369,6 +369,7 @@
             <groupId>org.mortbay.jetty</groupId>
             <artifactId>jetty-maven-plugin</artifactId>
             <version>7.2.2.v20101205</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.simpleframework</groupId>
@@ -381,11 +382,13 @@
             <version>1.5</version>
         </dependency>
 
+<!-- 
         <dependency>
             <groupId>org.apache.tomcat</groupId>
             <artifactId>catalina</artifactId>
             <version>6.0.29</version>
         </dependency>
+         -->
         <dependency>
             <groupId>com.sun.jersey.contribs</groupId>
             <artifactId>jersey-simple-server</artifactId>
@@ -431,6 +434,73 @@
           <version>1.2.2</version>
           <optional>false</optional>
       </dependency>  -->
+      
+      <!-- Icefaces -->
+  <dependency>
+    <groupId>commons-digester</groupId>
+    <artifactId>commons-digester</artifactId>
+    <version>1.8</version>
+  </dependency>
+
+        <dependency>
+            <groupId>org.icefaces</groupId>
+            <artifactId>icefaces</artifactId>
+            <version>1.8.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.icefaces</groupId>
+            <artifactId>icefaces-comps</artifactId>
+            <version>1.8.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.icefaces</groupId>
+            <artifactId>icefaces-facelets</artifactId>
+            <version>1.8.2</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.el</groupId>
+            <artifactId>el-api</artifactId>
+            <version>1.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>2.3</version>
+            <scope>provided</scope>
+        </dependency>
+        
+    <!-- JSF Dependencies -->
+    <!--
+        <dependency>
+            <groupId>javax.servlet.jsp</groupId>
+            <artifactId>jsp-api</artifactId>
+            <version>2.1</version>
+        </dependency>
+-->
+        <dependency>
+            <groupId>com.sun.el</groupId>
+            <artifactId>el-ri</artifactId>
+            <version>1.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+    <dependency>
+      <groupId>javax.faces</groupId>
+      <artifactId>jsf-api</artifactId>
+      <version>1.2</version>
+      <scope>compile</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>javax.faces</groupId>
+      <artifactId>jsf-impl</artifactId>
+      <version>1.2-b19</version>
+      <scope>compile</scope>
+    </dependency>
+      
 
 
     </dependencies>
