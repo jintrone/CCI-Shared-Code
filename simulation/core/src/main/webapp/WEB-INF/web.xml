@@ -18,6 +18,70 @@
         <param-value>classpath*:META-INF/spring/applicationContext*.xml</param-value>
     </context-param>
     
+    <context-param>
+      <param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+      <param-value>server</param-value>
+    </context-param>
+    
+    <context-param>
+        <description>The default suffix for extension-mapped resources that contain JSF components.
+Default is '.jsp'.</description>
+        <param-name>javax.faces.DEFAULT_SUFFIX</param-name>
+        <param-value>.jspx</param-value>
+    </context-param>
+    
+    <!-- Facelets Init Parameters -->
+    <context-param>
+        <param-name>facelets.SKIP_COMMENTS</param-name>
+        <param-value>true</param-value>
+    </context-param>
+    <context-param>
+        <param-name>facelets.VIEW_MAPPINGS</param-name>
+        <param-value>*.xhtml</param-value>
+    </context-param>
+    <context-param>
+        <param-name>facelets.BUILD_BEFORE_RESTORE</param-name>
+        <param-value>false</param-value>
+    </context-param>
+    <context-param>
+        <param-name>facelets.RECREATE_VALUE_EXPRESSION_ON_BUILD_BEFORE_RESTORE</param-name>
+        <param-value>false</param-value>
+    </context-param>
+    
+    <!-- ICEfaces Init Parameters -->
+  <context-param>
+    <description>To allow multiple windows for a single application.</description>
+    <param-name>com.icesoft.faces.concurrentDOMViews</param-name>
+    <param-value>false</param-value>
+  </context-param>
+  <context-param>
+    <description>Turn on/off application-wide synchronous or asynchronous updates.</description>
+    <param-name>com.icesoft.faces.synchronousUpdate</param-name>
+    <param-value>false</param-value>
+  </context-param>
+  <context-param>
+    <param-name>com.icesoft.faces.uploadDirectory</param-name>
+    <param-value>upload</param-value>
+  </context-param>
+  <context-param>
+    <param-name>com.icesoft.faces.uploadMaxFileSize</param-name>
+    <param-value>4048576</param-value>
+  </context-param>
+  <context-param>
+      <param-name>com.icesoft.faces.blockUIOnSubmit</param-name>
+      <param-value>true</param-value>
+  </context-param>
+  <context-param>
+    <param-name>log4jRefreshInterval</param-name>
+    <param-value>6000</param-value>
+  </context-param>
+  <context-param>
+    <param-name>facelets.RESOURCE_RESOLVER</param-name>
+    <param-value>webcore.application.TemplateResolver</param-value>
+  </context-param>
+  
+  
+    
     <filter>
         <filter-name>CharacterEncodingFilter</filter-name>
         <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
@@ -72,6 +136,57 @@
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
+    
+    
+  <servlet>
+    <servlet-name>Faces Servlet</servlet-name>
+    <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet>
+    <servlet-name>Persistent Faces Servlet</servlet-name>
+    <servlet-class>com.icesoft.faces.webapp.xmlhttp.PersistentFacesServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet>
+    <servlet-name>Blocking Servlet</servlet-name>
+    <servlet-class>com.icesoft.faces.webapp.xmlhttp.BlockingServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet>
+    <servlet-name>uploadServlet</servlet-name>
+    <servlet-class>com.icesoft.faces.component.inputfile.FileUploadServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>Persistent Faces Servlet</servlet-name>
+    <url-pattern>*.faces</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Persistent Faces Servlet</servlet-name>
+    <url-pattern>*.iface</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Persistent Faces Servlet</servlet-name>
+    <url-pattern>/xmlhttp/*</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Blocking Servlet</servlet-name>
+    <url-pattern>/block/*</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>uploadServlet</servlet-name>
+    <url-pattern>/uploadHtml</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Faces Servlet</servlet-name>
+    <url-pattern>/resources/*</url-pattern>
+  </servlet-mapping>
+  
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
     
     <servlet-mapping>
         <servlet-name>simulation</servlet-name>

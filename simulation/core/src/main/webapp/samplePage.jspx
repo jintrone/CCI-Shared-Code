@@ -1,0 +1,332 @@
+<f:view xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+    <ice:outputDeclaration doctypeRoot="HTML"
+                           doctypePublic="-//W3C//DTD XHTML 1.0 Transitional//EN"
+                           doctypeSystem="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"/>
+<html>
+    <head>
+    	<title>Sample page</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"></meta>
+        
+        <!-- STYLE SHEET -->
+        <style type = "text/css">
+        	body
+	        {
+	        background:#FFFFFF;
+	        background-image:url('logo.pgn');
+	        padding-top:2px;
+	        padding-left:20px;
+	        padding-right:20px;
+	        padding-bottom:25px;
+	        font-family:"verdana";
+	        font-size:14px;
+	        }
+	        .footer
+	        {
+	        text-align:center;
+	        }
+	        a{text-decoration:none;}
+	        a:link{color:blue;}
+	        a:visited{color:blue;}
+	        a:hover{color:green;}
+	       	.sections
+	        {
+	        border:1px solid gray;
+	        align:left;
+	        text-align:justify;
+	        background-color:#EEEEEE;
+	        padding:10px;
+	        width:85%;
+	        }
+	        .mainBody
+	        {
+	        padding-left:15px;
+	        padding-top:2px;
+	        padding-bottom:20px;
+	        border:1px solid gray;
+	        }
+        </style>
+        
+    </head>
+    
+    <body>
+    
+    
+    <h2 class = "header">Climate CoLab: Response Surface Creator</h2>
+    <hr/>
+    <!-- BreadCrum -->
+    <ice:form>
+    
+   	<ice:panelGroup>
+   		<b><ice:outputText value = "0. Start"
+   						rendered = "#{navigation.pageType == 'START'}"/></b>
+   		<ice:commandLink value = "0. Start"
+   							rendered = "#{navigation.pageType != 'START'}"
+   							id = "START"
+   							actionListener = "#{navigation.gotoPage}"/>
+   		<ice:outputText value = "&#160;&#160;&#160;&#160;"/>
+   		<ice:outputText value = "&#160;&#160;&#160;&#160;"/>
+   		<ice:outputText value = "&#160;&#160;&#160;&#160;"/>
+   			
+   		<b><ice:outputText value = "1. RS Description"
+   						rendered = "#{navigation.pageType == 'INITIALIZE_RS'}"/></b>
+   		<ice:commandLink value = "1. RS Description"
+   							rendered = "#{navigation.pageType != 'INITIALIZE_RS'}"
+   							id = "INITIALIZE_RS"
+   							actionListener = "#{navigation.gotoPage}"/>
+   		<ice:outputText value = "&#160;&#160;&#160;&#160;"/>
+   		<ice:outputText value = "&#160;&#160;&#160;&#160;"/>
+   		<ice:outputText value = "&#160;&#160;&#160;&#160;"/>
+   		
+   		<b><ice:outputText value = "2. Upload Data"
+   						rendered = "#{navigation.pageType == 'UPLOAD'}"/></b>
+   		<ice:commandLink value = "2. Upload Data"
+   							rendered = "#{navigation.pageType != 'UPLOAD'}"
+   							id = "UPLOAD"
+   							actionListener = "#{navigation.gotoPage}"/>
+   		<ice:outputText value = "&#160;&#160;&#160;&#160;"/>
+   		<ice:outputText value = "&#160;&#160;&#160;&#160;"/>
+   		<ice:outputText value = "&#160;&#160;&#160;&#160;"/>
+   		
+   		<b><ice:outputText value = "3. Confirm"
+   						rendered = "#{navigation.pageType == 'CONFIRM'}"/></b>
+   		<ice:commandLink value = "3. Confirm"
+   							rendered = "#{navigation.pageType != 'CONFIRM'}"
+   							id = "CONFIRM"
+   							actionListener = "#{navigation.gotoPage}"/>	
+   	
+   	</ice:panelGroup>
+    
+    </ice:form>
+    <br/>
+    <!-- Rest of the page Content -->
+    <ice:panelGroup>
+    <div class = "mainBody">
+	    <h:messages globalOnly="true" />
+	    
+	    <f:subview id="start" rendered="#{navigation.pageType == 'START'}">
+	    	<h3>Creating Response Surface:</h3>
+	    	<h4>Step 1: Name and Describe Your Response Surface</h4>
+	    	<h4>Step 2: Upload or Input Data for Your Response Surface</h4>
+	    	<h4>Step 3: Verify Your Response Surface Data</h4>
+	    	<ice:form>
+	    	<ice:commandButton id = "next" value = "Start" type = "submit" action = "#{navigation.nextPage}"/>
+	    	</ice:form>
+    	</f:subview>
+    	
+    	<f:subview id="initializeRS" rendered="#{navigation.pageType == 'INITIALIZE_RS'}">
+       		
+       		<h3>Step1: Naming Your Response Surface</h3>
+       		<ice:panelGrid columns="1">
+       			<ice:form>
+	       		<ice:panelGroup>
+		       		<ice:outputLabel value="Response Surface Name: "/>
+		       		<ice:inputText value="#{responseSurface.name}" 
+		       		               size="25" maxlength="25" 
+		       		               partialSubmit = "true"
+		       					   required = "true"/>
+		        </ice:panelGroup>
+	        	
+	        	<ice:panelGroup>
+		       		<ice:outputLabel value="Number of Scenarios: "/>
+	       			<ice:inputText value ="#{responseSurface.numScenario}" 
+	       			  			   size="5" maxlength="25" 
+	       			  			   partialSubmit = "true">
+    			  			 	<f:validateLongRange maximum = "100" minimum = "1"/>
+    			  	</ice:inputText>
+		        </ice:panelGroup>
+		        
+		        <ice:outputLabel value="Descriptions: (Optional) "/>
+		        <ice:panelGroup>
+		       		<ice:inputTextarea value = "#{responseSurface.description}" cols="20" rows="4" 
+		       			required = "false"
+		       			style="width:280px;height:80px;overflow: auto;"/>
+		        </ice:panelGroup>
+		       	
+    			<ice:commandButton immediate = "true" id = "previous" value = "Back" action = "#{navigation.prevPage}"/>
+		        <ice:commandButton id = "next" value = "Submit" type = "submit" action = "#{navigation.nextPage}"/> 
+    			</ice:form>
+		    </ice:panelGrid>
+        	
+    	</f:subview>
+    	
+    	<f:subview id="upload" rendered="#{navigation.pageType == 'UPLOAD'}">
+       		
+       		<h3>Step2: Upload Data to Your Response Surface</h3>
+       		<ice:outputText value = "There are three methods that you can 
+       		upload your data. Please select one of the following."/><br/><br/>
+       		
+       		
+       		<div class = "sections">
+       		<ice:form>
+       		<ice:outputText value = "&#8226; " 
+       						rendered = "#{navigation.uploadMethod != 'FILE' }"/>
+       		<ice:commandLink value = "Upload .csv File" 
+       		                   actionListener = "#{navigation.uploadUsingFile}"
+       		                   rendered = "#{navigation.uploadMethod != 'FILE' }" />
+       		<ice:panelCollapsible expanded = "#{navigation.uploadMethod == 'FILE'}" >
+       			<f:facet name = "Header">
+       				<ice:outputText value = "Uploading using .csv"/>
+       			</f:facet>
+      			
+      			<h4>Upload data using .csv</h4>
+				<ice:panelGroup>
+		 		<ice:outputText value="#{fileUploader.instruction}" /><br /><br />
+			 		
+		    		<ice:inputFile id="inputFileName" width="800" height = "50"
+		                       action = "#{navigation.nextPage}" 
+		                       actionListener="#{fileUploader.uploadFile}" 
+		                       uploadDirectory = "/Volumes/Keren/MIT/UROP/Thomas Malone/" 
+		                       uploadDirectoryAbsolute = "true" 
+		                       fileNamePattern = ".+\.csv"/>
+		        </ice:panelGroup>
+       		</ice:panelCollapsible>
+       		</ice:form>
+       		</div>
+       		
+       		<div class = "sections">
+       		<ice:form>
+       		<ice:outputText value = "&#8226; " 
+       						rendered = "#{navigation.uploadMethod != 'HAND' }"/>
+       		<ice:commandLink value = "Input Data by Hand" 
+       		                   actionListener = "#{navigation.uploadByHand}" 
+       		                   rendered = "#{navigation.uploadMethod != 'HAND' }"/>
+       		<ice:panelCollapsible expanded = "#{navigation.uploadMethod == 'HAND'}" >
+       			<f:facet name = "Header">
+       				<ice:outputText value = "Input Data By Hand"/>
+       			</f:facet>
+      			
+      			<h4>Input Data By Hand</h4>
+				<ice:panelGroup>
+		 			<ice:outputText value = "number of Columns: "/>
+		 			<ice:inputText value = "#{responseSurface.numCol}"
+		 						   size = "5" maxlength = "25"
+		 						   partialSubmit = "true"/>
+		 			<ice:outputText value = "(This will change the number of columns 
+		 									for all scenarios, inputs, and outputs.)"/>
+		 		</ice:panelGroup>
+		 		<br/>
+		 		<ice:panelGroup>
+		 			<ice:outputText value = "Independent Variable Names:"/>
+		 			<ice:panelSeries value = "#{responseSurface.columnHeaders}"
+		 							 var = "col">
+		 				<ice:outputText value = "#{col}"/>
+		 				
+		 			</ice:panelSeries>
+		 		</ice:panelGroup>
+		 		<br/>
+       		
+       		</ice:panelCollapsible>
+       		</ice:form>
+       		</div>
+       		
+       		<div class = "sections">
+       		<ice:form>
+       		<ice:outputText value = "&#8226; " 
+       						rendered = "#{navigation.uploadMethod != 'COPY' }"/>
+       		<ice:commandLink value = "Copy-Paste from Spreadsheet" 
+       		                   actionListener = "#{navigation.copyFromExcel}" 
+       		                   rendered = "#{navigation.uploadMethod != 'COPY' }"/>
+       		<ice:panelCollapsible expanded = "#{navigation.uploadMethod == 'COPY'}" >
+       			<f:facet name = "Header">
+       				<ice:outputText value = "Copy-Paste from Spreadsheet"/>
+       			</f:facet>
+      			
+      			<h4>Copy-Paste from Spreadsheet</h4>
+				<ice:panelGrid>
+		 		
+		 		</ice:panelGrid>
+       		</ice:panelCollapsible>
+       		</ice:form>
+       		</div>
+       		
+       		<ice:form>
+       		<ice:commandButton immediate = "true" id = "previous" value = "Back" 
+		                               action = "#{navigation.prevPage}"/>
+       		
+       		</ice:form>
+		</f:subview>
+    	
+    	
+    	<f:subview id="confirm" rendered="#{navigation.pageType == 'CONFIRM'}">
+       		<h3>Step3: Confirm Data for Your Response Surface</h3>
+       		<ice:panelGroup>
+       			<pre><ice:outputText value = "Response Surface name: #{responseSurface.name}"/>
+       			<ice:outputText value = "Number of Scenarios: #{responseSurface.numScenario}"/>
+       			<ice:outputText value = "Descriptions: #{responseSurface.description}"/></pre>
+    			
+    			<pre>
+    			<ice:outputText value = "Data: "/>
+    			<ice:outputText value = "#{responseSurface.columnHeaders}"/>
+    			<ice:outputText value = "#{responseSurface.scenarios}" />
+    			<ice:outputText value = "#{responseSurface.outputs}" />
+    			<ice:form>
+    			<ice:commandButton value = "Generate Excel SpreadSheet" actionListener = "#{responseSurface.makeRS}" action = "#{navigation.openPopUp}"/>
+    			</ice:form>
+    			</pre>
+    			
+    			<ice:panelPopup rendered = "#{navigation.popUp}" 
+    							style="border:2px solid gray; 
+    								   z-index:1000; top:30%; left:20%; 
+    								   position: absolute; 
+    								   width:400px; height:150px; 
+    								   font-size:14px">
+                <f:facet name="header">
+                    <ice:panelGrid width="100%" 
+                    			   style="text-align: center; background-color:#3399F0;">
+                        <ice:outputText style="color: #FFFFFF;" value="Response Surface Created"/>
+                    </ice:panelGrid>
+                </f:facet>
+                
+                <f:facet name="body">
+                    <ice:panelGrid width="100%" 
+                    				style="background-color:#EEEEEE;">
+                        <ice:outputText value="A Response Surface Spreadsheet has been generated."/><br/>
+                        <ice:outputText value="Location: #{responseSurface.rsPath}"/>
+                        <ice:form>
+                        	<ice:commandButton value = "Close" actionListener = "#{navigation.closePopUp}"/>
+                        </ice:form>
+                    </ice:panelGrid>
+                </f:facet>
+            </ice:panelPopup>
+    			
+    				
+       		</ice:panelGroup>
+    	</f:subview>
+	    
+	    </div>
+	    
+	    <!-- <ice:panelGroup>
+    		<pre>
+    		<ice:outputText value = "===============TESTING =============" /> </pre>
+    		<pre><ice:outputText value = "Navigation Type: #{navigation.pageType}"/></pre>
+    		<pre><ice:outputText value = "Response Surface name: #{responseSurface.name}"/></pre>
+    		<pre><ice:outputText value = "Number of Scenarios: #{responseSurface.numScenario}"/></pre>
+    		<pre><ice:outputText value = "true or false: #{navigation.popUp}"/></pre>
+    		
+    		
+    	</ice:panelGroup> 
+	    
+	    <ice:form>
+	    	<h3>Update name</h3>
+	    	<ice:inputText value="#{sampleBean.name }" />
+	    	<ice:commandButton value="update name" actionListener="#{sampleBean.updateName}" />
+	        
+	    </ice:form>		
+	     -->
+	    	 		
+	    
+		<ice:form>
+    		<p class = "footer">
+    		<ice:commandButton value = "Reset" action = "#{navigation.reset}" actionListener = "#{responseSurface.reset}" />
+    		</p>
+    	</ice:form>
+    
+    </ice:panelGroup>
+    
+    </body>
+    
+</html>
+</f:view>
