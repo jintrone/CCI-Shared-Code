@@ -709,15 +709,15 @@ public class CreateSimulations {
 
             DefaultVariable v = new DefaultVariable(get(line, "name"),
                     get(line, "description"),
-                    arity, inferPrecision(get(line, "profile")),
+                    arity, inferPrecision(get(line, "profile")), //0 for year, otherwise 2
                     getDouble(line, "min"),
                     getDouble(line, "max"));
             v.setUnits(get(line, "units"));
-            v.setLabels(get(line, "labels"));
-            v.setDefaultValue(get(line, "defaultval"));
-            v.setExternalName(get(line, "internalname"));
-            v.setOptions(parseCategories(get(line, "categories")));
-            v.setDataType(inferDataType(get(line, "vartype")));
+            v.setLabels(get(line, "labels"));//labels for graphs
+            v.setDefaultValue(get(line, "defaultval")); //Default value if there's not dataset
+            v.setExternalName(get(line, "internalname")); //Doens't need to set
+            v.setOptions(parseCategories(get(line, "categories"))); //ignore
+            v.setDataType(inferDataType(get(line, "vartype"))); //RANGE
             //v.setVarContext(get(line, "varcontext"));
 
             v.persist();

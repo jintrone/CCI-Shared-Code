@@ -116,7 +116,7 @@ public class Navigation implements java.io.Serializable {
 	public void openPopUp(){
 		popUp = true;
 	}
-	public void closePopUp(ActionEvent e){
+	public void closePopUp(){
 		popUp = false;
 	}
 	public boolean getPopUp(){

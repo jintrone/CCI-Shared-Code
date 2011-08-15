@@ -64,4 +64,26 @@
                 	<value>#{responseSurface}</value>
                 </managed-property>
   </managed-bean>
+  
+   <managed-bean>
+                <description>Simulation</description>
+                <managed-bean-name>simulation</managed-bean-name>
+                <managed-bean-class>edu.mit.cci.simulation.ice.beans.Simulation</managed-bean-class>
+                <managed-bean-scope>session</managed-bean-scope>
+                <managed-property>
+                	<property-name>responseSurface</property-name>
+                	<value>#{responseSurface}</value>
+                </managed-property>
+  </managed-bean>
+  
 </faces-config>
+
+
+
+
+
+
+
+
+
+

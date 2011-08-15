@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.faces.event.ActionEvent;
@@ -20,6 +21,9 @@ import javax.faces.application.FacesMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import edu.mit.cci.simulation.excel.responsesurfaces.*;
+import edu.mit.cci.simulation.excel.server.ExcelSimulation;
+import edu.mit.cci.simulation.excel.server.ExcelVariable;
+import edu.mit.cci.simulation.model.DefaultSimulation;
 
 
 
@@ -36,6 +40,8 @@ public class ResponseSurface {
 	private DoubleMatrix2D outputs;
 	private SimpleResponseSurface<Float, Integer> rs;
 	private String rsPath;
+	private Integer excelIOArity = 10; //Number of input/output columns needed for excel (input/output Arity for simulation)
+	
 
 	public String reset(ActionEvent e){
 		this.name = null;
@@ -48,6 +54,7 @@ public class ResponseSurface {
 		this.outputs = null;
 		this.rs = null;
 		this.rsPath = null;
+		this.excelIOArity = null;
 		return null;
 		
 	}
@@ -136,7 +143,7 @@ public class ResponseSurface {
 		
 		try{
 			String name = this.name + ".xls";
-			rsPath = ExcelResponseSurfaceWriter.writeSpreadSheet(name, 4, rs);
+			rsPath = ExcelResponseSurfaceWriter.writeSpreadSheet(name, excelIOArity, rs);
 		}catch(Throwable t){
 			
 			t.printStackTrace();
@@ -238,6 +245,13 @@ public class ResponseSurface {
 	}
 	public void setRowHeaders(String[] rowHeaders) {
 		this.rowHeaders = rowHeaders;
+	}
+
+	public Integer getExcelIOArity() {
+		return excelIOArity;
+	}
+	public void setExcelIOArity(Integer excelIOArity) {
+		this.excelIOArity = excelIOArity;
 	}
 
 	private String DoubleMatrix2DtoString(DoubleMatrix2D matrix){

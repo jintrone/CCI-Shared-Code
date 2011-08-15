@@ -124,7 +124,7 @@
 	       		<ice:panelGroup>
 		       		<ice:outputLabel value="Response Surface Name: "/>
 		       		<ice:inputText value="#{responseSurface.name}" 
-		       		               size="25" maxlength="25" 
+		       		               size="25" maxlength="50" 
 		       		               partialSubmit = "true"
 		       					   required = "true"/>
 		        </ice:panelGroup>
@@ -138,13 +138,103 @@
     			  	</ice:inputText>
 		        </ice:panelGroup>
 		        
-		        <ice:outputLabel value="Descriptions: (Optional) "/>
 		        <ice:panelGroup>
-		       		<ice:inputTextarea value = "#{responseSurface.description}" cols="20" rows="4" 
-		       			required = "false"
-		       			style="width:280px;height:80px;overflow: auto;"/>
+		       		<ice:outputLabel value="Descriptions: (Optional)"/>
+		       		<ice:inputTextarea value="#{responseSurface.description}"
+                               cols="20" rows="4"
+                               partialSubmit="true"
+                               required = "false"
+                               style="width:280px;height:80px;overflow: auto;"/>
 		        </ice:panelGroup>
 		       	
+		       	<h4>Setting Properties for Your Simulation</h4>
+		       	
+		       	<ice:panelGroup>
+		       		<ice:outputLabel value="Simulation Name: "/>
+		       		<ice:inputText value="#{simulation.name}" 
+		       		               size="25" maxlength="50" 
+		       		               partialSubmit = "true"
+		       					   required = "true"/>
+		        </ice:panelGroup>
+		        
+		        <ice:panelGroup>
+		       		<ice:outputLabel value="Simulation Descriptions: "/>
+		       		<ice:inputTextarea value="#{simulation.description}"
+                               cols="20" rows="4"
+                               partialSubmit="true"
+                               required = "false"
+                               style="width:280px;height:80px;overflow: auto;"/>
+		        </ice:panelGroup>
+		        
+		        <ice:panelGroup>
+		       		<ice:outputLabel value="Independent Variable Name (For both input and output):"/>
+		       		<ice:inputText value="#{simulation.indepVarName}" 
+		       		               size="10" maxlength="25" 
+		       		               partialSubmit = "true"
+		       					   required = "true"/>
+		       		<ice:outputLabel value="Descriptions:"/>
+		       		<ice:inputText value="#{simulation.indepVarDescription}" 
+		       		               size="10" maxlength="25" 
+		       		               partialSubmit = "true"
+		       					   required = "true"/>
+		       		<ice:outputLabel value="Units:"/>
+		       		<ice:inputText value="#{simulation.indepVarUnits}" 
+		       		               size="10" maxlength="25" 
+		       		               partialSubmit = "true"
+		       					   required = "true"/>
+		       		<ice:outputLabel value="Labels"/>
+		       		<ice:inputText value="#{simulation.indepVarLabels}" 
+		       		               size="10" maxlength="25" 
+		       		               partialSubmit = "true"
+		       					   required = "true"/>
+		        </ice:panelGroup>
+		        
+		        <ice:panelGroup>
+		       		<ice:outputLabel value="Input Variable Name: "/>
+		       		<ice:inputText value="#{simulation.inputVarName}" 
+		       		               size="10" maxlength="25" 
+		       		               partialSubmit = "true"
+		       					   required = "true"/>
+		       		<ice:outputLabel value="Descriptions:"/>
+		       		<ice:inputText value="#{simulation.inputVarDescription}" 
+		       		               size="10" maxlength="25" 
+		       		               partialSubmit = "true"
+		       					   required = "true"/>
+		       		<ice:outputLabel value="Units:"/>
+		       		<ice:inputText value="#{simulation.inputVarUnits}" 
+		       		               size="10" maxlength="25" 
+		       		               partialSubmit = "true"
+		       					   required = "true"/>
+		       		<ice:outputLabel value="Labels"/>
+		       		<ice:inputText value="#{simulation.inputVarLabels}" 
+		       		               size="10" maxlength="25" 
+		       		               partialSubmit = "true"
+		       					   required = "true"/>
+		        </ice:panelGroup>
+		        
+		        <ice:panelGroup>
+		       		<ice:outputLabel value="Output Variable Name: "/>
+		       		<ice:inputText value="#{simulation.outputVarName}" 
+		       		               size="10" maxlength="25" 
+		       		               partialSubmit = "true"
+		       					   required = "true"/>
+		       		<ice:outputLabel value="Descriptions:"/>
+		       		<ice:inputText value="#{simulation.outputVarDescription}" 
+		       		               size="10" maxlength="25" 
+		       		               partialSubmit = "true"
+		       					   required = "true"/>
+		       		<ice:outputLabel value="Units:"/>
+		       		<ice:inputText value="#{simulation.outputVarUnits}" 
+		       		               size="10" maxlength="25" 
+		       		               partialSubmit = "true"
+		       					   required = "true"/>
+		       		<ice:outputLabel value="Labels"/>
+		       		<ice:inputText value="#{simulation.outputVarLabels}" 
+		       		               size="10" maxlength="25" 
+		       		               partialSubmit = "true"
+		       					   required = "true"/>
+		        </ice:panelGroup>
+		        
     			<ice:commandButton immediate = "true" id = "previous" value = "Back" action = "#{navigation.prevPage}"/>
 		        <ice:commandButton id = "next" value = "Submit" type = "submit" action = "#{navigation.nextPage}"/> 
     			</ice:form>
@@ -265,32 +355,36 @@
     			<ice:form>
     			<ice:commandButton value = "Generate Excel SpreadSheet" actionListener = "#{responseSurface.makeRS}" action = "#{navigation.openPopUp}"/>
     			</ice:form>
+    			<ice:form>
+    			<ice:commandButton value = "Create Simulation" actionListener = "#{simulation.createSimulation}"/>
+    			</ice:form>
     			</pre>
     			
+    			<!-- Pop Up Window -->
     			<ice:panelPopup rendered = "#{navigation.popUp}" 
     							style="border:2px solid gray; 
     								   z-index:1000; top:30%; left:20%; 
     								   position: absolute; 
     								   width:400px; height:150px; 
     								   font-size:14px">
-                <f:facet name="header">
-                    <ice:panelGrid width="100%" 
-                    			   style="text-align: center; background-color:#3399F0;">
-                        <ice:outputText style="color: #FFFFFF;" value="Response Surface Created"/>
+              		<f:facet name="header">
+             		<ice:panelGrid width="100%" 
+             		       			   style="text-align: center; background-color:#3399F0;">
+                    	<ice:outputText style="color: #FFFFFF;" value="Response Surface Created"/>
                     </ice:panelGrid>
-                </f:facet>
+                	</f:facet>
                 
-                <f:facet name="body">
-                    <ice:panelGrid width="100%" 
-                    				style="background-color:#EEEEEE;">
-                        <ice:outputText value="A Response Surface Spreadsheet has been generated."/><br/>
-                        <ice:outputText value="Location: #{responseSurface.rsPath}"/>
-                        <ice:form>
-                        	<ice:commandButton value = "Close" actionListener = "#{navigation.closePopUp}"/>
-                        </ice:form>
-                    </ice:panelGrid>
-                </f:facet>
-            </ice:panelPopup>
+                	<f:facet name="body">
+                    	<ice:panelGrid width="100%" 
+                    					style="background-color:#EEEEEE;">
+                        	<ice:outputText value="A Response Surface Spreadsheet has been generated."/><br/>
+                        	<ice:outputText value="Location: #{responseSurface.rsPath}"/>
+                        	<ice:form>
+                        		<ice:commandButton value = "Close" actionListener = "#{navigation.closePopUp}"/>
+                        	</ice:form>
+                    	</ice:panelGrid>
+                	</f:facet>
+            	</ice:panelPopup>
     			
     				
        		</ice:panelGroup>

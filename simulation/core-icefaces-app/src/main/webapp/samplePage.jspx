@@ -286,7 +286,7 @@
                         <ice:outputText value="A Response Surface Spreadsheet has been generated."/><br/>
                         <ice:outputText value="Location: #{responseSurface.rsPath}"/>
                         <ice:form>
-                        	<ice:commandButton value = "Close" actionListener = "#{navigation.closePopUp}"/>
+                        	<ice:commandButton value = "Generate Simulation" actionListener ="#{responseSurface.createSimulation}"  action ="#{navigation.closePopUp}"/>
                         </ice:form>
                     </ice:panelGrid>
                 </f:facet>
