@@ -2,10 +2,9 @@ package edu.mit.cci.simulation.util;
 
 import edu.mit.cci.simulation.excel.server.ExcelSimulation;
 import edu.mit.cci.simulation.model.DataType;
-import edu.mit.cci.simulation.model.DefaultVariable;
 import edu.mit.cci.simulation.model.Tuple;
-import edu.mit.cci.simulation.model.DefaultVariable;
 import edu.mit.cci.simulation.model.Variable;
+import org.apache.log4j.Logger;
 import org.apache.poi.ss.util.AreaReference;
 
 import java.util.Arrays;
@@ -18,6 +17,8 @@ import java.util.List;
  * Time: 8:29 PM
  */
 public class Validation {
+
+    public static Logger log = Logger.getLogger(Validation.class);
 
     public static void validateExcelCoordinates(String cellRange) throws SimulationValidationException {
         AreaReference ref = new AreaReference(cellRange);
@@ -35,13 +36,15 @@ public class Validation {
     }
 
     public static void equalsArity(Variable v, int expected) throws SimulationValidationException {
-        if (v.getArity() != expected)
+        if (v == null || expected != v.getArity()) {
+            log.error("Variable " + v.getName() + " should have arity " + expected + " but instead has " + v.getArity());
             throw new SimulationValidationException("Variable " + v.getName() + " should have arity " + expected + " but instead has " + v.getArity());
+        }
     }
 
     public static void atMostArity(Variable v, int expected) throws SimulationValidationException {
         if (expected > v.getArity())
-            throw new SimulationValidationException("Data is longer than specified arity of "+v.getArity());
+            throw new SimulationValidationException("Data is longer than specified arity of " + v.getArity());
     }
 
     public static void excelUrl(String url) throws SimulationValidationException {
@@ -52,12 +55,12 @@ public class Validation {
     }
 
     public static void isComplete(Variable v) throws SimulationValidationException {
-       if (v == null) {
+        if (v == null) {
             throw new SimulationValidationException("Variable is null");
         }
         if (v.getDataType() == null || v.getArity() == null ||
-                (v.getDataType()==DataType.NUM && (v.getMin_()!=null && v.getMax_()!=null && v.getMin_()>v.getMax_())) ||
-                (v.getDataType()==DataType.CAT && (v.getOptions()==null || v.getOptions().length==0))) {
+                (v.getDataType() == DataType.NUM && (v.getMin_() != null && v.getMax_() != null && v.getMin_() > v.getMax_())) ||
+                (v.getDataType() == DataType.CAT && (v.getOptions() == null || v.getOptions().length == 0))) {
             throw new SimulationValidationException("Variable is not completely specified");
         }
     }
@@ -65,7 +68,7 @@ public class Validation {
     public static void canSet(Tuple tuple, String[] values) throws SimulationValidationException {
 
 
-        if (values.length>tuple.getVar().getArity() ) {
+        if (values.length > tuple.getVar().getArity()) {
             throw new SimulationValidationException("Cannot set tuple value with length > expected arity");
         }
     }
@@ -78,17 +81,17 @@ public class Validation {
     }
 
     public static void checkDataType(Variable var, String s, boolean ignoreNulls) throws SimulationValidationException {
-        List<String> options = var.getDataType()==DataType.CAT? Arrays.asList(var.getOptions()): Collections.<String>emptyList();
+        List<String> options = var.getDataType() == DataType.CAT ? Arrays.asList(var.getOptions()) : Collections.<String>emptyList();
         if (ignoreNulls && s == null) return;
-            if (var.getDataType() == DataType.NUM) {
+        if (var.getDataType() == DataType.NUM) {
 
-                try {
-                    Double.parseDouble(s);
-                } catch (NumberFormatException ex) {
-                    throw new SimulationValidationException("Value  "+s+" cannot be interpreted as a number");
-                }
-            } else if (var.getDataType() == DataType.CAT  && !options.contains(s)) {
-                throw new SimulationValidationException("Value " + s + " is not a known categorical option");
+            try {
+                Double.parseDouble(s);
+            } catch (NumberFormatException ex) {
+                throw new SimulationValidationException("Value  " + s + " cannot be interpreted as a number");
             }
+        } else if (var.getDataType() == DataType.CAT && !options.contains(s)) {
+            throw new SimulationValidationException("Value " + s + " is not a known categorical option");
+        }
     }
 }

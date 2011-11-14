@@ -127,14 +127,18 @@ public class ExcelRunnerStrategy implements RunStrategy {
 
     }
 
-    public void runForumlas(HSSFWorkbook workbook) {
+    public void runForumlas(HSSFWorkbook workbook) throws SimulationException {
         FormulaEvaluator evaluator = workbook.getCreationHelper().createFormulaEvaluator();
         for (int i = 0; i < workbook.getNumberOfSheets(); i++) {
             HSSFSheet sheet = workbook.getSheetAt(i);
             for (Row r : sheet) {
                 for (Cell c : r) {
                     if (c.getCellType() == Cell.CELL_TYPE_FORMULA) {
-                        evaluator.evaluateFormulaCell(c);
+                        try {
+                            evaluator.evaluateFormulaCell(c);
+                        } catch (Exception e) {
+                            throw new SimulationException(e);
+                        }
                     }
                 }
             }

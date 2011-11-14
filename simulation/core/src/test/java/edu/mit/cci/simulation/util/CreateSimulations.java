@@ -3,7 +3,6 @@ package edu.mit.cci.simulation.util;
 import edu.mit.cci.simulation.excel.server.ExcelSimulation;
 import edu.mit.cci.simulation.excel.server.ExcelVariable;
 import edu.mit.cci.simulation.model.*;
-
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -41,13 +40,13 @@ public class CreateSimulations {
     private static final String SIMULATION_TYPE_PLAN = "type=plan";
 
 
-	public static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    public static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 
     public static String SIM_MAP = "SimulationMapping.txt";
     public static String VAR_MAP = "VariableMapping.txt";
 
-    public static Long CSIM_OLD_ID=760L;
+    public static Long CSIM_OLD_ID = 760L;
     public static Long CSIM_3REGION_ID = 862L;
     public static Long CSIM_7REGION_ID = 863L;
     public static Long CSIM_15REGION_ID = 864L;
@@ -61,13 +60,13 @@ public class CreateSimulations {
         writer.flush();
         writer.close();
     }
-    
+
     private void addMapping(Long from, Long to, String mappingfile) throws IOException {
         File f = new File(mappingfile);
         PrintWriter writer = new PrintWriter(new FileWriter(f, true));
-	    writer.println(from + "," + to);
-	    writer.flush();
-	    writer.close();
+        writer.println(from + "," + to);
+        writer.flush();
+        writer.close();
     }
 
     public Simulation createBaseSim(String path, int inputArity, int outputArity) throws IOException, ParseException {
@@ -78,10 +77,17 @@ public class CreateSimulations {
         return sim;
     }
 
+    public Simulation createBaseSimNewFormat(String path) throws IOException, ParseException {
+        Simulation sim = readSimulation(path);
+        addVarsNewFormat(sim,path,true);
+        addVarsNewFormat(sim,path,false);
+        return sim;
+    }
+
 
     public DefaultSimulation findOrCreate(String namefragment) {
-       List<DefaultSimulation> existing = DefaultSimulation.findAllDefaultSimulations();
-        for (DefaultSimulation sim:existing) {
+        List<DefaultSimulation> existing = DefaultSimulation.findAllDefaultSimulations();
+        for (DefaultSimulation sim : existing) {
             if (sim.getName().contains(namefragment)) {
                 return sim;
             }
@@ -90,8 +96,8 @@ public class CreateSimulations {
     }
 
     public void createOld760() throws IOException, ParseException, SimulationCreationException {
-       //new File(SIM_MAP).delete();
-       //new File(VAR_MAP).delete();
+        //new File(SIM_MAP).delete();
+        //new File(VAR_MAP).delete();
 
         DefaultSimulation pangaea = findOrCreate("C-LEARN");
         DefaultSimulation damage = findOrCreate("damage costs");
@@ -109,7 +115,6 @@ public class CreateSimulations {
         ignoredOutputs.add("Temperature_Change_output"); // tyndall index
         ignoredOutputs.add("Temperature_Change1_ou1tput"); // ipcc index
         */
-
 
 
         CompositeSimulation csim = new CompositeSimulation();
@@ -155,9 +160,9 @@ public class CreateSimulations {
         for (Simulation s : s2.getSimulations()) {
 
             for (Variable v : s.getOutputs()) {
-            	if (! ignoredOutputs.contains(v.getExternalName())) {
-            		mapping3.addLink(v, v);
-            	}
+                if (!ignoredOutputs.contains(v.getExternalName())) {
+                    mapping3.addLink(v, v);
+                }
             }
         }
 
@@ -165,9 +170,9 @@ public class CreateSimulations {
         for (Simulation s : s1.getSimulations()) {
 
             for (Variable v : s.getOutputs()) {
-            	if (! ignoredOutputs.contains(v.getExternalName())) {
-            		mapping4.addLink(v, v);
-            	}
+                if (!ignoredOutputs.contains(v.getExternalName())) {
+                    mapping4.addLink(v, v);
+                }
             }
         }
 
@@ -205,7 +210,7 @@ public class CreateSimulations {
         tyndall_m.setName("tyndall_m");
         tyndall_m.setDescription("tyndall_m");
         tyndall_m.setCreated(new Date());
-        
+
         tyndall_m.persist();
 
         MappedSimulation ipcc_m = new MappedSimulation();
@@ -219,7 +224,7 @@ public class CreateSimulations {
         ipcc_m.persist();
 
         Simulation[] all = new Simulation[]{pangaea, damage, mitigation, tyndall_m, ipcc_m};
-        
+
         Set<String> ignoredOutputs = new HashSet<String>();
         /*
         ignoredOutputs.add("Year"); // pangaea index
@@ -228,7 +233,6 @@ public class CreateSimulations {
         ignoredOutputs.add("Temperature_Change_output"); // tyndall index
         ignoredOutputs.add("Temperature_Change1_ou1tput"); // ipcc index
         */
-
 
 
         CompositeSimulation csim = new CompositeSimulation();
@@ -258,7 +262,7 @@ public class CreateSimulations {
         for (Variable v : csim.getInputs()) {
             mapping1.addLink(v, v);
         }
-        
+
         CompositeStepMapping mapping2 = new CompositeStepMapping(csim, s1, s2);
         Variable pYear = pangaea.findVariableWithExternalName("Year", false);
         Variable pTemp = pangaea.findVariableWithExternalName("GlobalTempChange", false);
@@ -274,9 +278,9 @@ public class CreateSimulations {
         for (Simulation s : s2.getSimulations()) {
 
             for (Variable v : s.getOutputs()) {
-            	if (! ignoredOutputs.contains(v.getExternalName())) {
-            		mapping3.addLink(v, v);
-            	}
+                if (!ignoredOutputs.contains(v.getExternalName())) {
+                    mapping3.addLink(v, v);
+                }
             }
         }
 
@@ -284,23 +288,23 @@ public class CreateSimulations {
         for (Simulation s : s1.getSimulations()) {
 
             for (Variable v : s.getOutputs()) {
-            	if (! ignoredOutputs.contains(v.getExternalName())) {
-            		mapping4.addLink(v, v);
-            	}
+                if (!ignoredOutputs.contains(v.getExternalName())) {
+                    mapping4.addLink(v, v);
+                }
             }
         }
 
         csim.setType(SIMULATION_TYPE_PLAN);
         csim.persist();
-        
+
         // add mapping for 3 region composite simulation
         addMapping(csim.getId(), CSIM_3REGION_ID, SIM_MAP);
-        
-        /*
-         * 7 and 15 region disaggregation simulations 
-         */
 
-        
+        /*
+        * 7 and 15 region disaggregation simulations
+        */
+
+
         /* inputs that should be ignored from pangaea as model inputs */
         Set<String> inputsNotIncludedInDisagModels = new HashSet<String>();
         inputsNotIncludedInDisagModels.add("Developed start year");
@@ -324,17 +328,17 @@ public class CreateSimulations {
         disagOutputsToPangaeaMap.put("Developed_countries_emissions_change_output0", "Pct change in Developed FF emissions");
         disagOutputsToPangaeaMap.put("Rapidly_developing_countries_emissions_change_output3", "Pct change in Developing A FF emissions");
         disagOutputsToPangaeaMap.put("Other_developing_countries_emissions_change_output6", "Pct change in Developing B FF emissions");
-        
-        
+
+
         /*
-         * 7 Region model
-         */
-        
+        * 7 Region model
+        */
+
         CompositeSimulation csim_7reg = new CompositeSimulation();
         csim_7reg.setName("7 region composite model");
         csim_7reg.setSimulationVersion(1l);
         csim_7reg.setCreated(new Date());
-        
+
         Step s1_7reg = new Step(1, disag7);
         Step s2_7reg = new Step(2, pangaea);
         Step s3_7reg = new Step(3, mitigation, damage, tyndall_m, ipcc_m);
@@ -342,49 +346,49 @@ public class CreateSimulations {
         csim_7reg.getSteps().add(s1_7reg);
         csim_7reg.getSteps().add(s2_7reg);
         csim_7reg.getSteps().add(s3_7reg);
-        
+
         /* get inputs from disagregation 7 region sim */
-        for (Variable v: disag7.getInputs()) {
-        	csim_7reg.getInputs().add(v);
+        for (Variable v : disag7.getInputs()) {
+            csim_7reg.getInputs().add(v);
         }
-        
+
         /* add inputs not covered by disagregation outputs */
-        for (Variable v: pangaea.getInputs()) {
-        	if (! inputsNotIncludedInDisagModels.contains(v.getExternalName())) {
-        		csim_7reg.getInputs().add(v);
-        	}
+        for (Variable v : pangaea.getInputs()) {
+            if (!inputsNotIncludedInDisagModels.contains(v.getExternalName())) {
+                csim_7reg.getInputs().add(v);
+            }
         }
-        
+
         /* Same outputs as for 3-region */
         for (Simulation s : all) {
             for (Variable v : s.getOutputs()) {
-            	csim_7reg.getOutputs().add(v);
+                csim_7reg.getOutputs().add(v);
             }
         }
-        
+
         /* Mapping from input variables to input variables of disag7 simulation */
         CompositeStepMapping mapping1_7reg = new CompositeStepMapping(csim_7reg, null, s1_7reg);
         for (Variable v : disag7.getInputs()) {
             mapping1_7reg.addLink(v, v);
         }
-        
-        /* Map pangaea related inputs to step 2 (pangaea) */ 
+
+        /* Map pangaea related inputs to step 2 (pangaea) */
         CompositeStepMapping mapping2_7reg = new CompositeStepMapping(csim_7reg, null, s2_7reg);
-        for (Variable v: pangaea.getInputs()) {
-        	if (! inputsNotIncludedInDisagModels.contains(v.getExternalName())) {
-        		mapping2_7reg.addLink(v, v);
-        	}
+        for (Variable v : pangaea.getInputs()) {
+            if (!inputsNotIncludedInDisagModels.contains(v.getExternalName())) {
+                mapping2_7reg.addLink(v, v);
+            }
         }
-        
+
         /* Map step 1 outputs to step 2 inputs */
         CompositeStepMapping mapping3_7reg = new CompositeStepMapping(csim_7reg, s1_7reg, s2_7reg);
-        for (Variable v: disag7.getOutputs()) {
-        	mapping3_7reg.addLink(v, pangaea.findVariableWithExternalName(disagOutputsToPangaeaMap.get(v.getExternalName()), true));
+        for (Variable v : disag7.getOutputs()) {
+            mapping3_7reg.addLink(v, pangaea.findVariableWithExternalName(disagOutputsToPangaeaMap.get(v.getExternalName()), true));
         }
-        
+
         /* Map pangaea outputs to step 3 inputs (simmilar to 3 region) */
         CompositeStepMapping mapping4_7reg = new CompositeStepMapping(csim_7reg, s2_7reg, s3_7reg);
-        
+
         mapping4_7reg.addLink(pTemp, damage.findVariableWithExternalName("Temperature_input0", true));
         mapping4_7reg.addLink(pYear, mitigation.findVariableWithExternalName("Time_input0", true));
         mapping4_7reg.addLink(pCumEmissions, mitigation.findVariableWithExternalName("CO2e_input1", true));
@@ -395,9 +399,9 @@ public class CreateSimulations {
         CompositeStepMapping mapping5_7reg = new CompositeStepMapping(csim_7reg, s3_7reg, null);
         for (Simulation s : s3_7reg.getSimulations()) {
             for (Variable v : s.getOutputs()) {
-            	if (! ignoredOutputs.contains(v.getExternalName())) {
-            		mapping5_7reg.addLink(v, v);
-            	}
+                if (!ignoredOutputs.contains(v.getExternalName())) {
+                    mapping5_7reg.addLink(v, v);
+                }
             }
         }
 
@@ -405,29 +409,28 @@ public class CreateSimulations {
         CompositeStepMapping mapping6_7reg = new CompositeStepMapping(csim_7reg, s2_7reg, null);
         for (Simulation s : s2_7reg.getSimulations()) {
             for (Variable v : s.getOutputs()) {
-            	if (! ignoredOutputs.contains(v.getExternalName())) {
-            		mapping6_7reg.addLink(v, v);
-            	}
+                if (!ignoredOutputs.contains(v.getExternalName())) {
+                    mapping6_7reg.addLink(v, v);
+                }
             }
         }
-        
+
         csim_7reg.setType(SIMULATION_TYPE_PLAN);
         csim_7reg.persist();
-        
+
         // add mapping for 3 region composite simulation
         addMapping(csim_7reg.getId(), CSIM_7REGION_ID, SIM_MAP);
-        
-        
+
 
         /*
-         * 15 Region model
-         */
-        
+        * 15 Region model
+        */
+
         CompositeSimulation csim_15reg = new CompositeSimulation();
         csim_15reg.setName("15 region composite model");
         csim_15reg.setSimulationVersion(1l);
         csim_15reg.setCreated(new Date());
-        
+
         Step s1_15reg = new Step(1, disag15);
         Step s2_15reg = new Step(2, pangaea);
         Step s3_15reg = new Step(3, mitigation, damage, tyndall_m, ipcc_m);
@@ -435,49 +438,49 @@ public class CreateSimulations {
         csim_15reg.getSteps().add(s1_15reg);
         csim_15reg.getSteps().add(s2_15reg);
         csim_15reg.getSteps().add(s3_15reg);
-        
+
         /* get inputs from disagregation 15 region sim */
-        for (Variable v: disag15.getInputs()) {
-        	csim_15reg.getInputs().add(v);
+        for (Variable v : disag15.getInputs()) {
+            csim_15reg.getInputs().add(v);
         }
-        
+
         /* add inputs not covered by disagregation outputs */
-        for (Variable v: pangaea.getInputs()) {
-        	if (! inputsNotIncludedInDisagModels.contains(v.getExternalName())) {
-        		csim_15reg.getInputs().add(v);
-        	}
+        for (Variable v : pangaea.getInputs()) {
+            if (!inputsNotIncludedInDisagModels.contains(v.getExternalName())) {
+                csim_15reg.getInputs().add(v);
+            }
         }
-        
+
         /* Same outputs as for 3-region */
         for (Simulation s : all) {
             for (Variable v : s.getOutputs()) {
-            	csim_15reg.getOutputs().add(v);
+                csim_15reg.getOutputs().add(v);
             }
         }
-        
+
         /* Mapping from input variables to input variables of disag15 simulation */
         CompositeStepMapping mapping1_15reg = new CompositeStepMapping(csim_15reg, null, s1_15reg);
         for (Variable v : disag15.getInputs()) {
             mapping1_15reg.addLink(v, v);
         }
-        
-        /* Map pangaea related inputs to step 2 (pangaea) */ 
+
+        /* Map pangaea related inputs to step 2 (pangaea) */
         CompositeStepMapping mapping2_15reg = new CompositeStepMapping(csim_15reg, null, s2_15reg);
-        for (Variable v: pangaea.getInputs()) {
-        	if (! inputsNotIncludedInDisagModels.contains(v.getExternalName())) {
-        		mapping2_15reg.addLink(v, v);
-        	}
+        for (Variable v : pangaea.getInputs()) {
+            if (!inputsNotIncludedInDisagModels.contains(v.getExternalName())) {
+                mapping2_15reg.addLink(v, v);
+            }
         }
-        
+
         /* Map step 1 outputs to step 2 inputs */
         CompositeStepMapping mapping3_15reg = new CompositeStepMapping(csim_15reg, s1_15reg, s2_15reg);
-        for (Variable v: disag15.getOutputs()) {
-        	mapping3_15reg.addLink(v, pangaea.findVariableWithExternalName(disagOutputsToPangaeaMap.get(v.getExternalName()), true));
+        for (Variable v : disag15.getOutputs()) {
+            mapping3_15reg.addLink(v, pangaea.findVariableWithExternalName(disagOutputsToPangaeaMap.get(v.getExternalName()), true));
         }
-        
+
         /* Map pangaea outputs to step 3 inputs (simmilar to 3 region) */
         CompositeStepMapping mapping4_15reg = new CompositeStepMapping(csim_15reg, s2_15reg, s3_15reg);
-        
+
         mapping4_15reg.addLink(pTemp, damage.findVariableWithExternalName("Temperature_input0", true));
         mapping4_15reg.addLink(pYear, mitigation.findVariableWithExternalName("Time_input0", true));
         mapping4_15reg.addLink(pCumEmissions, mitigation.findVariableWithExternalName("CO2e_input1", true));
@@ -488,9 +491,9 @@ public class CreateSimulations {
         CompositeStepMapping mapping5_15reg = new CompositeStepMapping(csim_15reg, s3_15reg, null);
         for (Simulation s : s3_15reg.getSimulations()) {
             for (Variable v : s.getOutputs()) {
-            	if (! ignoredOutputs.contains(v.getExternalName())) {
-            		mapping5_15reg.addLink(v, v);
-            	}
+                if (!ignoredOutputs.contains(v.getExternalName())) {
+                    mapping5_15reg.addLink(v, v);
+                }
             }
         }
 
@@ -498,26 +501,24 @@ public class CreateSimulations {
         CompositeStepMapping mapping6_15reg = new CompositeStepMapping(csim_15reg, s2_15reg, null);
         for (Simulation s : s2_15reg.getSimulations()) {
             for (Variable v : s.getOutputs()) {
-            	if (! ignoredOutputs.contains(v.getExternalName())) {
-            		mapping6_15reg.addLink(v, v);
-            	}
+                if (!ignoredOutputs.contains(v.getExternalName())) {
+                    mapping6_15reg.addLink(v, v);
+                }
             }
         }
-        
+
         csim_15reg.setType(SIMULATION_TYPE_PLAN);
         csim_15reg.persist();
-        
+
         // add mapping for 3 region composite simulation
         addMapping(csim_15reg.getId(), CSIM_15REGION_ID, SIM_MAP);
-        
-        
+
 
         createOld760();
     }
 
 
-
-	//    @Test
+    //    @Test
 //    @Transactional
 //    @Rollback(false)
     public DefaultSimulation createPangaea() throws IOException, ParseException {
@@ -557,7 +558,7 @@ public class CreateSimulations {
 
     }
 
-     public DefaultSimulation createOldMitigation() throws IOException, ParseException {
+    public DefaultSimulation createOldMitigation() throws IOException, ParseException {
         DefaultSimulation sim = (DefaultSimulation) createBaseSim("./target/test-classes/old_mitigation", 101, 11);
         ExcelSimulation esim = new ExcelSimulation();
         esim.setSimulation(sim);
@@ -597,6 +598,30 @@ public class CreateSimulations {
         sim.persist();
         return sim;
 
+    }
+
+
+     @Test
+  @Transactional
+ @Rollback(false)
+    public void createDOEModel() throws IOException, ParseException {
+        String basename = "./target/test-classes/doe_model";
+
+        DefaultSimulation sim = (DefaultSimulation)createBaseSimNewFormat("./target/test-classes/doe_model");
+        ExcelSimulation esim = new ExcelSimulation(sim, new File("./target/test-classes/doe_step_model.xls"));
+        CSVReader reader = new CSVReader(basename + "_xlmapping.csv");
+        for (Map<String,String> line:reader) {
+          if ("true".equalsIgnoreCase(get(line,"input"))) {
+              esim.getInputs().add(new ExcelVariable(esim,sim.findVariableWithExternalName(get(line,"ext_name"),true),get(line,"worksheet"),get(line,"range")));
+          } else {
+               esim.getOutputs().add(new ExcelVariable(esim,sim.findVariableWithExternalName(get(line,"ext_name"),false),get(line,"worksheet"),get(line,"range")));
+          }
+
+        }
+        esim.persist();
+        sim.setUrl(ExcelSimulation.EXCEL_URL + esim.getId());
+        sim.persist();
+        //return sim;
     }
 
     //    @Test
@@ -685,7 +710,7 @@ public class CreateSimulations {
 
     public static String get(Map<String, String> line, String key) {
         String result = line.get(key);
-        return "NULL".equals(result) || result.isEmpty() ? null : result;
+        return result==null || "NULL".equals(result) || result.isEmpty() ? null : result;
     }
 
     public static Long getLong(Map<String, String> line, String key) {
@@ -696,6 +721,65 @@ public class CreateSimulations {
     public static Double getDouble(Map<String, String> line, String key) {
         String result = get(line, key);
         return result == null ? null : Double.parseDouble(result);
+    }
+
+    public static Integer getInteger(Map<String, String> line, String key) {
+        String result = get(line, key);
+        return result == null ? null : Integer.parseInt(result);
+    }
+
+    public static void addVarsNewFormat(Simulation sim, String basename, boolean inputs) throws IOException {
+        Map<String, String> map = new HashMap<String, String>();
+        CSVReader reader = new CSVReader(basename + (inputs ? "_inputs.csv" : "_outputs.csv"));
+        Map<String, Variable> varmap = new HashMap<String, Variable>();
+        List<Variable> varlist = new ArrayList<Variable>();
+
+        for (Map<String, String> line : reader) {
+            DefaultVariable v = new DefaultVariable(get(line, "name"),
+                    get(line, "description"),
+                    getInteger(line, "arity"), getInteger(line, "precision"), //0 for year, otherwise 2
+                    getDouble(line, "min"),
+                    getDouble(line, "max"));
+            v.setUnits(get(line, "units"));
+            v.setLabels(get(line, "labels"));//labels for graphs
+            if (get(line,"defaultval")!=null) v.setDefaultValue(get(line, "defaultval")); //Default value if there's not dataset
+            v.setDataType(DataType.valueOf(get(line, "datatype"))); //RANGE
+            if (get(line,"externalname")!=null) {
+                v.setExternalName(get(line, "externalname")); //Doens't need to set
+            }  else {
+                String extname = get(line,"name").replaceAll("\\s","_");
+                v.setExternalName(extname);
+
+            }
+            if (get(line,"categories") !=null) v.setOptions(parseCategories(get(line, "categories"))); //ignore
+
+            v.persist();
+            //?
+            varlist.add(v);
+
+            if (get(line,"id")!=null) {
+                map.put(v.getId_() + "", get(line, "id"));
+                varmap.put(get(line, "id"), v);
+            }
+
+        }
+
+        int i = 0;
+        for (Map<String, String> line : reader) {
+            Variable v = varlist.get(i);
+            if (get(line, "indexingid") != null) {
+                Variable indexing = varmap.get(get(line, "indexingid"));
+                v.setIndexingVariable(indexing);
+                ((DefaultVariable) v).persist();
+
+
+            }
+            if (inputs) sim.getInputs().add(v);
+            else sim.getOutputs().add(v);
+            i++;
+        }
+        ((DefaultSimulation) sim).persist();
+        dumpMapping(map, VAR_MAP);
     }
 
 
@@ -743,12 +827,12 @@ public class CreateSimulations {
         ((DefaultSimulation) sim).persist();
         dumpMapping(map, VAR_MAP);
     }
-    
 
-	private DefaultSimulation create15RegionDisagregation() throws IOException, ParseException {
+
+    private DefaultSimulation create15RegionDisagregation() throws IOException, ParseException {
         DefaultSimulation sim = (DefaultSimulation) createBaseSim("./target/test-classes/disag15", 1, 1);
         ExcelSimulation esim = new ExcelSimulation(sim, new File("./target/test-classes/disag15.xls"));
-        
+
         esim.getInputs().add(new ExcelVariable(esim, sim.findVariableWithExternalName("US_emissions_change_input0", true), "15region", "A13:A13"));
         esim.getInputs().add(new ExcelVariable(esim, sim.findVariableWithExternalName("EU_emissions_change_input1", true), "15region", "B13:B13"));
         esim.getInputs().add(new ExcelVariable(esim, sim.findVariableWithExternalName("Russia_Former_Soviet_Union_emissions_change_input2", true), "15region", "C13:C13"));
@@ -767,7 +851,7 @@ public class CreateSimulations {
         esim.getInputs().add(new ExcelVariable(esim, sim.findVariableWithExternalName("Middle_East_input15", true), "15region", "P13:P13"));
         esim.getInputs().add(new ExcelVariable(esim, sim.findVariableWithExternalName("Latin_America_input16", true), "15region", "Q13:Q13"));
         esim.getInputs().add(new ExcelVariable(esim, sim.findVariableWithExternalName("Africa_input17", true), "15region", "R13:R13"));
-		esim.getInputs().add(new ExcelVariable(esim, sim.findVariableWithExternalName("Other_developing_Asia_input18", true), "15region", "S13:S13"));
+        esim.getInputs().add(new ExcelVariable(esim, sim.findVariableWithExternalName("Other_developing_Asia_input18", true), "15region", "S13:S13"));
         esim.getInputs().add(new ExcelVariable(esim, sim.findVariableWithExternalName("Other_developing_countries_start_year_input19", true), "15region", "T13:T13"));
         esim.getInputs().add(new ExcelVariable(esim, sim.findVariableWithExternalName("Other_developing_countries_target_year_input20", true), "15region", "U13:U13"));
 
@@ -780,18 +864,18 @@ public class CreateSimulations {
         esim.getOutputs().add(new ExcelVariable(esim, sim.findVariableWithExternalName("Other_developing_countries_emissions_change_output6", false), "15region", "G26:G26"));
         esim.getOutputs().add(new ExcelVariable(esim, sim.findVariableWithExternalName("Other_developing_countries_start_year_output7", false), "15region", "H26:H26"));
         esim.getOutputs().add(new ExcelVariable(esim, sim.findVariableWithExternalName("Other_developing_countries_target_year_output8", false), "15region", "I26:I26"));
-        
+
         esim.persist();
         sim.setUrl(ExcelSimulation.EXCEL_URL + esim.getId());
-        sim.persist();        
-        
+        sim.persist();
+
         return sim;
     }
 
-	private DefaultSimulation create7RegionDisagregation() throws IOException, ParseException {
+    private DefaultSimulation create7RegionDisagregation() throws IOException, ParseException {
         DefaultSimulation sim = (DefaultSimulation) createBaseSim("./target/test-classes/disag7", 1, 1);
         ExcelSimulation esim = new ExcelSimulation(sim, new File("./target/test-classes/disag7.xls"));
-        
+
         esim.getInputs().add(new ExcelVariable(esim, sim.findVariableWithExternalName("US_emissions_change_input0", true), "Disagge", "A13:A13"));
         esim.getInputs().add(new ExcelVariable(esim, sim.findVariableWithExternalName("EU_emissions_change_input1", true), "Disagge", "B13:B13"));
         esim.getInputs().add(new ExcelVariable(esim, sim.findVariableWithExternalName("Other_developed_countries_emissions_change_input2", true), "Disagge", "C13:C13"));
@@ -805,7 +889,7 @@ public class CreateSimulations {
         esim.getInputs().add(new ExcelVariable(esim, sim.findVariableWithExternalName("Other_developing_countries_emissions_change_input10", true), "Disagge", "K13:K13"));
         esim.getInputs().add(new ExcelVariable(esim, sim.findVariableWithExternalName("Other_developing_countries_start_year_input11", true), "Disagge", "L13:L13"));
         esim.getInputs().add(new ExcelVariable(esim, sim.findVariableWithExternalName("Other_developing_countries_target_year_input12", true), "Disagge", "M13:M13"));
-        
+
 
         esim.getOutputs().add(new ExcelVariable(esim, sim.findVariableWithExternalName("Developed_countries_emissions_change_output0", false), "Disagge", "A26:A26"));
         esim.getOutputs().add(new ExcelVariable(esim, sim.findVariableWithExternalName("Developed_countries_start_year_output1", false), "Disagge", "B26:B26"));
@@ -816,7 +900,7 @@ public class CreateSimulations {
         esim.getOutputs().add(new ExcelVariable(esim, sim.findVariableWithExternalName("Other_developing_countries_emissions_change_output6", false), "Disagge", "G26:G26"));
         esim.getOutputs().add(new ExcelVariable(esim, sim.findVariableWithExternalName("Other_developing_countries_start_year_output7", false), "Disagge", "H26:H26"));
         esim.getOutputs().add(new ExcelVariable(esim, sim.findVariableWithExternalName("Other_developing_countries_target_year_output8", false), "Disagge", "I26:I26"));
-        
+
         esim.persist();
         sim.setUrl(ExcelSimulation.EXCEL_URL + esim.getId());
         sim.persist();
