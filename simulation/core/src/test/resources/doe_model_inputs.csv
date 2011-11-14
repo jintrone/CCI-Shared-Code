@@ -1,0 +1,18 @@
+name,description,units,labels,precision,min,max,datatype,defaultval,arity
+Coal-based electricity in 2050,Share of coal-based electricity generation in the generation mix of 2050.,%,Coal-based electricity in 2050,2,0,.68,NUM,.48,1
+Natural gas-based electricity in 2050,Share of natural gas-based electricity generation in the generation mix of 2050.,%,Natural gas-based electricity in 2050,2,.02,1.00,NUM,.22,1
+Nuclear electricity in 2050,Share of nuclear electricity generation in the generation mix of 2050.,%,Nuclear electricity in 2050,2,.16,.84,NUM,.16,1
+Renewable electricity in 2050,Share of renewable electricity generation in the generation mix of 2050.,%,Renewable electricity in 2050,2,.14,.80,NUM,.14,1
+Share of fossil CCS in 2050,Share of fossil-based electricity generation using carbon capture & storage (CCS).,%,Share of fossil CCS in 2050,2,0,1.00,NUM,.02,1
+Industry energy effeciency increase by 2050,Increase of energy efficiency in the industry sector by 2050.,%,Industry energy effeciency increase by 2050,2,0,.43,NUM,.43,1
+Low carbon fuel mix in 2050,Share of low carbon in the industry fuel mix in 2050.,%,Low carbon fuel mix in 2050,2,.30,.70,NUM,.50,1
+Biomass feedstock in 2050,Share of biomass feedstock in the bulk chemicals industry in 2050.,%,Biomass feedstock in 2050,2,0,.50,NUM,.50,1
+New building improvements by 2030,Energy use (heating and cooling) reduction due to new building improvements by 2030.,%,New building improvements by 2030,2,.30,.75,NUM,.75,1
+Residential building retrofits by 2050,Share of exisiting resedential buildings retrofitted by 2050 (share for commercial buildings is assumed to be 1/2 of this value).,%,Residential building retrofits by 2050,2,0,1.00,NUM,1.00,1
+Retrofit improvements in 2050,Energy use (heating and cooling) reduction due to retrofit improvements in 2050.,%,Retrofit improvements in 2050,2,0,.36,NUM,.12,1
+Appliance and equipment efficicency increase by 2050,Increase of equipment (heating and cooling) and household appliances efficiency by 2050.,%,Appliance and equipment efficicency increase by 2050,2,0,.52,NUM,.52,1
+Electrification share of heating and cooking in 2050,Electrification share of heating and cooking in 2050.,%,Electrification share of heating and cooking in 2050,2,0,.91,NUM,.91,1
+LDV fleet MPG in 2050,Average miles per gallon for the light duty vehicle (LDV: cars and light trucks) fleet (including electric and fuel cell vehicles).,MPG,LDV fleet MPG in 2050,0,36,108,NUM,36,1
+Non-LDV efficiency improvements by 2050,"Efficiency improvements for non-LDV transportation (commercial light trucks, heavy trucks, aircraft, ships and rail) by 2050.",%,Non-LDV efficiency improvements by 2050,2,0,.60,NUM,0,1
+Biofuels production in 2050,Total production of biofuels in 2050 (80 billion gallon represents a most aggressive scenario).,bn gallons,Biofuels production in 2050,0,34,80,NUM,50,1
+LDV miles travelled in 2050,"Average LDV miles travelled in 2050 (2010: 12,000 miles per vehicle).",miles,LDV miles travelled in 2050,0,9600,15000,NUM,9600,1

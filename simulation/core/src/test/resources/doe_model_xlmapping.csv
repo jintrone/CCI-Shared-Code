@@ -1,0 +1,23 @@
+ext_name,input,worksheet,range
+Coal-based_electricity_in_2050,TRUE,Climate CoLab Input,C7:C7
+Natural_gas-based_electricity_in_2050,TRUE,Climate CoLab Input,C12:C12
+Nuclear_electricity_in_2050,TRUE,Climate CoLab Input,C17:C17
+Renewable_electricity_in_2050,TRUE,Climate CoLab Input,C22:C22
+Share_of_fossil_CCS_in_2050,TRUE,Climate CoLab Input,C29:C29
+Industry_energy_effeciency_increase_by_2050,TRUE,Climate CoLab Input,C47:C47
+Low_carbon_fuel_mix_in_2050,TRUE,Climate CoLab Input,C53:C53
+Biomass_feedstock_in_2050,TRUE,Climate CoLab Input,C59:C59
+New_building_improvements_by_2030,TRUE,Climate CoLab Input,C67:C67
+Residential_building_retrofits_by_2050,TRUE,Climate CoLab Input,C73:C73
+Retrofit_improvements_in_2050,TRUE,Climate CoLab Input,C79:C79
+Appliance_and_equipment_efficicency_increase_by_2050,TRUE,Climate CoLab Input,C85:C85
+Electrification_share_of_heating_and_cooking_in_2050,TRUE,Climate CoLab Input,C91:C91
+LDV_fleet_MPG_in_2050,TRUE,Climate CoLab Input,C98:C98
+Non-LDV_efficiency_improvements_by_2050,TRUE,Climate CoLab Input,C104:C104
+Biofuels_production_in_2050,TRUE,Climate CoLab Input,C110:C110
+LDV_miles_travelled_in_2050,TRUE,Climate CoLab Input,C116:C116
+Year,FALSE,Climate CoLab Output,C12:K12
+Electric_generation,FALSE,Climate CoLab Output,C13:K13
+Transportation,FALSE,Climate CoLab Output,C14:K14
+Industry,FALSE,Climate CoLab Output,C15:K15
+Buildings,FALSE,Climate CoLab Output,C16:K16
