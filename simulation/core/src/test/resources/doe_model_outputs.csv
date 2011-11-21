@@ -4,3 +4,4 @@ Electric generation,,MM t CO2,Electric generation emissions,0,0,10000,9,NUM,,,1
 Transportation,,MM t CO2,Transportation emissions,0,0,10000,9,NUM,,,1
 Industry,,MM t CO2,Industry emissions,0,0,10000,9,NUM,,,1
 Buildings,,MM t CO2,Buildings emissions,0,0,10000,9,NUM,,,1
+Total,,MM t CO2,Total emissions,0,0,10000,9,NUM,,,1
