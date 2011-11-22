@@ -1,7 +1,7 @@
-name,description,units,lables,precision,min,max,arity,datatype,defaultval,id,indexingid
-Year,,Year,Year,0,2010,2050,9,NUM,,1,
-Electric generation,,MM t CO2,Electric generation emissions,0,0,10000,9,NUM,,,1
-Transportation,,MM t CO2,Transportation emissions,0,0,10000,9,NUM,,,1
-Industry,,MM t CO2,Industry emissions,0,0,10000,9,NUM,,,1
-Buildings,,MM t CO2,Buildings emissions,0,0,10000,9,NUM,,,1
-Total,,MM t CO2,Total emissions,0,0,10000,9,NUM,,,1
+name,description,units,labels,precision,min,max,arity,datatype,defaultval,id,indexingid
+Year,Year,Year,Year,0,2010,2050,9,NUM,,1,
+Electric generation,Electric generation,MM t CO2,Electric generation emissions,0,0,10000,9,NUM,,,1
+Transportation,Transportation,MM t CO2,Transportation emissions,0,0,10000,9,NUM,,,1
+Industry,Industry,MM t CO2,Industry emissions,0,0,10000,9,NUM,,,1
+Buildings,Buildings,MM t CO2,Buildings emissions,0,0,10000,9,NUM,,,1
+Total,Total,MM t CO2,Total emissions,0,0,10000,9,NUM,,,1
