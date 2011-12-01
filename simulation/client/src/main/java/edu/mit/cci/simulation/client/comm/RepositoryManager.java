@@ -21,6 +21,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import java.io.IOException;
 import java.io.Reader;
+import java.io.StringReader;
 import java.lang.reflect.Proxy;
 import java.util.Collections;
 import java.util.HashMap;
@@ -207,8 +208,9 @@ public class RepositoryManager implements Deserializer, JaxbReferenceResolver {
             Object o = um.unmarshal(stream);
             register(o);
             return o;
-
+            
         } catch (JAXBException e) {
+            log.error("Server response:\n" + stream.toString());
             e.printStackTrace();
             throw new RuntimeException(e);
         }

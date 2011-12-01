@@ -19,6 +19,7 @@ public class AdaptedMetaData extends AdaptedObject<Variable> implements MetaData
     private String[] max;
     private String[] min;
     private String[] labels;
+    private String[] defaultVal;
 
     private boolean isIndex = false;
 
@@ -103,7 +104,7 @@ public class AdaptedMetaData extends AdaptedObject<Variable> implements MetaData
         if (labels == null) {
             Variable v = model().getIndexingVariable();
             if (v != null) {
-                labels = new String[]{v.getIndexingVariable().getLabels(), model().getLabels() };
+                labels = new String[]{v.getLabels(), model().getLabels() };
             }
             else {
                 labels = new String[]{ model().getLabels() };
@@ -160,7 +161,18 @@ public class AdaptedMetaData extends AdaptedObject<Variable> implements MetaData
 
     @Override
     public String[] getDefault() {
-        return getMin();
+    	if (defaultVal == null) {
+            Variable v = model().getIndexingVariable();
+              if (v != null) {
+            	  defaultVal = new String[] {v.getDefaultValue(), model().getDefaultValue()};
+              } else {
+            	  defaultVal = new String[] {model().getDefaultValue()+""};
+              }
+              
+
+          }
+        return defaultVal; 
+        //return getMin();
     }
 
     @Override
