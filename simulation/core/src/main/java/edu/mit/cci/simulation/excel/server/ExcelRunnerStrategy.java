@@ -75,8 +75,14 @@ public class ExcelRunnerStrategy implements RunStrategy {
         runForumlas(workbook);
         Map<Variable, Object[]> result = new HashMap<Variable, Object[]>();
         for (ExcelVariable ev : esim.getOutputs()) {
-            result.put(ev.getSimulationVariable(), readOutput(ev, workbook));
+            result.put(ev.getSimulationVariable(), readOutput(ev, workbook, ev.getCellRange()));
         }
+        for (ExcelVariable ev:esim.getInputs()) {
+            if (ev.getRewriteCellRange()!=null) {
+               result.put(ev.getSimulationVariable(),readOutput(ev,workbook,ev.getRewriteCellRange()));
+            }
+        }
+
         return U.createStringRepresentation(result);
     }
 
@@ -146,12 +152,12 @@ public class ExcelRunnerStrategy implements RunStrategy {
         }
     }
 
-    public Object[] readOutput(ExcelVariable ev, HSSFWorkbook workbook) throws SimulationException {
+    public Object[] readOutput(ExcelVariable ev, HSSFWorkbook workbook, String cellRange) throws SimulationException {
         HSSFSheet sheet = workbook.getSheet(ev.getWorksheetName());
         Validation.notNull(sheet, "Worksheet");
-        Validation.validateExcelCoordinates(ev.getCellRange());
+        Validation.validateExcelCoordinates(cellRange);
 
-        AreaReference area = new AreaReference(ev.getCellRange());
+        AreaReference area = new AreaReference(cellRange);
 
         int  height= 1 + area.getLastCell().getRow() - area.getFirstCell().getRow();
         int width = 1 + area.getLastCell().getCol() - area.getFirstCell().getCol();
@@ -179,6 +185,9 @@ public class ExcelRunnerStrategy implements RunStrategy {
         return result;
 
     }
+
+
+
 
 }
 

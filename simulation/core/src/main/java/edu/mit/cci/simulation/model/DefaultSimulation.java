@@ -113,17 +113,27 @@ public class DefaultSimulation implements Simulation {
 
     public Scenario run(List<Tuple> siminputs) throws SimulationException {
 
+
+
         DefaultScenario result = new DefaultScenario();
         result.setSimulation(this);
+
+        Map<Variable,Tuple> inputMap = new HashMap<Variable, Tuple>();
+        for (Tuple t:siminputs) {
+            inputMap.put(t.getVar(),t);
+        }
+
         Set<Tuple> response = runRaw(siminputs);
         Set<Variable> outputs = new HashSet<Variable>(getOutputs());
         for (Tuple t : response) {
-            outputs.remove(t.getVar());
+            if (!outputs.remove(t.getVar())) {
+                inputMap.put(t.getVar(),t);
+            }
         }
         if (!outputs.isEmpty()) {
             log.warn("Not all outputs were identified, missing: " + outputs);
         }
-        result.getValues_().addAll(siminputs);
+        result.getValues_().addAll(inputMap.values());
         result.getValues_().addAll(response);
         result.persist();
         return result;
@@ -182,6 +192,9 @@ public class DefaultSimulation implements Simulation {
         response = getRunStrategy().run(url, selectedinputs);
 
         result.addAll(U.parseVariableMap(response, getOutputs()));
+        result.addAll(U.parseVariableMap(response,getInputs()));
+
+
         return result;
     }
 

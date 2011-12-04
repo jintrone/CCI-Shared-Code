@@ -166,15 +166,15 @@ public class U {
     /**
      *
      * @param input Presumes data formatted as a URL query parameter string with UTF-8 encoded values
-     * @param outputCandidates
+     * @param candidates
      * @return A List of Tuples.  Tuples are not explicitly persisted here.
      * @throws edu.mit.cci.simulation.model.SimulationException
      */
-    public static List<Tuple> parseVariableMap(String input, Collection<Variable> outputCandidates) throws SimulationException {
+    public static List<Tuple> parseVariableMap(String input, Collection<Variable> candidates) throws SimulationException {
 
         Map<String,String> externallyNamed = new HashMap<String,String>();
-        if (outputCandidates!=null) {
-            for (Variable v:outputCandidates) {
+        if (candidates !=null) {
+            for (Variable v: candidates) {
                 if (v.getExternalName()!=null) {
                     externallyNamed.put(v.getExternalName(),v.getId_());
                 }
@@ -198,6 +198,9 @@ public class U {
             Variable v = lid!=null? DefaultVariable.findDefaultVariable(lid):null;
             if (v == null) {
                 log.warn("Could not identify variable in response: " + varval[0]);
+                continue;
+            } else if (!(candidates.contains(v))) {
+                log.info("Found variable "+v.getName()+" but not looking for it");
                 continue;
             }
             Tuple t = new Tuple(v);

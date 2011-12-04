@@ -32,6 +32,14 @@ privileged aspect ExcelVariable_Roo_JavaBean {
     public void ExcelVariable.setCellRange(String cellRange) {
         this.cellRange = cellRange;
     }
+
+     public String ExcelVariable.getRewriteCellRange() {
+        return this.rewriteCellRange;
+    }
+
+    public void ExcelVariable.setRewriteCellRange(String cellRange) {
+        this.rewriteCellRange = cellRange;
+    }
     
     public DefaultVariable ExcelVariable.getSimulationVariable() {
         return this.simulationVariable;

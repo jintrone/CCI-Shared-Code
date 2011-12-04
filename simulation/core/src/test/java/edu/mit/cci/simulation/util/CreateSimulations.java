@@ -612,7 +612,7 @@ public class CreateSimulations {
         CSVReader reader = new CSVReader(basename + "_xlmapping.csv");
         for (Map<String,String> line:reader) {
           if ("true".equalsIgnoreCase(get(line,"input"))) {
-              esim.getInputs().add(new ExcelVariable(esim,sim.findVariableWithExternalName(get(line,"ext_name"),true),get(line,"worksheet"),get(line,"range")));
+              esim.getInputs().add(new ExcelVariable(esim,sim.findVariableWithExternalName(get(line,"ext_name"),true),get(line,"worksheet"),get(line,"range"),get(line,"rewriterange")));
           } else {
                esim.getOutputs().add(new ExcelVariable(esim,sim.findVariableWithExternalName(get(line,"ext_name"),false),get(line,"worksheet"),get(line,"range")));
           }
