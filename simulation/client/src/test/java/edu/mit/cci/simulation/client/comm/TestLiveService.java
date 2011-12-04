@@ -8,8 +8,10 @@ import edu.mit.cci.simulation.client.Variable;
 import org.junit.Assert;
 import org.junit.Test;
 
+import javax.persistence.TupleElement;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -37,17 +39,17 @@ public class TestLiveService {
         //developed
         inputs.put("Developed start year", "2012");  //start year
         inputs.put("Developed target year", "2050");  //target year
-        inputs.put("Pct change in Developed FF emissions", "0");   //target
+        inputs.put("Pct change in Developed FF emissions", "200");   //target
 
         //developing a
         inputs.put("Developing A start year", "2012");
         inputs.put("Developing A target year", "2050");
-        inputs.put("Pct change in Developing A FF emissions", "0");
+        inputs.put("Pct change in Developing A FF emissions", "200");
 
         //developing b
         inputs.put("Developing B start year", "2012");
         inputs.put("Developing B target year", "2050");
-        inputs.put("Pct change in Developing B FF emissions", "0");
+        inputs.put("Pct change in Developing B FF emissions", "200");
 
 
         inputs.put("Target Sequestration", "0.50");  //sequestration (afforestation)
@@ -76,6 +78,60 @@ public class TestLiveService {
         }
 
 
+    }
+
+    @Test
+    public void testDOEModel() throws IOException, MetaDataNotFoundException, ScenarioNotFoundException, ModelNotFoundException {
+        ClientRepository repo = ClientRepository.instance("localhost",8080);
+        Simulation sim = repo.getSimulation(18L);
+        Assert.assertNotNull(sim);
+        Map<String, Object> inputs = new HashMap<String, Object>();
+        inputs.put("Coal-based_electricity_in_2050","48");
+        inputs.put("Natural_gas-based_electricity_in_2050","99");
+        inputs.put("Nuclear_electricity_in_2050","16");
+        inputs.put("Renewable_electricity_in_2050","14");
+        inputs.put("Share_of_fossil_CCS_in_2050","2");
+        inputs.put("Industry_energy_effeciency_increase_by_2050","43");
+        inputs.put("Low_carbon_fuel_mix_in_2050","50");
+        inputs.put("Biomass_feedstock_in_2050","50");
+        inputs.put("New_building_improvements_by_2030","75");
+        inputs.put("Residential_building_retrofits_by_2050","100");
+        inputs.put("Retrofit_improvements_in_2050","12");
+        inputs.put("Appliance_and_equipment_efficicency_increase_by_2050","52");
+        inputs.put("Electrification_share_of_heating_and_cooking_in_2050","91");
+        inputs.put("LDV_fleet_MPG_in_2050","36");
+        inputs.put("Non-LDV_efficiency_improvements_by_2050","0");
+        inputs.put("Biofuels_production_in_2050","50");
+        inputs.put("LDV_miles_travelled_in_2050","9600");
+        Scenario scenario = repo.runModelWithInputNames(sim, inputs, 546L, true);
+        Assert.assertNotNull(scenario);
+
+        System.err.println("----------INPUTS-----------");
+        for (Variable v:scenario.getInputSet()) {
+          System.err.println(v.getMetaData().getName()+":"+createValueString(v.getValue()));
+        }
+
+
+        System.err.println("----------OUTPUTS-----------");
+        for (Variable v:scenario.getOutputSet()) {
+            System.err.println(v.getMetaData().getName()+":"+createValueString(v.getValue()));
+
+        };
+
+
+
+    }
+
+    public static String createValueString(List<Tuple> values) {
+        StringBuilder builder = new StringBuilder();
+        for (Tuple t:values) {
+            builder.append("[");
+            for (String v:t.getValues()) {
+                builder.append(v).append(";");
+            }
+            builder.append("]");
+        }
+        return builder.toString();
     }
 
     //    @Test

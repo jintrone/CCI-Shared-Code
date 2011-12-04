@@ -204,6 +204,7 @@ public class RepositoryManager implements Deserializer, JaxbReferenceResolver {
 
     public Object deserialize(Reader stream) {
         try {
+            log.debug("Received response: "+stream);
             Object o = um.unmarshal(stream);
             register(o);
             return o;

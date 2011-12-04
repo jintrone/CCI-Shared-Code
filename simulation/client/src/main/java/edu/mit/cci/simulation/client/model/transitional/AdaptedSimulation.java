@@ -105,7 +105,9 @@ public class AdaptedSimulation extends AdaptedObject<edu.mit.cci.simulation.mode
             for (Variable v: model().getOutputs()) {
                 MetaData md = (MetaData) manager().getAdaptor(v);
                 MetaData mdi = md.getIndexingMetaData();
+
                 if (mdi!=null) {
+                    if (mdi.equals(md)) continue;
                     mdi.setIndex(true);
                 }
                 outputs.add(md);
