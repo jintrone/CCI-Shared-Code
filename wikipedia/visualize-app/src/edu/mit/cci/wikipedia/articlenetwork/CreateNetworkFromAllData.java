@@ -43,7 +43,8 @@ public class CreateNetworkFromAllData {
 					while (itNode.hasNext()) {
 						String node = itNode.next();
 						int tie = linkMap.get(node);
-						bw.write(personName + "\t" + node + "\t" + tie);
+						//bw.write(personName + "\t" + node + "\t" + tie);
+						bw.write(prevPersonName + "\t" + node + "\t" + tie);
 						bw.newLine();
 						bw.flush();
 					}
